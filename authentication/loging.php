@@ -8,14 +8,15 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
 
 
     $sql = "select * from `users` where username = '$USERNAME' and password = '$PASSWORD'";
-    $sql_userId = "SELECT `user_id` from users WHERE username='$USERNAME'";
-    $userId_result = mysqli_query($con,$sql_userId);
+   
+  
     $result = mysqli_query($con, $sql);
-    $userId = mysqli_fetch_array($userId_result);
+  
     if(mysqli_num_rows($result)> 0){
+        $row = mysqli_fetch_assoc($result);
         session_start();
         $_SESSION["username"] = $USERNAME;
-        $_SESSION['userid'] = $userId[0];
+        $_SESSION['userid'] = $row['user_id'];
         header('location:../Home/dashbord.php');
     }else{
         echo'Cheack your user name and password and try again';

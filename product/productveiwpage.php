@@ -160,6 +160,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             let currentValue = parseInt(quantityInput.value);
             if (currentValue > 1) {
                 quantityInput.value = currentValue - 1;
+                price.innerHTML = <?php echo ($product['price']); ?> *quantityInput.value;
                 updateCartLink();
             }
         }

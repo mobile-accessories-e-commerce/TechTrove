@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']==='GET'){
 $user_id = $_SESSION['userid'];
 
 
-$cart_query = "SELECT cart_id FROM carts WHERE user_id = ?";
+$cart_query = "SELECT cart_id FROM carts WHERE user_id = ? ";
 $stmt = $con->prepare($cart_query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
