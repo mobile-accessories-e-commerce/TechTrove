@@ -10,6 +10,7 @@ $query = "
     SELECT 
         c.cart_id,
         cpi.item_id,
+        p.product_id,
         p.product_name,
         p.price,
         p.image_link,
@@ -87,11 +88,13 @@ if ($result->num_rows > 0) {
             <div class="row">
                 <?php foreach ($cartItems as $item): ?>
                     <div class="card">
+                        
                         <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>">
                         <h2><?php echo $item['product_name']; ?></h2>
                         <p>Price: $<?php echo number_format($item['price'], 2); ?></p>
                         <p>Quantity: <?php echo $item['quantity']; ?></p>
-                        <button class="buy-button" data-item-id="<?php echo $item['item_id']; ?>">Buy</button>
+                        <a href="../product/productveiwpage.php?product_id=<?php echo $item['product_id'];?>?item_id=<?php echo $item['item_id'] ?>"><button>Buy</button></a>
+                        
                     </div>
                 <?php endforeach; ?>
             </div>

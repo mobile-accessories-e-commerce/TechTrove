@@ -13,13 +13,29 @@ include "../connect.php";
 $error = '';
 $user_id = $_SESSION['userid'];
 
+
 $checkQuery = "SELECT * FROM sellers WHERE user_id = '$user_id'";
 $result = $con->query($checkQuery);
 
+
+
+//check if the user is alrady a seller
 if ($result->num_rows > 0) {
-    header("location:sellerdashbord.php");
+    $checkstatusquery = "SELECT approved FROM sellers  WHERE user_id = '$user_id'";
+    $statusresult =  $con->query(query: $checkstatusquery);
+    $row = mysqli_fetch_assoc($statusresult);
+    
+    //check seller is approved or not
+    if($row['approved']==1){
+        header("location:sellerdashbord.php");
+    }else{
+        header("location:sllerapprovedwaiting.php");
+    }
+   
 }
 
+
+//get seller details and register seller
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
     $store_name = $con->real_escape_string($_POST['store_name']);
@@ -73,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <div class="container">
         <h2>Seller Signup</h2>
 
-       
+<!--check for error-->
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
             <a href="../Home/dashbord.php"><button>Go to Dashboard</button></a>

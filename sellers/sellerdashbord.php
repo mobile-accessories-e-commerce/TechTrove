@@ -6,6 +6,8 @@ $user_id = $_SESSION['userid'];
 
 $productList = array();
 
+
+//Getting Seller Id for User in This session
 $query = "SELECT seller_id FROM sellers WHERE user_id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -19,8 +21,9 @@ if ($result->num_rows == 1) {
     echo "Seller not found. Please contact support.";
     exit;
 }
-echo $seller_id;
 
+
+//Getting Product list for that seller
 $query = "SELECT * FROM products WHERE seller_id=? ";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $seller_id);
@@ -85,12 +88,23 @@ if($result->num_rows>0){
 </head>
 <body>
     
-<a href="productlisting.php"><button>Add Product</button></a>
-<a href="../Home/dashbord.php"><button>Go to Home</button></a>
+<nav>
+<a href="productlisting.php">Add Product</a>
+<a href="../Home/dashbord.php">Go to Home</a>
+<a href="">Orders</a>
+<a href="">Sold Product</a>
+<a href="">Give Promotion</a>
+<a href="">Reports</a>
+</nav>
+
     <div class="container">
         <h1>Seller Dashbord</h1>
+
+        <!--If productList empty this code run-->
         <?php if (empty($productList)): ?>
             <p>Your have no product listed yet</p>
+            
+        <!-- else show the products-->
         <?php else: ?>
             <div class="row">
                 <?php foreach ($productList as $item): ?>

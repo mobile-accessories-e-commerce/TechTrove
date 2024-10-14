@@ -7,6 +7,7 @@ include '../connect.php';
 session_start();
 
 
+//Get form detail about product and update
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
     $productName = htmlspecialchars(trim($_POST['product_name']));

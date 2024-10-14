@@ -94,7 +94,8 @@ $services_result = $con->query($services_query);
             <h4><?php echo $product_row['product_name']; ?></h4>
             <p><?php echo $product_row['description']; ?></p>
             <p>Price: $<?php echo number_format($product_row['price'], 2); ?></p>
-            <button class="button add-to-cart" data-product-id="<?php echo $product_row['product_id']; ?>">Add to Cart</button>
+            <a href="../product/productveiwpage.php?product_id=<?php echo $product_row['product_id']; ?>">Veiw Product</a>
+            
 
         </div>
     <?php endwhile; ?>
@@ -112,32 +113,6 @@ $services_result = $con->query($services_query);
     <?php endwhile; ?>
 </div>
 
-<script>
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-
-        
-        fetch('../cart/add_to_cart.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ product_id: productId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Product added to cart!');
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-});
-
-</script>
 </body>
 </html>
 

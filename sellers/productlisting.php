@@ -5,6 +5,8 @@ include '../connect.php';
 $user_id = $_SESSION['userid'];
 
 
+
+//Get seller id for user in session 
 $query = "SELECT seller_id FROM sellers WHERE user_id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -19,10 +21,12 @@ if ($result->num_rows == 1) {
     exit;
 }
 
-
+//Get catogaries
 $cat_query = "SELECT product_cat_id, name FROM product_catogory";
 $cat_result = $con->query($cat_query);
 
+
+//list product 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 

@@ -3,14 +3,19 @@ session_start();
 include '../connect.php'; 
 
 
-if (!isset($_SESSION['userid'])) {
-    echo json_encode(['success' => false, 'message' => 'User not logged in']);
-    exit();
+if($_SERVER['REQUEST_METHOD']==='GET'){
+    $product_id=$_GET['product_id'];
+    $quantity=$_GET['quantity'];
+
+    $query = "SELECT * FROM products WHERE product_id=?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = mysqli_fetch_assoc($result);
+
 }
 
-
-$data = json_decode(file_get_contents("php://input"), true);
-$product_id = $data['product_id'];
 $user_id = $_SESSION['userid'];
 
 
@@ -41,17 +46,16 @@ $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     
-    $update_query = "UPDATE cart_product_items SET quantity = quantity+ 1 WHERE cart_id = ? AND product_id = ?";
-    $stmt = $con->prepare($update_query);
-    $stmt->bind_param("ii", $cart_id, $product_id);
-    $stmt->execute();
+    echo "This item already in your cart";
+    
 } else {
     
-    $insert_query = "INSERT INTO cart_product_items (cart_id, product_id, quantity) VALUES (?, ?, 1)";
+    $insert_query = "INSERT INTO cart_product_items (cart_id, product_id, quantity) VALUES (?, ?, ?)";
     $stmt = $con->prepare($insert_query);
-    $stmt->bind_param("ii", $cart_id, $product_id);
+    $stmt->bind_param("iii", $cart_id, $product_id,$quantity);
     $stmt->execute();
+    header("location:cartlandingpage.php");
 }
 
-echo json_encode(['success' => true]);
+
 ?>

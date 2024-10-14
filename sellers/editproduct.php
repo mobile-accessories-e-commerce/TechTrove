@@ -6,6 +6,8 @@ if (!isset($_SESSION['userid'])) {
    header("location:../authentication/loging.php");
 }
 
+
+//Get current product details acording to product_id
 if($_GET['product_id']){
     
     $product_id = $_GET['product_id'];
@@ -22,6 +24,7 @@ if($_GET['product_id']){
     $result = $stmt->get_result();
     $product = $result->fetch_assoc(); 
    
+    
     
     if ($product) {
         $product_name = $product['product_name'];
