@@ -50,73 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
-    <style>
-        /* Add basic styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2 {
-            color: #333;
-        }
-        .form-container {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .form-container input, 
-        .form-container select, 
-        .form-container textarea {
-            margin-bottom: 10px;
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .form-container button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-        }
-        .form-container button:hover {
-            background-color: #45a049;
-        }
-        .cart-items {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 15px;
-        }
-        .item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        .total {
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: right;
-        }
-    </style>
+    <link rel="stylesheet" href="../style/checkoutdetail.css">
 </head>
 <body>
+<div ><a href="../cart/cartlandingpage.php"><button class="back">back</button></a></div>   
     <div class="container">
+
         <h1>Checkout</h1>
 
         <!-- Checkout Details Form -->

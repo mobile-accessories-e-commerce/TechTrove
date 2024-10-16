@@ -1,42 +1,4 @@
-<?php
-// connect to database
-include('../connect.php');
 
-
-function deleteitemfromcart($item_id){
-    include "../connect.php";
-    $quary = "DELETE FROM cart_product_items WHERE item_id='$item_id'";
-    $result = mysqli_query($con,$quary);
-    if($result){
-       
-    }
-    else{
-        die("erro when deleting product");
-    }
-}
-
-// Get cart_id from the URL
-$order_id = isset($_GET['order_id']) ? $_GET['order_id'] : '';
-
-// Fetch the order details based on cart_id
-$stmt = $con->prepare("SELECT p.product_name, p.price, o.quantity 
-                       FROM order_items o 
-                       JOIN products p ON o.product_id = p.product_id   
-                       WHERE o.order_id = ?");
-                       
-// Bind the parameter (assuming order_id is an integer)
-$stmt->bind_param("i", $order_id); // 'i' specifies that $order_id is an integer
-
-// Execute the query
-$stmt->execute();
-
-// Get the result
-$result = $stmt->get_result();
-
-
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +7,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Success</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -118,22 +80,8 @@ $result = $stmt->get_result();
     <div class="success-message">Order Placed Successfully!</div>
 
     <div class="order-details">
-        <h2>Your Purchased Items:</h2>
-        <?php if (mysqli_num_rows($result) > 0): ?>
-            <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                
-                <div class="order-item">
-                    <h3><?php echo $row['product_name']; ?></h3>
-                    <p>Price: $<?php echo $row['price']; ?></p>
-                    <p>Quantity: <?php echo $row['quantity']; ?></p>
-                </div>
-                <?php deleteitemfromcart($row['item_id'])  ?>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No items found for this order.</p>
-        <?php endif; ?>
-    </div>
-
+        
+        
     <div class="thank-you">Thank you for shopping with us!</div>
     <a href="../Home/dashbord.php" class="btn-dashboard">Go to Dashboard</a>
 </div>

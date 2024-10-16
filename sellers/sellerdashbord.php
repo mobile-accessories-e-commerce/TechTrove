@@ -1,146 +1,268 @@
-<?php
-include "../connect.php";
-session_start();
-$user_id = $_SESSION['userid'];
-
-
-$productList = array();
-
-
-//Getting Seller Id for User in This session
-$query = "SELECT seller_id FROM sellers WHERE user_id = ?";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-    $seller_id = $row['seller_id'];
-} else {
-    
-    echo "Seller not found. Please contact support.";
-    exit;
-}
-
-
-//Getting Product list for that seller
-$query = "SELECT * FROM products WHERE seller_id=? ";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $seller_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if($result->num_rows>0){
-    while($row =mysqli_fetch_assoc($result)){
-        array_push($productList,$row);
-    }
-}
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller dashbord</title>
-    
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
     <style>
-        body{
-            background-color: #ffeefe;
-        }
-        .row {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
             display: flex;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            position: fixed;
+            height: 100%;
+            padding-top: 20px;
+        }
+
+        .sidebar nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        /* Product Styles */
+        .product-list {
+            display: flex;
+            justify-content: space-between;
             flex-wrap: wrap;
         }
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .product {
+            width: 30%; /* Each item takes 30% of the container width */
+        margin-bottom: 20px; /* Add space between rows */
+        box-sizing: border-box; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 15px;
-            margin: 10px;
-            width: calc(25% - 40px); 
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .card img {
+
+        .product img {
             width: 100%;
-            height: auto;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .product-price {
+            color: green;
+            font-weight: bold;
+        }
+
+        .product-stock {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .product a {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
             border-radius: 5px;
         }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
+
+        .product a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Order Styles */
+        .order-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .order {
+            width: 30%; /* Each item takes 30% of the container width */
+        margin-bottom: 20px; /* Add space between rows */
+        box-sizing: border-box; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .order img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .order-details {
             margin-top: 10px;
         }
-        h2 {
-            width: 100%;
-            margin: 20px 0;
+
+        .order-details strong {
+            display: block;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .order .price {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .order .details {
+            margin-top: 20px;
+        }
+
+        .order .details h3 {
+            margin-bottom: 10px;
+        }
+
+        .order .details p {
+            margin: 5px 0;
+        }
+
+        .order button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    
-<nav>
-<a href="productlisting.php">Add Product</a>
-<a href="../Home/dashbord.php">Go to Home</a>
-<a href="">Orders</a>
-<a href="">Sold Product</a>
-<a href="">Give Promotion</a>
-<a href="">Reports</a>
-</nav>
 
-    <div class="container">
-        <h1>Seller Dashbord</h1>
-
-        <!--If productList empty this code run-->
-        <?php if (empty($productList)): ?>
-            <p>Your have no product listed yet</p>
-            
-        <!-- else show the products-->
-        <?php else: ?>
-            <div class="row">
-                <?php foreach ($productList as $item): ?>
-                    <div class="card">
-                        <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>">
-                        <h2><?php echo $item['product_name']; ?></h2>
-                        <p>Price: $<?php echo number_format($item['price'], 2); ?></p>
-                        <form action="editproduct.php"><input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>"> <input type="submit" value="edit"></form>
-                        
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+    <!-- Left Sidebar Navigation -->
+    <div class="sidebar">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" onclick="loadContent('home')">Home</a></li>
+                <li><a href="productlisting.php">Add Product</a></li>
+                <li><a href="#" onclick="loadContent('all_products')">All Products</a></li>
+                <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
+                <li><a href="#" onclick="loadContent('ordered_products')">Ordered Products</a></li>
+                <li><a href="#" onclick="loadContent('reports')">Reports</a></li>
+            </ul>
+        </nav>
     </div>
 
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <h1>Seller Dashboard</h1>
+        <p>Welcome to your seller dashboard. Here you can manage your products, orders, and view reports.</p>
+    </div>
 
-
+    <script>
+        function loadContent(section) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `fetch_seller_dashbord_data.php?section=${section}`, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    let content = document.getElementById('main-content');
+                    if (section === 'all_products') {
+                        let products = JSON.parse(xhr.responseText);
+                        content.innerHTML = "<h1>All Products</h1>";
+                        if (products.length > 0) {
+                            let productHTML = '<div class="product-list">';
+                            products.forEach(function(product) {
+                                productHTML += `
+                                    <div class="product">
+                                        <img src="../images/${product.image_link}" alt="${product.product_name}">
+                                        <div class="product-name">${product.product_name}</div>
+                                        <div class="product-price">$${product.price}</div>
+                                        <div class="product-stock">Stock: ${product.stock_quantity}</div>
+                                        <a href="editproduct.php?product_id=${product.product_id}">Edit</a>
+                                    </div>
+                                `;
+                            });
+                            productHTML += '</div>';
+                            content.innerHTML += productHTML;
+                        } else {
+                            content.innerHTML = "<h1>No Products Found</h1><p>You haven't listed any products yet.</p>";
+                        }
+                    }
+                    
+                    if (section === 'ordered_products') {
+                        let orders = JSON.parse(xhr.responseText);
+                        content.innerHTML = "<h1>All Orders</h1>";
+                        if (orders.length > 0) {
+                            let ordersHTML = '<div class="order-list">';
+                            orders.forEach(function(order) {
+                                ordersHTML += `
+                                    <div class="order">
+                                        <img src="../images/${order.image_link}" alt="${order.product_name}">
+                                        <div class="order-details">
+                                            <strong>Product:</strong> ${order.product_name}
+                                            <strong>Quantity:</strong> ${order.quantity}
+                                            <div class="price">$${order.price}</div>
+                                        </div>
+                                        <div class="details">
+                                            <h3>Shipping Details:</h3>
+                                            <p><strong>Address:</strong> ${order.address}</p>
+                                            <p><strong>Country:</strong> ${order.country}</p>
+                                            <p><strong>Zip Code:</strong> ${order.zip_code}</p>
+                                            <p><strong>Phone Number:</strong> ${order.phone_number}</p>
+                                            <p><strong>Email:</strong> ${order.email}</p>
+                                            <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+                                        </div>
+                                        <button>Mark as Delivered</button>
+                                    </div>
+                                `;
+                            });
+                            ordersHTML += '</div>';
+                            content.innerHTML += ordersHTML;
+                        } else {
+                            content.innerHTML = "<h1>No Orders Found</h1><p>No orders have been placed yet.</p>";
+                        }
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

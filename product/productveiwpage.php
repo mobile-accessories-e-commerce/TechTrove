@@ -19,109 +19,12 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        
-        .container {
-            background-color: #fff;
-            width: 80%; /* 80% of screen width */
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            border-radius: 8px;
-        }
-
-        .image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        .details {
-            flex: 1.5;
-            padding: 20px;
-        }
-
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .description {
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #555;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e74c3c;
-            margin-bottom: 20px;
-        }
-
-        .quantity {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .quantity button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-
-        .quantity input {
-            width: 50px;
-            text-align: center;
-            font-size: 16px;
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button.add-to-cart {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        button.add-to-cart:hover {
-            background-color: #218838;
-        }
-    </style>
+    <link rel="stylesheet" href="../style/productveiwpage.css">
 </head>
 <body>
+    <div ><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
 
+    <div class="main-container">
     <div class="container">
         <div class="image">
             <img src="../images/<?php echo $product['image_link']; ?>" alt="Product Image">
@@ -130,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         <div class="details">
             <div class="title"><?php echo $product['product_name']; ?></div>
             <div class="description"><?php echo $product['description']; ?></div>
-            <div class="price" id="price">$<?php echo $product['price']; ?></div>
+            <div class="price" >$<span id="price"><?php echo $product['price']; ?></span></div>
             
             <div class="quantity">
                 <button onclick="decreaseQuantity()">-</button>
@@ -143,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             </a>
         </div>
     </div>
-
+    </div>
     <script>
         const quantityInput = document.getElementById('quantity');
         const addToCartLink = document.getElementById('addToCartLink');
@@ -152,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         function increaseQuantity() {
             let currentValue = parseInt(quantityInput.value);
             quantityInput.value = currentValue + 1;
-            price.innerHTML = <?php echo ($product['price']); ?> *quantityInput.value;
+            price.innerHTML = (<?php echo ($product['price']); ?> *quantityInput.value);
             updateCartLink();
         }
 

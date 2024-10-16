@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../connect.php'; 
-include '../layouts/header.php';
+
 
 $userId = $_SESSION['userid']; 
 
@@ -50,118 +50,11 @@ if ($result->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+    <link rel="stylesheet" href="../style/cartlandingpage.css">
     
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 20px;
-            flex-direction: column;
-        }
-        .title {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            padding: 10px 0;
-            font-weight: bold;
-            background-color: #f7f7f7;
-            border-bottom: 2px solid #e1e1e1;
-        }
-        .card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #e1e1e1;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px;
-            width: 100%
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .card img {
-
-            width: 150px;
-            height: 100px;
-            border-radius: 5px;
-        }
-        .product_detail{
-            width: 100px;
-        }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        .quantity_container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .quantity_container input {
-            width: 60px;
-            text-align: center;
-        }
-        .total-container {
-            text-align: right;
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-        .total-container a {
-            text-decoration: none;
-            color: #fff;
-            background-color: #007BFF;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .total-container a:hover {
-            background-color: #0056b3;
-        }
-        @media (max-width: 768px) {
-            .card {
-                width: calc(50% - 40px); /* Responsive layout for smaller screens */
-            }
-        }
-        @media (max-width: 480px) {
-            .card {
-                width: 100%; /* Full width on mobile */
-            }
-        }
-    </style>
 </head>
 <body>
+<div ><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
     <div class="container">
         <h1>Your Cart</h1>
         <?php if (empty($cartItems)): ?>

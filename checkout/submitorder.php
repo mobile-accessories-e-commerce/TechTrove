@@ -1,9 +1,20 @@
 <?php
 include "../connect.php";
 session_start();
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['userid'];
 
 
+function deleteitemfromcart($item_id){
+    include "../connect.php";
+    $quary = "DELETE FROM cart_product_items WHERE item_id='$item_id'";
+    $result = mysqli_query($con,$quary);
+    if($result){
+       
+    }
+    else{
+        die("erro when deleting product");
+    }
+}
 
 
 
@@ -92,7 +103,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
         // Execute the query
         if (mysqli_query($con, $sql)) {
             echo "Item inserted successfully!<br>";
-            
+            deleteitemfromcart($item['item_id']);
         } else {
             echo "Error: " . mysqli_error($con) . "<br>";
         }
@@ -103,7 +114,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     }
 
 
-        header("location:ordersucsuus.php?order_id='$order_id'");
+        header("location:ordersucsuus.php");
     }else{
         die("error when checout ");
     }

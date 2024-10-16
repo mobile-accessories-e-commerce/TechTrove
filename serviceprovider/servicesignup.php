@@ -18,7 +18,16 @@ $checkQuery = "SELECT * FROM service_providers WHERE user_id = '$user_id'";
 $result = $con->query($checkQuery);
 
 if ($result->num_rows > 0) {
-    header("location:servicedashbord.php");
+    $checkstatusquery = "SELECT aproved FROM service_providers  WHERE user_id = '$user_id'";
+    $statusresult =  $con->query(query: $checkstatusquery);
+    $row = mysqli_fetch_assoc($statusresult);
+    
+    //check seller is approved or not
+    if($row['aproved']==1){
+        header("location:servicedashbord.php");
+    }else{
+        header("location:../sellers/sllerapprovedwaiting.php");
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
