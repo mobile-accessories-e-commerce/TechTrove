@@ -1,132 +1,235 @@
-<?php
-include "../connect.php";
-session_start();
-$user_id = $_SESSION['userid'];
-
-
-$serviceList = array();
-
-$query = "SELECT service_provider_id FROM service_providers WHERE user_id = ?";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-    $service_provider_id = $row['service_provider_id'];
-} else {
-    
-    echo "service provider not found. Please contact support.";
-    exit;
-}
-
-
-$query = "SELECT * FROM services WHERE service_provider_id=? ";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $service_provider_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if($result->num_rows>0){
-    while($row =mysqli_fetch_assoc($result)){
-        array_push($serviceList,$row);
-    }
-}
-
-
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>service provider dashbord</title>
-    
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
     <style>
-        body{
-            background-color: #ffeefe;
-        }
-        .row {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
             display: flex;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            position: fixed;
+            height: 100%;
+            padding-top: 20px;
+        }
+
+        .sidebar nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        /* Product Styles */
+        .product-list {
+            display: flex;
+            justify-content: space-between;
             flex-wrap: wrap;
         }
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        .product {
+            width: 30%; /* Each item takes 30% of the container width */
+        margin-bottom: 20px; /* Add space between rows */
+        box-sizing: border-box; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 15px;
-            margin: 10px;
-            width: calc(25% - 40px); 
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .card img {
+
+        .product img {
             width: 100%;
-            height: auto;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .product-price {
+            color: green;
+            font-weight: bold;
+        }
+
+        .product-stock {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .product a {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
             border-radius: 5px;
         }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
+
+        .product a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Order Styles */
+        .order-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .order {
+            width: 30%; /* Each item takes 30% of the container width */
+        margin-bottom: 20px; /* Add space between rows */
+        box-sizing: border-box; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .order img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .order-details {
             margin-top: 10px;
         }
-        h2 {
-            width: 100%;
-            margin: 20px 0;
+
+        .order-details strong {
+            display: block;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .order .price {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .order .details {
+            margin-top: 20px;
+        }
+
+        .order .details h3 {
+            margin-bottom: 10px;
+        }
+
+        .order .details p {
+            margin: 5px 0;
+        }
+
+        .order button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-    
-<a href="servicelisting.php"><button>Add service</button></a>
-<a href="../Home/dashbord.php"><button>Go to Home</button></a>
-    <div class="container">
-        <h1>Your Product</h1>
-        <?php if (empty($serviceList)): ?>
-            <p>No service List yet</p>
-        <?php else: ?>
-            <div class="row">
-                <?php foreach ($serviceList as $service): ?>
-                    <div class="card">
-                        <img src="../images/<?php echo $service['image_link']; ?>" alt="<?php echo $service['service_name']; ?>">
-                        <h2><?php echo $service['service_name']; ?></h2>
-                        <p>Price: $<?php echo number_format($service['price'], 2); ?></p>
-                        <form action="editservice.php"><input type="hidden" name="service_id" value="<?php echo $service['service_id']; ?>"> <input type="submit" value="edit"></form>
-                        
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+
+    <!-- Left Sidebar Navigation -->
+    <div class="sidebar">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" onclick="loadContent('home')">Home</a></li>
+                <li><a href="servicelisting.php">Add service</a></li>
+                <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
+                <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
+                <li><a href="#" onclick="loadContent('ordered_products')">Ordered Products</a></li>
+                <li><a href="#" onclick="loadContent('reports')">Reports</a></li>
+                <li><a href="../Home/dashbord.php">Back to Home</a></li>
+            </ul>
+        </nav>
     </div>
 
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <h1>Service Provider Dashboard</h1>
+        <p>Welcome to your Service Provider  dashboard. Here you can manage your services, orders, and view reports.</p>
+    </div>
 
-
+    <script>
+        function loadContent(section) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `fetch_serviceProvider_data.php?section=${section}`, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    let content = document.getElementById('main-content');
+                    if (section === 'all_service') {
+                        let services = JSON.parse(xhr.responseText);
+                        content.innerHTML = "<h1>All services</h1>";
+                        if (services.length > 0) {
+                            let productHTML = '<div class="product-list">';
+                            services.forEach(function(service) {
+                                productHTML += `
+                                    <div class="product">
+                                        <img src="../images/${service.image_link}" alt="${service.service_name}">
+                                        <div class="product-name">${service.service_name}</div>
+                                        <div class="product-price">$${service.price}</div>
+                                        <div class="product-stock">Stock: ${service.service_status}</div>
+                                        <a href="editservice.php?service_id=${service.service_id}">Edit</a>
+                                    </div>
+                                `;
+                            });
+                            productHTML += '</div>';
+                            content.innerHTML += productHTML;
+                        } else {
+                            content.innerHTML = "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
+                        }
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

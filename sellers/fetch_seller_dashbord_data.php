@@ -52,11 +52,11 @@ elseif($section=='ordered_products'){
     
     
     $sql = "SELECT o.address, o.country, o.zip_code, o.phone_number, o.email, o.payment_method, 
-                   p.product_name, oi.quantity, oi.price,p.image_link
+                   p.product_name, oi.quantity, oi.price,p.image_link,oi.item_id
             FROM orders AS o 
             JOIN order_items AS oi ON o.order_id = oi.order_id
             JOIN products AS p ON oi.product_id = p.product_id
-            WHERE p.seller_id = '$seller_id'";
+            WHERE p.seller_id = '$seller_id' and oi.order_status='pending'";
     
     $result = mysqli_query($con, $sql);
     

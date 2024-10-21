@@ -46,7 +46,7 @@ if(mysqli_num_rows($result)>0){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS for styling -->
+    
     <style>
         /* Basic styling for the dashboard */
         body {
@@ -110,9 +110,16 @@ if(mysqli_num_rows($result)>0){
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             margin: 10px;
         }
-
-        /* Buttons */
-        input[type="submit"], button {
+          /* Buttons */
+        .block{
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .approve{
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -121,8 +128,21 @@ if(mysqli_num_rows($result)>0){
             border-radius: 5px;
         }
 
-        input[type="submit"]:hover, button:hover {
+      
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .approve, button:hover {
             background-color: #45a049;
+        }
+        .block:hover{
+            background-color: darkred;
         }
 
         @media screen and (max-width: 768px) {
@@ -135,6 +155,8 @@ if(mysqli_num_rows($result)>0){
         width: 100%;
         margin-bottom: 20px;
     }
+  
+    
 }
 
 
@@ -143,15 +165,15 @@ if(mysqli_num_rows($result)>0){
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <a href="#">Dashboard</a>
-        <a href="#">Add Category</a>
+        <a href="admindashbord.php">Dashboard</a>
+        <button onclick="addCategory()">addcatogory</button>
         <a href="#">All Products</a>
         <a href="#">Reports</a>
         <a href="#">Logout</a>
     </div>
 
     <!-- Dashboard content -->
-    <div class="container">
+    <div class="container" id="main_container">
         <!-- Sellers Section -->
         <div class="sellercontainer">
             <h1>Sellers</h1>
@@ -169,7 +191,7 @@ if(mysqli_num_rows($result)>0){
                     <td>
                         <form action="changestatus.php" method="post">
                             <input type="hidden" name="seller_approve" value="<?php echo $seller['seller_id'] ?>">
-                            <input type="submit" value="<?php echo ( $seller['approved']==1 ?  "Block" :  "Approve" )?>">
+                            <input type="submit" value="<?php echo ( $seller['approved']==1 ?  "Block" :  "Approve" )?>" class="<?php echo ( $seller['approved']==1 ?  "block" :  "approve" )?>">
                         </form>
                     </td>
                     <td><a href=""><button>View Detail</button></a></td>
@@ -195,7 +217,7 @@ if(mysqli_num_rows($result)>0){
                     <td>
                         <form action="changestatus.php" method="post">
                             <input type="hidden" name="service_approved" value="<?php echo $serviceProvider['service_provider_id']  ?>">
-                            <input type="submit" value="<?php echo ( $serviceProvider['aproved']==1 ?  "Block" :  "Approve" )?>">
+                            <input type="submit" value="<?php echo ( $serviceProvider['aproved']==1 ?  "Block" :  "Approve" )?>"  class="<?php echo ( $serviceProvider['aproved']==1 ?  "block" :  "approve" )?>">
                         </form>
                     </td>
                     <td><a href=""><button>View Detail</button></a></td>
@@ -204,5 +226,92 @@ if(mysqli_num_rows($result)>0){
             </table>
         </div>
     </div>
+
+
+
+<script>
+       function addCategory() {
+            const main_container = document.getElementById('main_container');
+            const xhr = new XMLHttpRequest();
+            let catogoryHTML = `<div class="cat-container"><h1>Product Catogory</h1><table>
+                                <tr>
+                                    <th>cat_id</th>
+                                    <th>Name</th>
+                                    
+                                </tr>`;
+        
+            xhr.open('GET', 'getcatogory.php?type=product', true); 
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    
+                    const data = JSON.parse(xhr.responseText);
+                    
+                
+                    const productCategories = data.productCategories;
+                    const serviceCategories = data.serviceCategories;
+
+                
+                    productCategories.forEach(function(cat) {
+                            catogoryHTML += `
+                                <tr>
+                                    <td>${cat.product_cat_id}</td>
+                                    <td>${cat.name}</td>
+                                    
+                                </tr>
+                            `;
+                        });
+
+                    catogoryHTML += `</table>
+                            <div>
+                                <form action='addcatogory.php' method='POST'>
+                                <input type='hidden' name='cat_type' value='product'>
+                                <input type='text' name='cat_name' requered>
+                                <input type='submit' value='Add Catogory' name='name'>
+                                </form>
+                            </div>
+                    </div>`;
+                    
+                    catogoryHTML += `<div class="cat-container"><h1>service Catogory</h1> <table>
+                                <tr>
+                                    <th>cat_id</th>
+                                    <th>Name</th>
+                                    
+                                </tr>`;
+                    serviceCategories.forEach(function(cat) {
+                        catogoryHTML += `
+                            
+                                <tr>
+                                    <td>${cat.service_cat_id}</td>
+                                    <td>${cat.name}</td>
+                                    
+                                </tr>
+                                
+                                
+                            `;
+                    });
+
+                    catogoryHTML +=`</table>
+                    <div>
+                                <form action='addcatogory.php' method='POST'>
+                                <input type='hidden' name='cat_type' value='service'>
+                                <input type='text' name='cat_name' requered>
+                                <input type='submit' value='Add Catogory' name='name'>
+                                </form>
+                            </div>
+                    </div>`;
+                    main_container.innerHTML = catogoryHTML;  
+                }
+            };
+
+        
+            xhr.send();
+}
+
+
+
+
+
+    </script>
 </body>
 </html>

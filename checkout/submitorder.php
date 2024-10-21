@@ -52,8 +52,7 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     }
 
     $result = mysqli_query($con,$sql);
-    if($result){
-        echo "hiii";    
+    if($result){   
         $sql="SELECT order_id FROM orders WHERE user_id='$user_id'";
         $result = mysqli_query($con,$sql);
         $row = mysqli_fetch_assoc($result);
@@ -90,15 +89,15 @@ if($_SERVER['REQUEST_METHOD']==="POST"){
     }
     
     foreach ($cartItems as $item) {
-        // Prepare the query
-        $product_id = $item['product_id'];  // Get the product ID
-        $quantity = $item['quantity']; // Quantity ordered
-        $cart_id = $item['cart_id']; // Price of the item
-        $price = $item['price'];
         
+        $product_id = $item['product_id']; 
+        $quantity = $item['quantity']; 
+        $cart_id = $item['cart_id']; 
+        $price = $item['price'];
+        $order_status = "pending";
        
-        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price) 
-                VALUES ('$order_id', '$product_id', '$quantity', '$price')";
+        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price,order_status) 
+                VALUES ('$order_id', '$product_id', '$quantity', '$price','$order_status')";
         
         // Execute the query
         if (mysqli_query($con, $sql)) {

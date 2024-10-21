@@ -11,7 +11,7 @@ if(!isset($_SESSION['seller_id'])){
 
 // Corrected SQL query
 $sql = "SELECT o.address, o.country, o.zip_code, o.phone_number, o.email, o.payment_method, 
-               p.product_name, oi.quantity, oi.price,p.image_link
+               p.product_name, oi.quantity, oi.price,p.image_link,oi.item_id
         FROM orders AS o 
         JOIN order_items AS oi ON o.order_id = oi.order_id
         JOIN products AS p ON oi.product_id = p.product_id
@@ -124,9 +124,9 @@ while($row = mysqli_fetch_assoc($result)){
     <h1>Your Orders</h1>
     <p class="order-message">Make sure you delevier items on time</p>
 
-    <!-- Success Icon -->
+    
     <div class="success-icon">
-        &#10004; <!-- Checkmark icon -->
+        &#10004; 
     </div>
 
     <ul class="order-list">
@@ -149,7 +149,7 @@ while($row = mysqli_fetch_assoc($result)){
         <p><strong>Email:</strong> <?php echo $product['email']; ?></p>
         <p><strong>Payment Method:</strong> <?php echo $product['payment_method']; ?></p>
     </div>
-    <div><button>Make as deliver</button></div>
+    <a href="confirmorder.php?oder_item_id=<?php echo $product['item_id'] ?>">Make as ship</a>
     </li>
         <?php endforeach; ?>
     </ul>
