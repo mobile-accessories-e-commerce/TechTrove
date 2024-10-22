@@ -26,10 +26,27 @@ while($row=mysqli_fetch_assoc($products_result)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>products</title>
-    <link rel="stylesheet" href="../style/products.css">
+    <link rel="stylesheet" href="../style/product.css">
 </head>
 <body>
-<div class="product-section-container">
+<div class="header">
+    <input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()" />
+    <div id="search-results"></div> 
+</div>
+
+<div class="side-bar">
+    <div class="side-bar-icon">
+        <a href="../cart/cartlandingpage.php">Cart</a>
+    </div>
+    <div class="side-bar-icon">
+        <a href="../Home/dashbord.php">Home</a>
+    </div>
+    <div class="side-bar-icon">
+        <a href="">Free shipping</a>
+    </div>
+</div>
+
+<div class="product-section-container" id="product-section-container">
     
     <ul class="product-section-item-wrapper">
         <?php foreach($product_list as $product): ?>
@@ -59,6 +76,58 @@ while($row=mysqli_fetch_assoc($products_result)){
         <?php endforeach; ?>
     </ul>
 </div>
+
+<script>
+function searchProducts() {
+    let searchTerm = document.getElementById('search').value;
+
     
+    const xhr = new XMLHttpRequest();
+    let main_container = document.getElementById('product-section-container');
+
+   
+    xhr.open('GET', `search.php?query=${searchTerm}`, true);
+    
+    let updateContent = `<div>Search Result for "${searchTerm}"</div>  <ul class="product-section-item-wrapper">`;
+
+  
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            let products = JSON.parse(xhr.responseText);  
+            
+        
+            products.forEach(function(product) {
+                updateContent += ` 
+                <li class="product-item">
+                    <div class="product-image">
+                        <img src="../images/${product['image_link']}" alt="smart watch">
+                    </div>
+                    <div class="product-text">
+                        <span class="product-title">
+                            ${product['product_name']}
+                        </span>
+                        <div class="product-purchace">
+                            <span class="product-price">
+                                $${product['price']}
+                            </span>
+                            <a href="../product/productveiwpage.php?product_id=${product['product_id']}">
+                                <button class="blue-btn add-to-cart">
+                                    View Product
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </li>`;
+            });
+
+            
+            main_container.innerHTML = updateContent;
+        }
+    };
+
+    
+    xhr.send();
+}
+</script>
 </body>
 </html>

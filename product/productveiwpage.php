@@ -4,6 +4,18 @@ include "../connect.php";
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     $product_id = $_GET['product_id'];
 
+    $getviewquary = "SELECT view_count FROM products WHERE product_id='$product_id'";
+    $result = mysqli_query($con,$getviewquary);
+    $row = mysqli_fetch_assoc($result);
+    $current_view = $row['view_count'];
+    $new_view = $current_view+1;
+
+    $updateviewquary = "UPDATE products SET view_count = '$new_view' WHERE product_id='$product_id'";
+    $result = mysqli_query($con,$updateviewquary);
+
+    if(!$result){
+        header("location:../Home/dashbord.php");
+    }
     $query = "SELECT * FROM products WHERE product_id=?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $product_id);
