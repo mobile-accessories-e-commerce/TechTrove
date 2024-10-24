@@ -98,6 +98,19 @@ function loadContent(section) {
                     content.innerHTML = "<h1>No Products Found</h1><p>No product data is available.</p>";
                 }
             }
+
+            if(section=='reports'){
+                content.innerHTML = `<div class="reports-menu">
+                                    <h2>Reports</h2>
+                                    <ul>
+                                        <li><a href='reports.php?report_type=sales_reports'>Sales Summary Report</a></li>
+                                        <li><a href='reports.php?report_type=product_reports'>Product Performance Report</a></li>
+                                        <li><a href='reports.php?report_type=top_selling_products'>Top Selling Products</a></li>
+                                        <li><a href='reports.php?report_type=customer_reports'>Customer Report</a></li>
+                                    </ul>
+                                </div>
+                                    `
+            }
                 
         }
     };
