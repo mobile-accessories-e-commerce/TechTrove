@@ -7,6 +7,20 @@ if($_SERVER['REQUEST_METHOD']==='GET'){
     $product_id=$_GET['product_id'];
     $quantity=$_GET['quantity'];
 
+    $stock_erro = 0;
+    $sql = "SELECT stock_quantity FROM products WHERE product_id = '$product_id'";
+    $result = mysqli_query($con,$sql);
+    $row = mysqli_fetch_assoc($result);
+    $stock_quantity = $row['stock_quantity'];
+
+    if($stock_quantity<$quantity){
+        $stock_erro =1;
+        header("location:../product/productveiwpage.php?erro=1&&product_id=$product_id");
+    }
+else{
+
+    
+
     $query = "SELECT * FROM products WHERE product_id=?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $product_id);
@@ -14,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']==='GET'){
     $result = $stmt->get_result();
     $product = mysqli_fetch_assoc($result);
 
-}
+
 
 $user_id = $_SESSION['userid'];
 
@@ -57,5 +71,6 @@ if ($result->num_rows > 0) {
     header("location:cartlandingpage.php");
 }
 
-
+}
+}
 ?>

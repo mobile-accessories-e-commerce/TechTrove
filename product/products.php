@@ -4,7 +4,7 @@ include '../connect.php';
 
 
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name , p.stock_quantity
     FROM products p
     JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
 ";
@@ -58,6 +58,10 @@ while($row=mysqli_fetch_assoc($products_result)){
             <div class="product-text">
                 <span class="product-title">
                     <?php echo $product['product_name'] ?>
+                </span>
+                <br>
+                <span style="color:red;">
+                    <?php if($product['stock_quantity']==0){ echo "This is out of stock";} ?>
                 </span>
                 <div class="product-purchace">
                     <span class="product-price">

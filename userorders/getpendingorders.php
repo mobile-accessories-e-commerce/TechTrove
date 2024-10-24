@@ -11,8 +11,9 @@ if(!isset($_SESSION['userid'])){
 $order_list = array();
 $quary = "SELECT * FROM order_items AS oi
 JOIN orders AS o ON oi.order_id = o.order_id
+JOIN carts AS c ON o.cart_id = c.cart_id
 JOIN products AS p ON oi.product_id = p.product_id
-WHERE user_id = '$user_id' and (order_status='pending' or order_status='shiped')";
+WHERE c.user_id = '$user_id' and (order_status='pending' or order_status='shiped')";
 
 $result = mysqli_query($con,$quary);
 if(mysqli_num_rows($result)>0){

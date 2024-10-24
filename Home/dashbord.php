@@ -90,6 +90,9 @@ while($row=mysqli_fetch_assoc($products_result)){
                     <li>
                         <a href="../serviceprovider/servicesignup.php">Service Provider</a>
                     </li>
+                    <li>
+                        <a href="../userprofile.php">profile    </a>
+                    </li>
                 </ul>
                 <button class="blue-btn"><a href="../authentication/logout.php">LogOut</a></button>
 

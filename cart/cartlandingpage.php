@@ -22,7 +22,8 @@ $query = "
         p.product_name,
         p.price,
         p.image_link,
-        cpi.quantity
+        cpi.quantity,
+        p.stock_quantity
     FROM 
         carts AS c
     JOIN 
@@ -69,11 +70,12 @@ if ($result->num_rows > 0) {
                         <div class="product_detail"><h2><?php echo $item['product_name']; ?></h2></div>
                         <div class="product_detail"><p>$<?php echo number_format($item['price'], 2); ?></p></div>
                         <div class="quantity_container product_detail">
-                            <button onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>)">-</button>
+                            <button onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">-</button>
                             <input type="number" id="quantity_<?php echo $item['item_id']; ?>" value="<?php echo $item['quantity']; ?>" min="1">
-                            <button onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>)">+</button>
+                            <button onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">+</button>
                         </div>
                         <div class="product_detail"><p id="price_<?php echo $item['item_id']; ?>">$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></p></div>
+                        <p id="stock_erro" style="color:red;"></p>
                         <div><a href="deletecartitem.php?item_id=<?php echo $item['item_id']; ?>"><button class="button">Delete</button></a></div>
                     </div>
                 <?php endforeach; ?>
@@ -98,10 +100,11 @@ if ($result->num_rows > 0) {
             document.getElementById('totalCost').innerHTML = totalCost.toFixed(2);
         }
 
-        function increaseQuantity(itemId, pricePerItem) {
+        function increaseQuantity(itemId, pricePerItem,max_value) {
             const quantityInput = document.getElementById('quantity_' + itemId);
             const priceElement = document.getElementById('price_' + itemId);
             let currentValue = parseInt(quantityInput.value);
+            if(currentValue<max_value){
             quantityInput.value = currentValue + 1;
             
             const newPrice = (pricePerItem * quantityInput.value).toFixed(2);
@@ -111,9 +114,12 @@ if ($result->num_rows > 0) {
             updateQuantityInDB(itemId, quantityInput.value);
             
             calculateTotalCost();
+            }else{
+                document.getElementById('stock_erro').innerText = `item have only ${currentValue} in stock`; 
+            }
         }
 
-        function decreaseQuantity(itemId, pricePerItem) {
+        function decreaseQuantity(itemId, pricePerItem,maxvalue) {
             const quantityInput = document.getElementById('quantity_' + itemId);
             const priceElement = document.getElementById('price_' + itemId);
             let currentValue = parseInt(quantityInput.value);
@@ -124,6 +130,10 @@ if ($result->num_rows > 0) {
                 updateQuantityInDB(itemId, quantityInput.value);
             }
             calculateTotalCost();
+
+            if(currentValue<=maxvalue){
+                document.getElementById('stock_erro').innerText = ``; 
+            }
         }
 
         function updateQuantityInDB(itemId, currentValue) {

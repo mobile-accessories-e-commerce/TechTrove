@@ -2,10 +2,13 @@
 session_start();
 include '../connect.php'; 
 
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $cart_id = $_GET['cart_id'];
 
-    // SQL Query to fetch the cart items based on the cart_id
+   
     $query = "
     SELECT 
         c.cart_id,

@@ -60,6 +60,7 @@ if (xhr.status === 200) {
                     <img src="../images/${order.image_link}" alt="${order.product_name}">
                     <div class="product-name">${order.product_name}</div>
                     <div class="product-price">$${order.price}</div>
+                    <div><button><a href='productrating.php?product_id=${order.product_id}'>Give Feedback</a></button></div>
                 </div>
             `;
         });

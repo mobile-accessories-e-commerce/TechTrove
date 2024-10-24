@@ -4,7 +4,7 @@ include '../connect.php';
 
 
 $services_query = "
-    SELECT s.service_name, s.description, s.price, s.image_link, sc.name AS category_name
+    SELECT s.service_id,s.service_name, s.description, s.price, s.image_link, sc.name AS category_name
     FROM services s
     JOIN service_catogory sc ON s.catogory_id = sc.service_cat_id
 ";
@@ -46,9 +46,9 @@ while($row=mysqli_fetch_assoc($services_result)){
                     <?php echo "$".$service['price'] ?>
                     </span>
         <!-- Todo need to implement serviceview page -->
-                    <!-- <a href="../product/serviceviewpage.php?service_id="><button class="blue-btn add-to-cart" > -->
+                    <a href="serviceviewpage.php?service_id='<?php echo $service['service_id']; ?>'"><button class="blue-btn add-to-cart" >
                         Veiw Product
-                    <!-- </button></a> -->
+                    </button></a>
                     
                 </div>
 

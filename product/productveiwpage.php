@@ -1,7 +1,10 @@
 <?php
 include "../connect.php";
+$stock_erro = 0;
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
+
+    if(isset($_GET['product_id'])){
     $product_id = $_GET['product_id'];
 
     $getviewquary = "SELECT view_count FROM products WHERE product_id='$product_id'";
@@ -22,6 +25,14 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     $stmt->execute();
     $result = $stmt->get_result();
     $product = mysqli_fetch_assoc($result);
+
+    if(isset($_GET['erro'])){
+        $stock_erro = $_GET['erro'];
+    }
+}
+
+
+
 }
 ?>
 
@@ -52,7 +63,9 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                 <input type="number" id="quantity" value="1" min="1">
                 <button onclick="increaseQuantity()">+</button>
             </div>
-
+            <?php if($stock_erro): ?>
+                <p style="color:red;">Stock is not suffcieant</p>
+            <?php endif; ?>    
             <a href="../cart/add_to_cart.php?product_id=<?php echo $product['product_id']; ?>&quantity=1" id="addToCartLink">
                 <button class="add-to-cart">Add to Cart</button>
             </a>
