@@ -275,7 +275,9 @@ box-sizing: border-box;
     padding: 20px; /* Padding inside the box */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     max-width: 300px; /* Maximum width */
-    margin: 20px auto; /* Centered on the page with margin */
+    margin: 20px auto;
+    display: inline-block;
+    margin: 20px;
 }
 
 /* Heading for the reports section */
