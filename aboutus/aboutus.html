@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Phone Accessories Shop</title>
+    <link rel="stylesheet" href="aboutus_styles.css">
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+    </header>
+
+    <!-- Company Vision and Goals Section -->
+    <section id="vision-goals">
+        <h2>Our Vision & Goals</h2>
+        <p>Our vision is to become a trusted provider of high-quality phone and electronic accessories, offering exceptional customer service and innovative products.</p>
+        <p>Our goal is to make technology accessible and enhance the user experience with reliable accessories that support and protect your devices.</p>
+    </section>
+
+    <!-- Team Members Section -->
+    <section id="team">
+        <h2>Meet Our Team</h2>
+        <div class="team-members">
+            <div class="member">
+                <img src="lakshitha.jpg" alt="Team Member 1">
+                <p>Lakshitha</p>
+            </div>
+            <div class="member">
+                <img src="praveen.jpg" alt="Team Member 2">
+                <p>Praveen</p>
+            </div>
+            <div class="member">
+                <img src="buddika.jpg" alt="Team Member 3">
+                <p>Buddika</p>
+            </div>
+            <div class="member">
+                <img src="jojeewan.jpg" alt="Team Member 4">
+                <p>Jojeewan</p>
+            </div>
+            <!-- Add more team members as needed -->
+        </div>
+    </section>
+
+    <!-- Customer Comment Form -->
+    <section id="comments">
+        <h2>We'd Love Your Feedback!</h2>
+        <form id="comment-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" required></textarea>
+
+            <button type="button" onclick="submitComment()">Submit</button>
+        </form>
+    </section>
+
+    <!-- Comments Display Section -->
+    <section id="display-comments">
+        <h3>Customer Comments</h3>
+        <ul id="comment-list"></ul>
+    </section>
+
+    <script src="aboutus_script.js"></script>
+</body>
+</html>
