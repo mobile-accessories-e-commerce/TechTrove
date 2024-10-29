@@ -127,7 +127,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         <input type="text" name="address" id="address" value="<?php echo "$address" ?>"><br><br>
         <label for="country">Country</label>
         <input type="text" name="country" id="country" value="<?php echo "$country" ?>">
-        <input type="submit" >
+        <input type="submit" value="Update" >
        
 
 

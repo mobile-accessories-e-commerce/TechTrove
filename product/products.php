@@ -1,23 +1,27 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
-
+// Fetch all products with categories
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name , p.stock_quantity
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity
     FROM products p
     JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
 ";
-
-
 $products_result = $con->query($products_query);
 
-
 $product_list = array();
-while($row=mysqli_fetch_assoc($products_result)){
-    array_push($product_list,$row);
+while ($row = mysqli_fetch_assoc($products_result)) {
+    $product_list[] = $row;
 }
 
+// Fetch all product categories
+$product_category_query = "SELECT product_cat_id, name FROM product_catogory";
+$product_category_result = $con->query($product_category_query);
+$product_category_list = array();
+while ($row = mysqli_fetch_assoc($product_category_result)) {
+    $product_category_list[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,58 +29,92 @@ while($row=mysqli_fetch_assoc($products_result)){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>products</title>
+    <title>Products</title>
     <link rel="stylesheet" href="../style/product.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
 <div class="header">
-    <input type="text" id="search" placeholder="Search products..." onkeyup="searchProducts()" />
+    <div class="nav-bar-logo">
+        <img src="../images/elife_logo.png" width="140" height="70">
+    </div>
+    <div class="category">
+        <select name="category" id="category" onchange="categorySearch()">
+            <option value="">All Categories</option>
+            <?php foreach ($product_category_list as $category): ?>
+                <option value="<?php echo $category['product_cat_id']; ?>"><?php echo $category['name']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="search-container">
+    <form action="javascript:void(0);" class="search">
+            <input type="text" id="search" placeholder="Search products..." />
+            <button id="search-btn" type="button" onclick="searchProducts()">Search</button>    
+        </form>
+    </div>
     <div id="search-results"></div> 
 </div>
 
+
 <div class="side-bar">
     <div class="side-bar-icon">
-        <a href="../cart/cartlandingpage.php">Cart</a>
+        <a href="../cart/cartlandingpage.php">
+            <i class="fas fa-shopping-cart"></i> Cart
+        </a>
     </div>
     <div class="side-bar-icon">
-        <a href="../Home/dashbord.php">Home</a>
+        <a href="../Home/dashbord.php">
+            <i class="fas fa-home"></i> Home
+        </a>
     </div>
     <div class="side-bar-icon">
-        <a href="">Free shipping</a>
+        <a href="../shipping/free_shipping.php">
+            <i class="fas fa-truck"></i> Free Shipping
+        </a>
+    </div>
+    <div class="side-bar-icon">
+        <a href="../wishlist/wishlist.php">
+            <i class="fas fa-heart"></i> Wishlist
+        </a>
+    </div>
+    <div class="side-bar-icon">
+        <a href="../userprofile.php">
+            <i class="fas fa-user"></i> Profile
+        </a>
+    </div>
+    <div class="side-bar-icon">
+        <a href="../userorders/userorders.php">
+            <i class="fas fa-list-alt"></i> Orders
+        </a>
     </div>
 </div>
 
 <div class="product-section-container" id="product-section-container">
-    
     <ul class="product-section-item-wrapper">
-        <?php foreach($product_list as $product): ?>
+        <?php foreach ($product_list as $product): ?>
         <li class="product-item">
             <div class="product-image">
-                <img src="../images/<?php echo $product['image_link'] ?>" alt="smart watch">
-
+                <img src="../images/<?php echo $product['image_link']; ?>" alt="smart watch">
             </div>
             <div class="product-text">
                 <span class="product-title">
-                    <?php echo $product['product_name'] ?>
+                    <?php echo $product['product_name']; ?>
                 </span>
                 <br>
                 <span style="color:red;">
-                    <?php if($product['stock_quantity']==0){ echo "This is out of stock";} ?>
+                    <?php if ($product['stock_quantity'] == 0) echo "This is out of stock"; ?>
                 </span>
-                <div class="product-purchace">
+                <div class="product-purchase">
                     <span class="product-price">
-                    <?php echo "$".$product['price'] ?>
+                        <?php echo "$" . $product['price']; ?>
                     </span>
-                    <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>"><button class="blue-btn add-to-cart" >
-                        Veiw Product
-                    </button></a>
-                    
+                    <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
+                        <button class="blue-btn add-to-cart">View Product</button>
+                    </a>
                 </div>
-
             </div>
-
         </li>
-
         <?php endforeach; ?>
     </ul>
 </div>
@@ -84,52 +122,86 @@ while($row=mysqli_fetch_assoc($products_result)){
 <script>
 function searchProducts() {
     let searchTerm = document.getElementById('search').value;
-
-    
     const xhr = new XMLHttpRequest();
-    let main_container = document.getElementById('product-section-container');
+    const main_container = document.getElementById('product-section-container');
 
-   
     xhr.open('GET', `search.php?query=${searchTerm}`, true);
     
-    let updateContent = `<div>Search Result for "${searchTerm}"</div>  <ul class="product-section-item-wrapper">`;
-
-  
     xhr.onload = function() {
         if (xhr.status === 200) {
             let products = JSON.parse(xhr.responseText);  
+            let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
             
-        
-            products.forEach(function(product) {
-                updateContent += ` 
-                <li class="product-item">
-                    <div class="product-image">
-                        <img src="../images/${product['image_link']}" alt="smart watch">
-                    </div>
-                    <div class="product-text">
-                        <span class="product-title">
-                            ${product['product_name']}
-                        </span>
-                        <div class="product-purchace">
-                            <span class="product-price">
-                                $${product['price']}
-                            </span>
-                            <a href="../product/productveiwpage.php?product_id=${product['product_id']}">
-                                <button class="blue-btn add-to-cart">
-                                    View Product
-                                </button>
-                            </a>
+            if (products.length > 0) { 
+                products.forEach(function(product) {
+                    updateContent += `
+                    <li class="product-item">
+                        <div class="product-image">
+                            <img src="../images/${product['image_link']}" alt="smart watch">
                         </div>
-                    </div>
-                </li>`;
-            });
+                        <div class="product-text">
+                            <span class="product-title">${product['product_name']}</span>
+                            <div class="product-purchase">
+                                <span class="product-price">$${product['price']}</span>
+                                <a href="productveiwpage.php?product_id=${product['product_id']}">
+                                    <button class="blue-btn add-to-cart">View Product</button>
+                                    
+                                </a>
+                            </div>
+                        </div>
+                    </li>`;
+                });
+            } else {
+                updateContent += `<p>No products found</p>`;
+            }
 
-            
+            updateContent += `</ul>`;
             main_container.innerHTML = updateContent;
         }
     };
 
-    
+    xhr.send();
+}
+function categorySearch() {
+    let searchTerm = document.getElementById('category').value;
+    const xhr = new XMLHttpRequest();
+    const main_container = document.getElementById('product-section-container');
+
+    xhr.open('GET', `catogorySearch.php?query=${searchTerm}`, true);
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            let products = JSON.parse(xhr.responseText);  
+            let updateContent = `<div>Category Result</div><ul class="product-section-item-wrapper">`;
+            
+            if (products.length > 0) {
+                products.forEach(function(product) {
+                    updateContent += `
+                    <li class="product-item">
+                        <div class="product-image">
+                            <img src="../images/${product['image_link']}" alt="smart watch">
+                        </div>
+                        <div class="product-text">
+                            <span class="product-title">${product['product_name']}</span>
+                            <div class="product-purchase">
+                                <span class="product-price">$${product['price']}</span>
+                                <a href="productveiwpage.php?product_id=${product['product_id']}">
+                                    <button class="blue-btn add-to-cart">View Product</button>
+                                    
+                                </a>
+                            </div>
+                        </div>
+                    </li>`;
+                });
+            } else {
+                updateContent += `<p>No products found in this category</p>`;
+            }
+
+            updateContent += `</ul>`;
+            main_container.innerHTML = updateContent;
+        }
+    };
+
     xhr.send();
 }
 </script>
