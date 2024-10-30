@@ -12,7 +12,7 @@ body{
 
 /*navigation-section*/
 nav{
-    background-color: transparent;
+    background-color: white;
     position:fixed;
     width: 100%;
     z-index: 1000;
@@ -24,6 +24,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+   
     
 }
 .nav-bar-link{
@@ -79,6 +80,8 @@ nav{
 
 /* Top section*/
 .home-top-container{
+    position: relative;
+    overflow: hidden;
     background: #edf2fb;
     height: 80vh;
     padding: 20px;
@@ -93,7 +96,7 @@ nav{
     flex-direction: row;
     width: 85%;
     align-items: center;
-    
+    transition: transform 0.5s ease-in-out;    
 }
 .home-top-text{
     width: 60%;
@@ -121,13 +124,17 @@ nav{
     max-width: 350px;
 }
 
+
 /*collection-section*/
 .collection-container{
     background-color: #c7d5f1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 28px;
+    padding-top: 20px;
+    padding-bottom: 28px;
+    margin: 20px;
+    margin-top: 100px
 }
 
 .collection-item-wrapper{
@@ -170,6 +177,18 @@ text-align: center;
 margin-top: 20px;
 }
 
+.catogory{
+    margin-top: 30px;
+    display: flex;
+    gap: 90px;
+    margin-bottom: 20px;
+}
+
+.cat-btn{
+    cursor: pointer;
+    font-size: 20px;
+
+}
 
 /* Best seller product section*/
 
@@ -396,3 +415,6 @@ footer{
 .footer-bottom a:hover{
     color: rgb(65,105,225);
 }
+
+
+

@@ -24,6 +24,7 @@ function loadContent(section) {
                                 
                                 </div>
                                 <a href="editproduct.php?product_id=${product.product_id}">Edit</a>
+                                <a href="heroSectionProduct.php?product_id=${product.product_id}">Add To hero section</a>
                                  
                                  
                                 

@@ -1,21 +1,20 @@
 <?php
 include "../connect.php";   
-// Get the product_id from the URL
+
 $product_id = $_GET['product_id'];
 $erro=0;
-// (Optional) Validate that the user is logged in (ensure session is started)
+
 session_start();
 if (!isset($_SESSION['userid'])) {
     die('You must be logged in to rate a product.');
 }
 
-$user_id = $_SESSION['userid']; // Get the user_id from session
+$user_id = $_SESSION['userid']; 
 
 $check_user_sql = "SELECT * FROM ratings WHERE user_id='$user_id' and product_id='$product_id'";
 $result = mysqli_query($con,$check_user_sql);
 if(mysqli_num_rows($result)>0){
    $erro = 1;
-
 }
 
 ?>
