@@ -1,90 +1,99 @@
+<?php
+include "../connect.php";
+session_start();
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Success</title>
-    <link rel="stylesheet" href="styles.css">
-   
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-top: 40px;
-            text-align: center;
-        }
-        .success-message {
-            color: #28a745;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .success-icon {
-            font-size: 50px;
-            color: #28a745;
-            margin-bottom: 20px;
-        }
-        .order-details {
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        .order-item {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .order-item:last-child {
-            border-bottom: none;
-        }
-        .order-item h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .order-item p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .thank-you {
-            margin-top: 20px;
-            font-size: 22px;
-        }
-        .btn-dashboard {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
-        }
-        .btn-dashboard:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
+function deleteitemfromcart($item_id)
+{
+    include "../connect.php";
+    $quary = "DELETE FROM cart_product_items WHERE item_id='$item_id'";
+    $result = mysqli_query($con, $quary);
+    if ($result) {
 
-<div class="container">
-    <i class="fas fa-check-circle success-icon"></i>
-    <div class="success-message">Order Placed Successfully!</div>
+    } else {
+        die("erro when deleting product");
+    }
+}
 
-    <div class="order-details">
-        
-        
-    <div class="thank-you">Thank you for shopping with us!</div>
-    <a href="../Home/dashbord.php" class="btn-dashboard">Go to Dashboard</a>
-</div>
 
-</body>
-</html>
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $cart_id = $_GET['cart_id'];
+    $order_id = $_GET['order_id'];
+    $payment_method = $_GET['method'];
+
+
+    $sql = "SELECT id FROM shipping_details WHERE order_id = $order_id";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $shipping_details_id = $row['id'];
+
+
+
+
+
+    $query = "
+    SELECT 
+        c.cart_id,
+        cpi.item_id,
+        p.product_id,
+        p.product_name,
+        p.price,
+        p.image_link,
+        cpi.quantity,
+        p.stock_quantity
+    FROM 
+        carts AS c
+    JOIN 
+        cart_product_items AS cpi ON c.cart_id = cpi.cart_id
+    JOIN 
+        products AS p ON cpi.product_id = p.product_id
+    JOIN 
+        orders AS o ON c.cart_id = o.cart_id
+    WHERE 
+        o.order_id = ?
+";
+
+    $stmt = $con->prepare($query);
+    $stmt->bind_param('i', $order_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $cartItems = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $cartItems = [];
+    }
+
+    foreach ($cartItems as $item) {
+
+        $product_id = $item['product_id'];
+        $quantity = $item['quantity'];
+        $cart_id = $item['cart_id'];
+        $price = $item['price'];
+        $order_status = "pending";
+
+
+        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price,shipping_detail_id,order_status,payment_method) 
+            VALUES ('$order_id', '$product_id', '$quantity', '$price','$shipping_details_id','$order_status','$payment_method')";
+
+        // Execute the query
+        if (mysqli_query($con, $sql)) {
+
+            $new_quantity = $item['stock_quantity'] - $item['quantity'];
+
+            $sql = "UPDATE products SET stock_quantity='$new_quantity' WHERE product_id = '$product_id'";
+            $result = mysqli_query($con, $sql);
+            deleteitemfromcart($item['item_id']);
+
+
+
+        } else {
+            echo "Error: " . mysqli_error($con) . "<br>";
+        }
+    }
+    header("location:../userorders/userorders.php");
+}
+
+
+
+?>

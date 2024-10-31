@@ -1,210 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Orders</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-   <style>
-    /* General page styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    display: flex;
-}
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            display: flex;
+        }
 
-.side-bar {
-    background-color: #ffffff;
-    width: 200px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-right: 1px solid #e1e1e1;
-    display: flex;
-    flex-direction: column;
-    
-}
+        .side-bar {
+            background-color: #ffffff;
+            width: 200px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #e1e1e1;
+            display: flex;
+            flex-direction: column;
 
-.side-bar-icon {
-    margin: 15px 0;
-}
+        }
 
-.side-bar-icon a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s;
-}
+        .side-bar-icon {
+            margin: 15px 0;
+        }
 
-.side-bar-icon i {
-    margin-right: 10px;
-    color: #007bff;
-}
+        .side-bar-icon a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
 
-.side-bar-icon a:hover {
-    color: #0056b3;
-}
+        .side-bar-icon i {
+            margin-right: 10px;
+            color: #007bff;
+        }
 
-/* Content area styles */
-.content {
-    flex: 1;
-    padding: 20px;
-}
+        .side-bar-icon a:hover {
+            color: #0056b3;
+        }
 
-.content-header {
-    margin-bottom: 20px;
-}
+        /* Content area styles */
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
 
-.content-header h1 {
-    font-size: 24px;
-    color: #333;
-}
+        .content-header {
+            margin-bottom: 20px;
+        }
 
-/* Orders container and order card styles */
-.orders-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+        .content-header h1 {
+            font-size: 24px;
+            color: #333;
+        }
 
-.order-card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    display: flex;
-    margin: 10px;
-    flex-direction: column;
-    gap: 15px;
-    transition: box-shadow 0.3s;
-}
+        /* Orders container and order card styles */
+        .orders-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-.order-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+        .order-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            margin: 10px;
+            flex-direction: column;
+            gap: 15px;
+            transition: box-shadow 0.3s;
+        }
 
-.order-info {
-    border-bottom: 1px solid #e1e1e1;
-    padding-bottom: 15px;
-}
+        .order-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
 
-.order-info h2 {
-    font-size: 20px;
-    margin: 0;
-    color: #333;
-}
+        .order-info {
+            border-bottom: 1px solid #e1e1e1;
+            padding-bottom: 15px;
+        }
 
-.product-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+        .order-info h2 {
+            font-size: 20px;
+            margin: 0;
+            color: #333;
+        }
 
-.product-info img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
-}
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-.product-info div {
-    font-size: 14px;
-}
+        .product-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
 
-.order-actions {
-    display: flex;
-    gap: 10px;
-}
+        .product-info div {
+            font-size: 14px;
+        }
 
-.order-actions button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-}
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
 
-.view-btn {
-    background-color: #007bff;
-    color: #ffffff;
-}
+        .order-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
 
-.view-btn:hover {
-    background-color: #0056b3;
-}
+        .view-btn {
+            background-color: #007bff;
+            color: #ffffff;
+        }
 
-.track-btn {
-    background-color: #28a745;
-    color: #ffffff;
-}
+        .view-btn:hover {
+            background-color: #0056b3;
+        }
 
-.track-btn:hover {
-    background-color: #218838;
-}
+        .track-btn {
+            background-color: #28a745;
+            color: #ffffff;
+        }
 
-
-/* dashbord*/
+        .track-btn:hover {
+            background-color: #218838;
+        }
 
 
-.container {
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
-}
-
-.dashboard {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.dashboard h1 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.dashboard-summary {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.summary-item {
-    background: linear-gradient(135deg, #007bff, #00d4ff);
-    padding: 20px;
-    color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.summary-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.summary-item h2 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    color: #e0f7ff;
-}
-
-.summary-item p {
-    font-size: 26px;
-    margin: 0;
-    font-weight: bold;
-}
+        /* dashbord*/
 
 
-   </style>
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .dashboard h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .summary-item {
+            background: linear-gradient(135deg, #007bff, #00d4ff);
+            padding: 20px;
+            color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .summary-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .summary-item h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #e0f7ff;
+        }
+
+        .summary-item p {
+            font-size: 26px;
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
     <!-- Sidebar -->
@@ -216,10 +216,10 @@ body {
     <!-- Content -->
     <!-- <div class="content" id="order-container">
         <h2>Order Details</h2> -->
-        <!-- Order data will be displayed here -->
+    <!-- Order data will be displayed here -->
     <!-- </div> -->
 
-   
+
 
     <div class="side-bar">
         <div class="side-bar-icon">
@@ -243,8 +243,9 @@ body {
 
     <!-- Main content area -->
     <div class="content" id="order-container">
-    
 
-    <script src="../script/userorder.js"></script>
+
+        <script src="../script/userorder.js"></script>
 </body>
+
 </html>

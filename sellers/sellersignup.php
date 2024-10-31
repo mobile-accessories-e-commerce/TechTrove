@@ -9,7 +9,7 @@ if (!isset($_SESSION['userid'])) {
 }
 
 
-include "../connect.php"; 
+include "../connect.php";
 $error = '';
 $user_id = $_SESSION['userid'];
 
@@ -22,16 +22,16 @@ $result = $con->query($checkQuery);
 //check if the user is alrady a seller
 if ($result->num_rows > 0) {
     $checkstatusquery = "SELECT approved FROM sellers  WHERE user_id = '$user_id'";
-    $statusresult =  $con->query(query: $checkstatusquery);
+    $statusresult = $con->query(query: $checkstatusquery);
     $row = mysqli_fetch_assoc($statusresult);
-    
+
     //check seller is approved or not
-    if($row['approved']==1){
+    if ($row['approved'] == 1) {
         header("location:sellerdashbord.php");
-    }else{
+    } else {
         header("location:sllerapprovedwaiting.php");
     }
-   
+
 }
 
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     $bank_ac_num = $con->real_escape_string($_POST['bank_ac_num']);
     $store_description = $con->real_escape_string($_POST['store_description']);
 
-   
+
     if (empty($store_name) || empty($seller_name) || empty($email) || empty($phone_number) || empty($bank_ac_num) || empty($store_description)) {
         $error = "All fields are required!";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -55,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     } elseif (!preg_match('/^[0-9]{9,18}$/', $bank_ac_num)) {
         $error = "Invalid bank account number! It should be between 9 to 18 digits.";
     } else {
-        
+
         $sql = "INSERT INTO sellers (user_id, store_name, seller_name, store_description, phone_number, email, bank_ac_num) 
                 VALUES ('$user_id', '$store_name', '$seller_name', '$store_description', '$phone_number', '$email', '$bank_ac_num')";
 
         if ($con->query($sql) === TRUE) {
-            
+
             header("Location: ../Home/dashbord.php");
             exit();
         } else {
@@ -72,29 +72,62 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Signup</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-        label, input, textarea { display: block; width: 100%; margin-bottom: 10px; }
-        input[type="submit"] { width: auto; padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #218838; }
-        .error { color: red; margin-bottom: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        label,
+        input,
+        textarea {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        input[type="submit"] {
+            width: auto;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Seller Signup</h2>
 
-<!--check for error-->
+        <!--check for error-->
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
             <a href="../Home/dashbord.php"><button>Go to Dashboard</button></a>
         <?php else: ?>
-            
+
             <form action="sellersignup.php" method="POST">
                 <label for="store_name">Store Name:</label>
                 <input type="text" id="store_name" name="store_name" required>
@@ -119,4 +152,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
         <?php endif; ?>
     </div>
 </body>
+
 </html>

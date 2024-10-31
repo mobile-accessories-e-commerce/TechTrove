@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
 
 
@@ -8,7 +8,7 @@ include '../connect.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $cart_id = $_GET['cart_id'];
 
-   
+
     $query = "
     SELECT 
         c.cart_id,
@@ -37,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if ($result->num_rows > 0) {
         $cartItems = $result->fetch_all(MYSQLI_ASSOC);
         $totalPrice = 0;
-                foreach ($cartItems as $item){
-                    $itemTotal = $item['price'] * $item['quantity'];
-                    $totalPrice += $itemTotal;
-                }
+        foreach ($cartItems as $item) {
+            $itemTotal = $item['price'] * $item['quantity'];
+            $totalPrice += $itemTotal;
+        }
     } else {
         $cartItems = [];
     }
@@ -49,14 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <link rel="stylesheet" href="../style/checkoutdetail.css">
 </head>
+
 <body>
-<div ><a href="../cart/cartlandingpage.php"><button class="back">back</button></a></div>   
+    <div><a href="../cart/cartlandingpage.php"><button class="back">back</button></a></div>
     <div class="container">
 
         <h1>Checkout</h1>
@@ -66,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <h2>Enter Your Details</h2>
             <form action="submitorder.php" method="POST">
                 <input type="hidden" name="cart_id" value="<?php echo $cartItems['0']['cart_id']; ?>">
-                <input type="hidden" name="total_price" value="<?php echo $totalPrice?>">
+                <input type="hidden" name="total_price" value="<?php echo $totalPrice ?>">
                 <label for="address">Shipping Address:</label>
                 <textarea name="address" id="address" rows="4" required></textarea>
 
@@ -96,14 +98,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         <div class="cart-items">
             <h2>Your Cart</h2>
             <?php if (!empty($cartItems)): ?>
-                <?php 
+                <?php
                 $totalPrice = 0;
-                foreach ($cartItems as $item): 
+                foreach ($cartItems as $item):
                     $itemTotal = $item['price'] * $item['quantity'];
                     $totalPrice += $itemTotal;
-                ?>
+                    ?>
                     <div class="item">
-                        <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>" width="100">
+                        <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>"
+                            width="100">
                         <span><?php echo $item['product_name']; ?></span>
                         <span>Quantity: <?php echo $item['quantity']; ?></span>
                         <span>Price: $<?php echo number_format($itemTotal, 2); ?></span>
@@ -119,4 +122,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         </div>
     </div>
 </body>
+
 </html>

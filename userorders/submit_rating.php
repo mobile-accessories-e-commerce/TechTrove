@@ -10,28 +10,46 @@ if ($con->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     session_start();
     $user_id = $_SESSION['userid'];  // Get the logged-in user ID from session
-    $product_id = $_POST['product_id'];  // Get product_id from the form
+    $item_id = $_POST['item_id'];  // Get product_id from the form
     $rating = intval($_POST['rating']);  // Ensure rating is an integer
     $review = $con->real_escape_string($_POST['review']);
 
-    
 
-   
-  
 
-        // User has purchased the product, allow rating
-        $sql = "INSERT INTO ratings (user_id, product_id, rating, review, created_at) 
+    //Get order items detail acording to item id
+    $sql = "SELECT * FROM order_items WHERE item_id='$item_id'";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+    $product_id = $row['product_id'];
+
+
+
+
+    // User has purchased the product, allow rating
+    $sql = "INSERT INTO ratings (user_id, product_id, rating, review, created_at) 
                 VALUES (?, ?, ?, ?, NOW())";
-        $stmt = $con->prepare($sql);
-        $stmt->bind_param("iiis", $user_id, $product_id, $rating, $review);
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("iiis", $user_id, $product_id, $rating, $review);
 
-        if ($stmt->execute()) {
-            echo "Thank you for your rating!";
-        } else {
-            echo "Error: " . $con->error;
+    if ($stmt->execute()) {
+        $update_order_item_sql = "UPDATE order_items SET can_feedback=0 WHERE item_id='$item_id'";
+        $result = mysqli_query($con, $update_order_item_sql);
+
+        if ($result) {
+
+
+            $sql = "UPDATE products SET rating = (SELECT AVG(rating) FROM ratings WHERE product_id = '$product_id') WHERE product_id = '$product_id'";
+            $result = mysqli_query($con, $sql);
+            if ($result) {
+                echo "Thank you for your rating!";
+            }
         }
-        $stmt->close();
-    
+    } else {
+        echo "Error: " . $con->error;
+    }
+    $stmt->close();
+
 
 
     $con->close();

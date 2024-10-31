@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
 
 $services_query = "
@@ -13,52 +13,56 @@ $services_query = "
 $services_result = $con->query($services_query);
 
 $service_list = array();
-while($row=mysqli_fetch_assoc($services_result)){
-    array_push($service_list,$row);
+while ($row = mysqli_fetch_assoc($services_result)) {
+    array_push($service_list, $row);
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>products</title>
     <link rel="stylesheet" href="../style/products.css">
 </head>
+
 <body>
-<div class="product-section-container">
-    
-    <ul class="product-section-item-wrapper">
-        <?php foreach($service_list as $service): ?>
-        <li class="product-item">
-            <div class="product-image">
-                <img src="../images/<?php echo $service['image_link'] ?>" alt="smart watch">
+    <div class="product-section-container">
 
-            </div>
-            <div class="product-text">
-                <span class="product-title">
-                    <?php echo $service['service_name'] ?>
-                </span>
-                <div class="product-purchace">
-                    <span class="product-price">
-                    <?php echo "$".$service['price'] ?>
-                    </span>
-        <!-- Todo need to implement serviceview page -->
-                    <a href="serviceviewpage.php?service_id='<?php echo $service['service_id']; ?>'"><button class="blue-btn add-to-cart" >
-                        Veiw Product
-                    </button></a>
-                    
-                </div>
+        <ul class="product-section-item-wrapper">
+            <?php foreach ($service_list as $service): ?>
+                <li class="product-item">
+                    <div class="product-image">
+                        <img src="../images/<?php echo $service['image_link'] ?>" alt="smart watch">
 
-            </div>
+                    </div>
+                    <div class="product-text">
+                        <span class="product-title">
+                            <?php echo $service['service_name'] ?>
+                        </span>
+                        <div class="product-purchace">
+                            <span class="product-price">
+                                <?php echo "$" . $service['price'] ?>
+                            </span>
+                            <!-- Todo need to implement serviceview page -->
+                            <a href="serviceviewpage.php?service_id='<?php echo $service['service_id']; ?>'"><button
+                                    class="blue-btn add-to-cart">
+                                    Veiw Product
+                                </button></a>
 
-        </li>
+                        </div>
 
-        <?php endforeach; ?>
-    </ul>
-</div>
-    
+                    </div>
+
+                </li>
+
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
 </body>
+
 </html>
