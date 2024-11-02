@@ -8,12 +8,13 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-   
+
 }
 
 .container {
     background-color: #fff;
-    width: 80%; /* 80% of screen width */
+    width: 80%;
+    /* 80% of screen width */
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -107,8 +108,8 @@ button.add-to-cart:hover {
     background-color: #218838;
 }
 
-.back{
-    position:absolute;
+.back {
+    position: absolute;
     left: 20px;
     top: 20px;
     background-color: #28a745;

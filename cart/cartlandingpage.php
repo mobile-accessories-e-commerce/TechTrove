@@ -1,12 +1,13 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
 
-$userId = $_SESSION['userid']; 
+$userId = $_SESSION['userid'];
 
-function updateQuantity($value, $item_id){
-    include '../connect.php'; 
+function updateQuantity($value, $item_id)
+{
+    include '../connect.php';
     $query = "UPDATE cart_product_items SET quantity='$value' WHERE item_id='$item_id' ";
     $result = mysqli_query($con, $query);
     if (!$result) {
@@ -47,43 +48,56 @@ if ($result->num_rows > 0) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
     <link rel="stylesheet" href="../style/cartlandingpage.css">
-    
+
 </head>
+
 <body>
-<div ><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
+    <div><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
     <div class="container">
         <h1>Your Cart</h1>
         <?php if (empty($cartItems)): ?>
             <p>Your cart is empty.</p>
         <?php else: ?>
             <div class="row">
-                
-               
+
+
                 <?php foreach ($cartItems as $item): ?>
                     <div class="card">
                         <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>">
-                        <div class="product_detail"><h2><?php echo $item['product_name']; ?></h2></div>
-                        <div class="product_detail"><p>$<?php echo number_format($item['price'], 2); ?></p></div>
-                        <div class="quantity_container product_detail">
-                            <button onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">-</button>
-                            <input type="number" id="quantity_<?php echo $item['item_id']; ?>" value="<?php echo $item['quantity']; ?>" min="1">
-                            <button onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">+</button>
+                        <div class="product_detail">
+                            <h2><?php echo $item['product_name']; ?></h2>
                         </div>
-                        <div class="product_detail"><p id="price_<?php echo $item['item_id']; ?>">$<?php echo number_format($item['price'] * $item['quantity'], 2); ?></p></div>
+                        <div class="product_detail">
+                            <p>$<?php echo number_format($item['price'], 2); ?></p>
+                        </div>
+                        <div class="quantity_container product_detail">
+                            <button
+                                onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">-</button>
+                            <input type="number" id="quantity_<?php echo $item['item_id']; ?>"
+                                value="<?php echo $item['quantity']; ?>" min="1">
+                            <button
+                                onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">+</button>
+                        </div>
+                        <div class="product_detail">
+                            <p id="price_<?php echo $item['item_id']; ?>">
+                                $<?php echo number_format($item['price'] * $item['quantity'], 2); ?></p>
+                        </div>
                         <p id="stock_erro" style="color:red;"></p>
-                        <div><a href="deletecartitem.php?item_id=<?php echo $item['item_id']; ?>"><button class="button">Delete</button></a></div>
+                        <div><a href="deletecartitem.php?item_id=<?php echo $item['item_id']; ?>"><button
+                                    class="button">Delete</button></a></div>
                     </div>
                 <?php endforeach; ?>
             </div>
 
             <div class="total-container">
                 <h3>Total Cost: $<span id="totalCost">0.00</span></h3>
-                <a href="../checkout/checkoutdetail.php?cart_id=<?php echo  $cartItems[0]['cart_id']; ?>">Checkout</a>
+                <a href="../checkout/checkoutdetail.php?cart_id=<?php echo $cartItems[0]['cart_id']; ?>">Checkout</a>
             </div>
         <?php endif; ?>
     </div>
@@ -91,8 +105,8 @@ if ($result->num_rows > 0) {
     <script>
         calculateTotalCost();
         function calculateTotalCost() {
-           let totalCost = 0; // Reset the total cost
-           let itemQuantity;
+            let totalCost = 0; // Reset the total cost
+            let itemQuantity;
             <?php foreach ($cartItems as $item): ?>
                 itemQuantity = document.getElementById('quantity_<?php echo $item['item_id']; ?>').value;
                 totalCost += <?php echo $item['price']; ?> * itemQuantity;
@@ -100,26 +114,26 @@ if ($result->num_rows > 0) {
             document.getElementById('totalCost').innerHTML = totalCost.toFixed(2);
         }
 
-        function increaseQuantity(itemId, pricePerItem,max_value) {
+        function increaseQuantity(itemId, pricePerItem, max_value) {
             const quantityInput = document.getElementById('quantity_' + itemId);
             const priceElement = document.getElementById('price_' + itemId);
             let currentValue = parseInt(quantityInput.value);
-            if(currentValue<max_value){
-            quantityInput.value = currentValue + 1;
-            
-            const newPrice = (pricePerItem * quantityInput.value).toFixed(2);
-            priceElement.innerHTML = '$' + newPrice;
-            
-            // Call the PHP function via AJAX to update the quantity
-            updateQuantityInDB(itemId, quantityInput.value);
-            
-            calculateTotalCost();
-            }else{
-                document.getElementById('stock_erro').innerText = `item have only ${currentValue} in stock`; 
+            if (currentValue < max_value) {
+                quantityInput.value = currentValue + 1;
+
+                const newPrice = (pricePerItem * quantityInput.value).toFixed(2);
+                priceElement.innerHTML = '$' + newPrice;
+
+                // Call the PHP function via AJAX to update the quantity
+                updateQuantityInDB(itemId, quantityInput.value);
+
+                calculateTotalCost();
+            } else {
+                document.getElementById('stock_erro').innerText = `item have only ${currentValue} in stock`;
             }
         }
 
-        function decreaseQuantity(itemId, pricePerItem,maxvalue) {
+        function decreaseQuantity(itemId, pricePerItem, maxvalue) {
             const quantityInput = document.getElementById('quantity_' + itemId);
             const priceElement = document.getElementById('price_' + itemId);
             let currentValue = parseInt(quantityInput.value);
@@ -131,19 +145,19 @@ if ($result->num_rows > 0) {
             }
             calculateTotalCost();
 
-            if(currentValue<=maxvalue){
-                document.getElementById('stock_erro').innerText = ``; 
+            if (currentValue <= maxvalue) {
+                document.getElementById('stock_erro').innerText = ``;
             }
         }
 
         function updateQuantityInDB(itemId, currentValue) {
-                fetch('updateQuantity.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `item_id=${itemId}&quantity=${currentValue}`
-                })
+            fetch('updateQuantity.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `item_id=${itemId}&quantity=${currentValue}`
+            })
                 .then(response => response.text())  // Assuming the PHP file returns a text response
                 .then(data => {
                     console.log('Quantity updated:', data); // Optional, just for debugging
@@ -154,4 +168,5 @@ if ($result->num_rows > 0) {
         }
     </script>
 </body>
+
 </html>

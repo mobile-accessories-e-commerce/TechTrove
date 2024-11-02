@@ -50,9 +50,11 @@ body {
 }
 
 .product {
-    width: 30%; /* Each item takes 30% of the container width */
-margin-bottom: 20px; /* Add space between rows */
-box-sizing: border-box; 
+    width: 30%;
+    /* Each item takes 30% of the container width */
+    margin-bottom: 20px;
+    /* Add space between rows */
+    box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
@@ -91,18 +93,20 @@ box-sizing: border-box;
     text-decoration: none;
     border-radius: 5px;
 }
-button{
-   
+
+button {
+
     font-size: 12px;
     background-color: #007bff;
     color: white;
-   padding:8px;
-   margin-left: 5px;
-   border-style: none;
-   border-radius: 5px;
- 
+    padding: 8px;
+    margin-left: 5px;
+    border-style: none;
+    border-radius: 5px;
+
     border-radius: 5px;
 }
+
 .product a:hover {
     background-color: #0056b3;
 }
@@ -115,9 +119,11 @@ button{
 }
 
 .order {
-    width: 30%; /* Each item takes 30% of the container width */
-margin-bottom: 20px; /* Add space between rows */
-box-sizing: border-box; 
+    width: 30%;
+    /* Each item takes 30% of the container width */
+    margin-bottom: 20px;
+    /* Add space between rows */
+    box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
@@ -172,6 +178,7 @@ box-sizing: border-box;
 .order button:hover {
     background-color: #218838;
 }
+
 /* order status*/
 
 /* Product Status List - Layout */
@@ -247,7 +254,7 @@ box-sizing: border-box;
 }
 
 /* Stock and Orders Styling */
-.product-details .stock, 
+.product-details .stock,
 .product-details .orders {
     font-size: 15px;
     font-weight: bold;
@@ -270,11 +277,16 @@ box-sizing: border-box;
 
 /* General styling for the reports menu */
 .reports-menu {
-    background-color: #ffffff; /* White background for contrast */
-    border-radius: 15px; /* Rounded corners */
-    padding: 20px; /* Padding inside the box */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    max-width: 300px; /* Maximum width */
+    background-color: #ffffff;
+    /* White background for contrast */
+    border-radius: 15px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Padding inside the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    max-width: 300px;
+    /* Maximum width */
     margin: 20px auto;
     display: inline-block;
     margin: 20px;
@@ -282,34 +294,48 @@ box-sizing: border-box;
 
 /* Heading for the reports section */
 .reports-menu h2 {
-    text-align: center; /* Centered text */
-    color: #333; /* Dark color for the heading */
-    margin-bottom: 15px; /* Space below the heading */
+    text-align: center;
+    /* Centered text */
+    color: #333;
+    /* Dark color for the heading */
+    margin-bottom: 15px;
+    /* Space below the heading */
 }
 
 /* List styling */
 .reports-menu ul {
-    list-style-type: none; /* Remove default bullet points */
-    padding: 0; /* Remove padding */
+    list-style-type: none;
+    /* Remove default bullet points */
+    padding: 0;
+    /* Remove padding */
 }
 
 /* List item styling */
 .reports-menu li {
-    margin: 10px 0; /* Space between items */
+    margin: 10px 0;
+    /* Space between items */
 }
 
 /* Link styling */
 .reports-menu a {
-    text-decoration: none; /* Remove underline */
-    color: #27ae60; /* Green color for the links */
-    font-weight: 500; /* Slightly bold font */
-    display: block; /* Make the link fill the list item */
-    padding: 10px; /* Padding for the link area */
-    border-radius: 5px; /* Rounded corners for links */
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    text-decoration: none;
+    /* Remove underline */
+    color: #27ae60;
+    /* Green color for the links */
+    font-weight: 500;
+    /* Slightly bold font */
+    display: block;
+    /* Make the link fill the list item */
+    padding: 10px;
+    /* Padding for the link area */
+    border-radius: 5px;
+    /* Rounded corners for links */
+    transition: background-color 0.3s ease;
+    /* Smooth background transition */
 }
 
 /* Link hover effect */
 .reports-menu a:hover {
-    background-color: #f0f0f0; /* Light grey background on hover */
+    background-color: #f0f0f0;
+    /* Light grey background on hover */
 }

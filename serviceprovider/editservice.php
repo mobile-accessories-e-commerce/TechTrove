@@ -1,28 +1,28 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
 if (!isset($_SESSION['userid'])) {
-   header("location:../authentication/loging.php");
+    header("location:../authentication/loging.php");
 }
 
-if($_GET['service_id']){
-    
+if ($_GET['service_id']) {
+
     $service_id = $_GET['service_id'];
     $user_id = $_SESSION['userid'];
 
     $cat_query = "SELECT service_cat_id, name FROM service_catogory";
     $cat_result = $con->query($cat_query);
 
-    
+
     $query = "SELECT * FROM services WHERE service_id=?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $service_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $service = $result->fetch_assoc(); 
-   
-    
+    $service = $result->fetch_assoc();
+
+
     if ($service) {
         $service_name = $service['service_name'];
         $description = $service['description'];
@@ -34,8 +34,8 @@ if($_GET['service_id']){
         $contact_detail = $service['contact_detail'];
         $duration = $service['duration'];
 
-    
-       
+
+
     } else {
         echo "Product not found!";
         exit();
@@ -51,14 +51,16 @@ if($_GET['service_id']){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
     <style>
-        body{
+        body {
             background-color: #ffeefe;
         }
+
         .container {
             width: 60%;
             margin: auto;
@@ -66,12 +68,17 @@ if($_GET['service_id']){
             border: 1px solid #ccc;
             background-color: #f9f9f9;
         }
-        input[type=text], input[type=number], textarea, select {
+
+        input[type=text],
+        input[type=number],
+        textarea,
+        select {
             width: 100%;
             padding: 8px;
             margin: 8px 0;
             box-sizing: border-box;
         }
+
         input[type=submit] {
             width: 100%;
             padding: 10px;
@@ -82,18 +89,20 @@ if($_GET['service_id']){
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Edit Product</h2>
 
         <form action="serviceupdate.php" method="POST">
-        <input type="hidden" name="service_id" value="<?php echo $service_id; ?>">
+            <input type="hidden" name="service_id" value="<?php echo $service_id; ?>">
 
             <label for="service_name">Service Name:</label>
             <input type="text" id="service_name" name="service_name" required value="<?php echo $service_name; ?>">
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required><?php echo htmlspecialchars($description); ?></textarea>
+            <textarea id="description" name="description"
+                required><?php echo htmlspecialchars($description); ?></textarea>
 
             <label for="price">Price:</label>
             <input type="number" id="price" name="price" step="0.01" required value="<?php echo $price; ?>">
@@ -102,7 +111,8 @@ if($_GET['service_id']){
             <input type="text" id="location" name="location" required value="<?php echo $location; ?>">
 
             <label for="contact_detail">Contact Detail:</label>
-            <input type="text" id="contact_detail" name="contact_detail" required value="<?php echo $contact_detail; ?>">
+            <input type="text" id="contact_detail" name="contact_detail" required
+                value="<?php echo $contact_detail; ?>">
 
             <label for="image_link">Image Link:</label>
             <input type="file" id="image_link" name="image_link" required>
@@ -125,8 +135,5 @@ if($_GET['service_id']){
         </form>
     </div>
 </body>
+
 </html>
-
-
-
-

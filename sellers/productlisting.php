@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connect.php'; 
+include '../connect.php';
 
 $user_id = $_SESSION['userid'];
 
@@ -16,7 +16,7 @@ if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
     $seller_id = $row['seller_id'];
 } else {
-    
+
     echo "Seller not found. Please contact support.";
     exit;
 }
@@ -28,7 +28,7 @@ $cat_result = $con->query($cat_query);
 
 //list product 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+
 
     $product_name = trim($_POST['product_name']);
     $description = trim($_POST['description']);
@@ -43,12 +43,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $is_free_shiping = isset($_POST['is_free_shiping']) ? 1 : 0;
     $product_status = isset($_POST['product_status']) ? 1 : 0;
     $catogory_id = intval($_POST['catogory_id']);
-    
-   
+
+
     if (empty($product_name) || empty($description) || $price <= 0 || $stock_quantity < 0) {
         $error = "Please fill out all required fields correctly.";
     } else {
-        
+
         $insert_query = "INSERT INTO products (seller_id, catogory_id, product_name, description, price, brand, stock_quantity, shipping_cost, image_link, color, size, weight, is_free_shiping, product_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($insert_query);
         $stmt->bind_param("iissdssdsssidi", $seller_id, $catogory_id, $product_name, $description, $price, $brand, $stock_quantity, $shipping_cost, $image_link, $color, $size, $weight, $is_free_shiping, $product_status);
@@ -66,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,12 +79,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #ccc;
             background-color: #f9f9f9;
         }
-        input[type=text], input[type=number], input[type=float], textarea, select {
+
+        input[type=text],
+        input[type=number],
+        input[type=float],
+        textarea,
+        select {
             width: 100%;
             padding: 8px;
             margin: 8px 0;
             box-sizing: border-box;
         }
+
         input[type=submit] {
             width: 100%;
             padding: 10px;
@@ -92,22 +99,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: none;
             cursor: pointer;
         }
-        .error { color: red; }
-        .success { color: green; }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Product Listing</h2>
 
-       
+
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php elseif (!empty($success)): ?>
             <div class="success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-       
+
         <form action="productlisting.php" method="POST">
             <label for="product_name">Product Name:</label>
             <input type="text" id="product_name" name="product_name" required>
@@ -157,4 +171,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
+
 </html>

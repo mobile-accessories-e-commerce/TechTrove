@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,9 +61,11 @@
         }
 
         .product {
-            width: 30%; /* Each item takes 30% of the container width */
-        margin-bottom: 20px; /* Add space between rows */
-        box-sizing: border-box; 
+            width: 30%;
+            /* Each item takes 30% of the container width */
+            margin-bottom: 20px;
+            /* Add space between rows */
+            box-sizing: border-box;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 15px;
@@ -114,9 +117,11 @@
         }
 
         .order {
-            width: 30%; /* Each item takes 30% of the container width */
-        margin-bottom: 20px; /* Add space between rows */
-        box-sizing: border-box; 
+            width: 30%;
+            /* Each item takes 30% of the container width */
+            margin-bottom: 20px;
+            /* Add space between rows */
+            box-sizing: border-box;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 15px;
@@ -173,6 +178,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Left Sidebar Navigation -->
@@ -193,10 +199,11 @@
     <!-- Main Content -->
     <div class="main-content" id="main-content">
         <h1>Service Provider Dashboard</h1>
-        <p>Welcome to your Service Provider  dashboard. Here you can manage your services, orders, and view reports.</p>
+        <p>Welcome to your Service Provider dashboard. Here you can manage your services, orders, and view reports.</p>
     </div>
 
     <script src="../script/serviceproviderdashbord.js"></script>
 
 </body>
+
 </html>

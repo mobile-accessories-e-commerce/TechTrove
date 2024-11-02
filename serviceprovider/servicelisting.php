@@ -15,7 +15,7 @@ if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
     $service_provider_id = $row['service_provider_id'];
 } else {
-    
+
     echo "Service provider not found. Please contact support.";
     exit;
 }
@@ -26,7 +26,7 @@ $cat_result = $con->query($cat_query);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   
+
     $service_name = trim($_POST['service_name']);
     $description = trim($_POST['description']);
     $price = floatval($_POST['price']);
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $service_status = isset($_POST['service_status']) ? 1 : 0;
     $category_id = intval($_POST['category_id']);
 
-    
+
     if (empty($service_name) || empty($description) || $price <= 0 || empty($location) || empty($contact_detail)) {
         $error = "Please fill out all required fields correctly.";
     } else {
@@ -59,14 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Listing</title>
     <style>
-        body{
+        body {
             background-color: #ffeefe;
         }
+
         .container {
             width: 60%;
             margin: auto;
@@ -74,12 +76,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #ccc;
             background-color: #f9f9f9;
         }
-        input[type=text], input[type=number], input[type=float], textarea, select {
+
+        input[type=text],
+        input[type=number],
+        input[type=float],
+        textarea,
+        select {
             width: 100%;
             padding: 8px;
             margin: 8px 0;
             box-sizing: border-box;
         }
+
         input[type=submit] {
             width: 100%;
             padding: 10px;
@@ -88,22 +96,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: none;
             cursor: pointer;
         }
-        .error { color: red; }
-        .success { color: green; }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Service Listing</h2>
 
-       
+
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
         <?php elseif (!empty($success)): ?>
             <div class="success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-       
+
         <form action="servicelisting.php" method="POST">
             <label for="service_name">Service Name:</label>
             <input type="text" id="service_name" name="service_name" required>
@@ -141,4 +156,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 </body>
+
 </html>

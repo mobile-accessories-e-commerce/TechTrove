@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="../style/sellerdashbord.css">
 </head>
+
 <body>
 
     <!-- Left Sidebar Navigation -->
@@ -34,4 +36,5 @@
     <script src="../script/sellerdashbord.js"></script>
 
 </body>
+
 </html>

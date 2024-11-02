@@ -2,9 +2,9 @@
 include "../connect.php";
 session_start();
 
-if(!isset($_SESSION['userid'])){
+if (!isset($_SESSION['userid'])) {
     header("location:../authentication/loging.php");
-}else{
+} else {
     $user_id = $_SESSION['userid'];
 }
 
@@ -15,13 +15,13 @@ JOIN carts AS c ON o.cart_id = c.cart_id
 JOIN products AS p ON oi.product_id = p.product_id
 WHERE c.user_id = '$user_id' and (order_status='pending' or order_status='shiped')";
 
-$result = mysqli_query($con,$quary);
-if(mysqli_num_rows($result)>0){
-    while($row = mysqli_fetch_assoc($result)){
-        array_push($order_list,$row);
+$result = mysqli_query($con, $quary);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        array_push($order_list, $row);
     }
-    echo json_encode($order_list); 
-}else{
+    echo json_encode($order_list);
+} else {
     echo json_encode($order_list);
 }
 

@@ -1,0 +1,11 @@
+{
+    "name": "hp/e-commercesite",
+    "autoload": {
+        "psr-4": {
+            "Hp\\ECommercesite\\": "src/"
+        }
+    },
+    "require": {
+        "stripe/stripe-php": "^16.2"
+    }
+}

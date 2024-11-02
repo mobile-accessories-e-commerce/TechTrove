@@ -4,27 +4,31 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .container {
-    
+
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
+
 h1 {
     text-align: center;
     color: #333;
 }
+
 .row {
-   
+
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 20px;
     flex-direction: column;
 }
+
 .title {
     display: flex;
     width: 100%;
@@ -34,6 +38,7 @@ h1 {
     background-color: #f7f7f7;
     border-bottom: 2px solid #e1e1e1;
 }
+
 .card {
     display: flex;
     justify-content: space-between;
@@ -47,18 +52,22 @@ h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
 }
+
 .card:hover {
     transform: scale(1.05);
 }
+
 .card img {
 
     width: 150px;
     height: 100px;
     border-radius: 5px;
 }
-.product_detail{
+
+.product_detail {
     width: 100px;
 }
+
 .button {
     background-color: #4CAF50;
     color: white;
@@ -69,23 +78,28 @@ h1 {
     border-radius: 5px;
     transition: background-color 0.3s;
 }
+
 .button:hover {
     background-color: #45a049;
 }
+
 .quantity_container {
     display: flex;
     gap: 10px;
     align-items: center;
 }
+
 .quantity_container input {
     width: 60px;
     text-align: center;
 }
+
 .total-container {
     text-align: right;
     margin-top: 20px;
     font-size: 1.2em;
 }
+
 .total-container a {
     text-decoration: none;
     color: #fff;
@@ -94,11 +108,13 @@ h1 {
     border-radius: 5px;
     transition: background-color 0.3s;
 }
+
 .total-container a:hover {
     background-color: #0056b3;
 }
-.back{
-    position:absolute;
+
+.back {
+    position: absolute;
     left: 40px;
     top: 40px;
     background-color: #28a745;
@@ -110,13 +126,17 @@ h1 {
     border-radius: 4px;
     z-index: +1;
 }
+
 @media (max-width: 768px) {
     .card {
-        width: calc(50% - 40px); /* Responsive layout for smaller screens */
+        width: calc(50% - 40px);
+        /* Responsive layout for smaller screens */
     }
 }
+
 @media (max-width: 480px) {
     .card {
-        width: 100%; /* Full width on mobile */
+        width: 100%;
+        /* Full width on mobile */
     }
 }

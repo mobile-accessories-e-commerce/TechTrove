@@ -26,6 +26,7 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,30 +35,31 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
+
 <body>
-<div class="header">
-    <div class="nav-bar-logo">
-        <img src="../images/elife_logo.png" width="140" height="70">
+    <div class="header">
+        <div class="nav-bar-logo">
+            <img src="../images/elife_logo.png" width="140" height="70">
+        </div>
+        <div class="category">
+            <select name="category" id="category" onchange="categorySearch()">
+                <option value="">All Categories</option>
+                <?php foreach ($product_category_list as $category): ?>
+                    <option value="<?php echo $category['product_cat_id']; ?>"><?php echo $category['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="search-container">
+            <form action="javascript:void(0);" class="search">
+                <input type="text" id="search" placeholder="Search products..." />
+                <button id="search-btn" type="button" onclick="searchProducts()">Search</button>
+            </form>
+        </div>
+        <div id="search-results"></div>
     </div>
-    <div class="category">
-        <select name="category" id="category" onchange="categorySearch()">
-            <option value="">All Categories</option>
-            <?php foreach ($product_category_list as $category): ?>
-                <option value="<?php echo $category['product_cat_id']; ?>"><?php echo $category['name']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div class="search-container">
-    <form action="javascript:void(0);" class="search">
-            <input type="text" id="search" placeholder="Search products..." />
-            <button id="search-btn" type="button" onclick="searchProducts()">Search</button>    
-        </form>
-    </div>
-    <div id="search-results"></div> 
-</div>
 
 
-<div class="side-bar">
+    <!-- <div class="side-bar">
     <div class="side-bar-icon">
         <a href="../cart/cartlandingpage.php">
             <i class="fas fa-shopping-cart"></i> Cart
@@ -88,53 +90,54 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
             <i class="fas fa-list-alt"></i> Orders
         </a>
     </div>
-</div>
+</div> -->
 
-<div class="product-section-container" id="product-section-container">
-    <ul class="product-section-item-wrapper">
-        <?php foreach ($product_list as $product): ?>
-        <li class="product-item">
-            <div class="product-image">
-                <img src="../images/<?php echo $product['image_link']; ?>" alt="smart watch">
-            </div>
-            <div class="product-text">
-                <span class="product-title">
-                    <?php echo $product['product_name']; ?>
-                </span>
-                <br>
-                <span style="color:red;">
-                    <?php if ($product['stock_quantity'] == 0) echo "This is out of stock"; ?>
-                </span>
-                <div class="product-purchase">
-                    <span class="product-price">
-                        <?php echo "$" . $product['price']; ?>
-                    </span>
-                    <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
-                        <button class="blue-btn add-to-cart">View Product</button>
-                    </a>
-                </div>
-            </div>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-</div>
+    <div class="product-section-container" id="product-section-container">
+        <ul class="product-section-item-wrapper">
+            <?php foreach ($product_list as $product): ?>
+                <li class="product-item">
+                    <div class="product-image">
+                        <img src="../images/<?php echo $product['image_link']; ?>" alt="smart watch">
+                    </div>
+                    <div class="product-text">
+                        <span class="product-title">
+                            <?php echo $product['product_name']; ?>
+                        </span>
+                        <br>
+                        <span style="color:red;">
+                            <?php if ($product['stock_quantity'] == 0)
+                                echo "This is out of stock"; ?>
+                        </span>
+                        <div class="product-purchase">
+                            <span class="product-price">
+                                <?php echo "$" . $product['price']; ?>
+                            </span>
+                            <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
+                                <button class="blue-btn add-to-cart">View Product</button>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 
-<script>
-function searchProducts() {
-    let searchTerm = document.getElementById('search').value;
-    const xhr = new XMLHttpRequest();
-    const main_container = document.getElementById('product-section-container');
+    <script>
+        function searchProducts() {
+            let searchTerm = document.getElementById('search').value;
+            const xhr = new XMLHttpRequest();
+            const main_container = document.getElementById('product-section-container');
 
-    xhr.open('GET', `search.php?query=${searchTerm}`, true);
-    
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            let products = JSON.parse(xhr.responseText);  
-            let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
-            
-            if (products.length > 0) { 
-                products.forEach(function(product) {
-                    updateContent += `
+            xhr.open('GET', `search.php?query=${searchTerm}`, true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    let products = JSON.parse(xhr.responseText);
+                    let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
+
+                    if (products.length > 0) {
+                        products.forEach(function (product) {
+                            updateContent += `
                     <li class="product-item">
                         <div class="product-image">
                             <img src="../images/${product['image_link']}" alt="smart watch">
@@ -150,33 +153,33 @@ function searchProducts() {
                             </div>
                         </div>
                     </li>`;
-                });
-            } else {
-                updateContent += `<p>No products found</p>`;
-            }
+                        });
+                    } else {
+                        updateContent += `<p>No products found</p>`;
+                    }
 
-            updateContent += `</ul>`;
-            main_container.innerHTML = updateContent;
+                    updateContent += `</ul>`;
+                    main_container.innerHTML = updateContent;
+                }
+            };
+
+            xhr.send();
         }
-    };
+        function categorySearch() {
+            let searchTerm = document.getElementById('category').value;
+            const xhr = new XMLHttpRequest();
+            const main_container = document.getElementById('product-section-container');
 
-    xhr.send();
-}
-function categorySearch() {
-    let searchTerm = document.getElementById('category').value;
-    const xhr = new XMLHttpRequest();
-    const main_container = document.getElementById('product-section-container');
+            xhr.open('GET', `catogorySearch.php?query=${searchTerm}`, true);
 
-    xhr.open('GET', `catogorySearch.php?query=${searchTerm}`, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    let products = JSON.parse(xhr.responseText);
+                    let updateContent = `<div>Category Result</div><ul class="product-section-item-wrapper">`;
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            let products = JSON.parse(xhr.responseText);  
-            let updateContent = `<div>Category Result</div><ul class="product-section-item-wrapper">`;
-            
-            if (products.length > 0) {
-                products.forEach(function(product) {
-                    updateContent += `
+                    if (products.length > 0) {
+                        products.forEach(function (product) {
+                            updateContent += `
                     <li class="product-item">
                         <div class="product-image">
                             <img src="../images/${product['image_link']}" alt="smart watch">
@@ -192,18 +195,19 @@ function categorySearch() {
                             </div>
                         </div>
                     </li>`;
-                });
-            } else {
-                updateContent += `<p>No products found in this category</p>`;
-            }
+                        });
+                    } else {
+                        updateContent += `<p>No products found in this category</p>`;
+                    }
 
-            updateContent += `</ul>`;
-            main_container.innerHTML = updateContent;
+                    updateContent += `</ul>`;
+                    main_container.innerHTML = updateContent;
+                }
+            };
+
+            xhr.send();
         }
-    };
-
-    xhr.send();
-}
-</script>
+    </script>
 </body>
+
 </html>

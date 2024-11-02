@@ -1,16 +1,16 @@
 function loadContent(section) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `fetch_seller_dashbord_data.php?section=${section}`, true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            let content = document.getElementById('main-content');
-            if (section === 'all_products') {
-                let products = JSON.parse(xhr.responseText);
-                content.innerHTML = "<h1>All Products</h1>";
-                if (products.length > 0) {
-                    let productHTML = '<div class="product-list">';
-                    products.forEach(function(product) {
-                        productHTML += `
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `fetch_seller_dashbord_data.php?section=${section}`, true);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      let content = document.getElementById("main-content");
+      if (section === "all_products") {
+        let products = JSON.parse(xhr.responseText);
+        content.innerHTML = "<h1>All Products</h1>";
+        if (products.length > 0) {
+          let productHTML = '<div class="product-list">';
+          products.forEach(function (product) {
+            productHTML += `
                             <div class="product">
                                 <img src="../images/${product.image_link}" alt="${product.product_name}">
                                 <div class="product-name">${product.product_name}</div>
@@ -30,21 +30,22 @@ function loadContent(section) {
                                 
                             </div>
                         `;
-                    });
-                    productHTML += '</div>';
-                    content.innerHTML += productHTML;
-                } else {
-                    content.innerHTML = "<h1>No Products Found</h1><p>You haven't listed any products yet.</p>";
-                }
-            }
-            
-            if (section === 'ordered_products') {
-                let orders = JSON.parse(xhr.responseText);
-                content.innerHTML = "<h1>All Orders</h1>";
-                if (orders.length > 0) {
-                    let ordersHTML = '<div class="order-list">';
-                    orders.forEach(function(order) {
-                        ordersHTML += `
+          });
+          productHTML += "</div>";
+          content.innerHTML += productHTML;
+        } else {
+          content.innerHTML =
+            "<h1>No Products Found</h1><p>You haven't listed any products yet.</p>";
+        }
+      }
+
+      if (section === "ordered_products") {
+        let orders = JSON.parse(xhr.responseText);
+        content.innerHTML = "<h1>All Orders</h1>";
+        if (orders.length > 0) {
+          let ordersHTML = '<div class="order-list">';
+          orders.forEach(function (order) {
+            ordersHTML += `
                             <div class="order">
                                 <img src="../images/${order.image_link}" alt="${order.product_name}">
                                 <div class="order-details">
@@ -65,22 +66,24 @@ function loadContent(section) {
                                 
                             </div>
                         `;
-                    });
-                    ordersHTML += '</div>';
-                    content.innerHTML += ordersHTML;
-                } else {
-                    content.innerHTML = "<h1>No Orders Found</h1><p>No orders have been placed yet.</p>";
-                }
-            }
+          });
+          ordersHTML += "</div>";
+          content.innerHTML += ordersHTML;
+        } else {
+          content.innerHTML =
+            "<h1>No Orders Found</h1><p>No orders have been placed yet.</p>";
+        }
+      }
 
-            if (section === 'product_status') {
-                let products = JSON.parse(xhr.responseText);
-                content.innerHTML = "<h1>Product Status</h1>";
-                if (products.length > 0) {
-                    let productHTML = '<div class="product-status-list">';
-                    products.forEach(function(product) {
-                        let stockClass = product.stock_quantity < 10 ? 'low-stock' : 'stock';
-                        productHTML += `
+      if (section === "product_status") {
+        let products = JSON.parse(xhr.responseText);
+        content.innerHTML = "<h1>Product Status</h1>";
+        if (products.length > 0) {
+          let productHTML = '<div class="product-status-list">';
+          products.forEach(function (product) {
+            let stockClass =
+              product.stock_quantity < 10 ? "low-stock" : "stock";
+            productHTML += `
                             <div class="product-card">
                                 <img src="../images/${product.image_link}" alt="${product.product_name}">
                                 <div class="product-details">
@@ -92,16 +95,17 @@ function loadContent(section) {
                                 </div>
                             </div>
                         `;
-                    });
-                    productHTML += '</div>';
-                    content.innerHTML += productHTML;
-                } else {
-                    content.innerHTML = "<h1>No Products Found</h1><p>No product data is available.</p>";
-                }
-            }
+          });
+          productHTML += "</div>";
+          content.innerHTML += productHTML;
+        } else {
+          content.innerHTML =
+            "<h1>No Products Found</h1><p>No product data is available.</p>";
+        }
+      }
 
-            if(section=='reports'){
-                content.innerHTML = `<div class="reports-menu">
+      if (section == "reports") {
+        content.innerHTML = `<div class="reports-menu">
                                     <h2>Daily Reports</h2>
                                     <ul>
                                         <li><a href='reports.php?report_type=sales_reports'>Sales Summary Report</a></li>
@@ -130,10 +134,9 @@ function loadContent(section) {
                                         <li><a href='reports.php?report_type=customer_reports'>Customer Report</a></li>
                                     </ul>
                                 </div>
-                                    `
-            }
-                
-        }
-    };
-    xhr.send();
+                                    `;
+      }
+    }
+  };
+  xhr.send();
 }
