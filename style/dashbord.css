@@ -590,12 +590,12 @@ footer {
 }
 
 .collection-container.scroll-active {
-    animation: fadeInUp 1.5s ease-out forwards;
+    animation: fadeInUp 1.2s ease-out forwards;
 }
 
 
 .product-section-container.scroll-active {
-    animation: slideInLeft 2.3s cubic-bezier(0.5, 1.25, 0.75, 1.5) forwards;
+    animation: slideInLeft 1.7s cubic-bezier(0.5, 1.25, 0.75, 1.5) forwards;
 }
 
 .promo-container.scroll-active {
@@ -604,5 +604,5 @@ footer {
 
 
 footer.scroll-active {
-    animation: fadeInUp 1.7s ease-out forwards;
+    animation: fadeInUp 1.2s ease-out forwards;
 }

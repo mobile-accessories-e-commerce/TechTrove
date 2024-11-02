@@ -27,9 +27,11 @@ while ($row = mysqli_fetch_assoc($service_category_result)) {
 
 
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name ,pro.discount
     FROM products p
-    JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id LIMIT 10
+    JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
+    LEFT JOIN promotions pro ON p.product_id = pro.product_id 
+    LIMIT 10
 ";
 
 $services_query = "
@@ -68,33 +70,6 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <link rel="stylesheet" href="../style/dashbord.css">
 
     <style>
-        .product-section-container {
-            max-width: 980px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .product-slider {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
-
-        .product-section-item-wrapper {
-            display: flex;
-            transition: transform 0.5s ease;
-            width: 100%;
-        }
-
-        .product-item {
-            flex: 1 0 33.333%;
-            box-sizing: border-box;
-            padding: 10px;
-        }
-
-        .slider-controls {
-            margin: 10px 0;
-        }
 
 
 
@@ -199,6 +174,34 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     padding: 10px;
 }
 
+
+.product-section-container {
+            max-width: 980px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .product-slider {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .product-section-item-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+
+        .product-item {
+            flex: 1 0 33.333%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .slider-controls {
+            margin: 10px 0;
+        }
         
     </style>
 
@@ -206,9 +209,9 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
 <body>
 
-<nav class="nav-bar">
+    <nav class="nav-bar">
         <div class="nav-bar-logo">
-            <a href="index.php">
+            <a href="#">
                 <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
             </a>
         </div>
@@ -222,7 +225,10 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             
             <div class="cart">
                 <a href="../cart/cartlandingpage.php">
-                <img src="../images/cart.png" alt="cart"></a>
+                <img src="../images/cart.png" alt="cart">
+                </a>
+            </div>
+               
                 
            
         </div>
@@ -250,21 +256,23 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!-- Top-->
     <div class="home-top-container">
-        
+
         <div class="home-top-wrapper" id="home-top-wrapper">
 
         </div>
 
     </div>
 
-  
+
 
     <!---our collection/type of product selling-->
-    <div class="collection-header"> <h1>Our Collection</h1></div>
-   
-    <div class="collection-container">
+    <div class="collection-header">
+        <h1>Our Collection</h1>
+    </div>
 
-       
+    <div class="collection-container scroll-animate">
+
+
         <div class="catogory">
             <p onclick="loadProductCatogory()" class="cat-btn">Product</p>
             <p onclick="loadServiceCatogory()" class="cat-btn">Service</p>
@@ -290,7 +298,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     </div>
 
     <!--Best Sellers -product seection-->
-    <div class="product-section-container">
+    <div class="product-section-container scroll-animate">
         <h1>Best Selling Product</h1>
         <span class="product-section-description">
             ctus et netus et malesuada fames aVestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
@@ -298,15 +306,15 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             leo.
         </span>
 
-       
+
 
         <div class="product-slider">
-        <div class="slider-controls">
-            <button class="slide-btn" id="prevBtn">&#8249;</button>
-            <button class="slide-btn" id="nextBtn">&#8250;</button>
-        </div>
+            <div class="slider-controls">
+                <button class="slide-btn" id="prevBtn">&#8249;</button>
+                <button class="slide-btn" id="nextBtn">&#8250;</button>
+            </div>
             <ul class="product-section-item-wrapper">
-           
+
                 <?php foreach ($product_list as $product): ?>
                     <li class="product-item">
                         <div class="product-image">
@@ -317,9 +325,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                                 <?php echo $product['product_name'] ?>
                             </span>
                             <div class="product-purchase">
-                                <span class="product-price">
-                                    <?php echo "$" . $product['price'] ?>
-                                </span>
+                                <?php if ($product['discount'] == null): ?>
+                                    <span class="product-price">
+                                        <?php echo "$" . $product['price']; ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if ($product['discount'] != null): ?>
+                                    <span>Discount <?php echo $product['discount'] ?>%</span><br>
+                                    <span class="product-price">Price After Discount
+                                        <?php echo "$" . ($product['price'] - (($product['price'] / 100) * $product['discount'])) ?></span>
+                                <?php endif; ?>
                                 <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                 </a>
@@ -333,7 +348,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!--IPAD PROMO-->
 
-    <div class="promo-container">
+    <div class="promo-container scroll-animate">
         <div class="promo-box">
             <div class="promo-image">
                 <img src="../images/07.png" alt="i pad">
@@ -356,7 +371,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!--Footer-->
 
-    <footer>
+    <footer class="scroll-animate">
         <div class="footer-top">
             <img src="../images/elife_logo.png" width="220px" height="110px">
 
@@ -405,11 +420,11 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                 </li>
             </ul>
 
-        <p>
-            Coppyright &#xA9; 2024 eLife. All Right Receved
-        </p>
-    </div>
-</footer>
+            <p>
+                Coppyright &#xA9; 2024 eLife. All Right Receved
+            </p>
+        </div>
+    </footer>
 
 
     <script>
@@ -478,16 +493,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
      <?php foreach ($service_category_list as $catogory): ?>
-            <div class="collection-item">
-                <div class="collection-icon">
-                    <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-        <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-        <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-        </svg></a>
+                <div class="collection-item">
+                    <div class="collection-icon">
+                        <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+            <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+            <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+            </svg></a>
+                    </div>
+                    <span class="collection-name"><?php echo $catogory['name'] ?></span>
                 </div>
-                <span class="collection-name"><?php echo $catogory['name'] ?></span>
-            </div>
     <?php endforeach; ?>`
 
         }
@@ -497,16 +512,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
     <?php foreach ($product_category_list as $catogory): ?>
-            <div class="collection-item">
-                <div class="collection-icon">
-                    <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-        <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-        <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-        </svg></a>
+                <div class="collection-item">
+                    <div class="collection-icon">
+                        <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+            <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+            <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+            </svg></a>
+                    </div>
+                    <span class="collection-name"><?php echo $catogory['name'] ?></span>
                 </div>
-                <span class="collection-name"><?php echo $catogory['name'] ?></span>
-            </div>
     <?php endforeach; ?>
     `
         }
@@ -544,15 +559,59 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
 
         function navigateToPage() {
-        const dropdown = document.getElementById("product-dropdown");
-        const selectedValue = dropdown.value;
-        
-        if (selectedValue) {
-            window.location.href = selectedValue; 
-        }
-    }
-        
+            const dropdown = document.getElementById("product-dropdown");
+            const selectedValue = dropdown.value;
 
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-active');
+                        observer.unobserve(entry.target);  // Stop observing once the animation is triggered
+                    }
+                });
+            }, observerOptions);
+
+            // Select all sections to animate on scroll
+            document.querySelectorAll('.scroll-animate').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const collectionContainer = document.querySelector('.collection-container');
+            const backgroundImages = [
+                '../images/cat-slider1.jpg',
+                '../images/cat-slider2.jpg',
+                '../images/cat-slider3.jpg',
+                '../images/cat-slider4.jpg'
+            ];
+            let currentImageIndex = 0;
+
+            // Function to update background image
+            function updateBackgroundImage() {
+                collectionContainer.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
+                currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+            }
+
+            // Initial background setup
+            updateBackgroundImage();
+
+            // Set interval to change background image every 5 seconds
+            setInterval(updateBackgroundImage, 5000);  // Adjust as needed
+        });
 
     </script>
 </body>

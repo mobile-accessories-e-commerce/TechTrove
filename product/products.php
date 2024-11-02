@@ -11,9 +11,10 @@ function storeSearchQuary($input)
 }
 // Fetch all products with categories
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity,pro.discount,pro.price_after_discount
     FROM products p
     JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
+    LEFT JOIN promotions pro ON p.product_id = pro.product_id
 ";
 $products_result = $con->query($products_query);
 
@@ -53,11 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="header">
         <div class="nav-bar-logo">
+            <a href="../Home/dashbord.php">
             <img src="../images/elife_logo.png" width="140" height="70">
+            </a>
         </div>
         <div class="category">
             <select name="category" id="category" onchange="categorySearch()">
-                <option value="">All Categories</option>
+                <option value="none">All Categories</option>
                 <?php foreach ($product_category_list as $category): ?>
                     <option value="<?php echo $category['product_cat_id']; ?>"><?php echo $category['name']; ?></option>
                 <?php endforeach; ?>
@@ -71,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="cart">
             <a href="../cart/cartlandingpage.php">
-                <img src="../images/cart.png" alt="cart"></a>
+            <img src="../images/cart.png" alt="cart"></a>
         </div>
         <div id="search-results"></div>
     </div>
@@ -127,9 +130,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 echo "This is out of stock"; ?>
                         </span>
                         <div class="product-purchase">
-                            <span class="product-price">
-                                <?php echo "$" . $product['price']; ?>
-                            </span>
+                            <?php if ($product['discount'] == null): ?>
+                                <span class="product-price">
+                                    <?php echo "$" . $product['price']; ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($product['discount'] != null): ?>
+                                <span>Discount <?php echo $product['discount'] ?>%</span><br>
+                                <span class="product-price">Price After Discount
+                                    <?php echo "$" .$product['price_after_discount']?></span>
+                            <?php endif; ?>
+
                             <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                                 <button class="blue-btn add-to-cart">View Product</button>
                             </a>
@@ -160,6 +171,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         if (products.length > 0) {
                             products.forEach(function (product) {
+                                let discount = product['discount'] != null ? product['discount'] : "none";
+                                let price = product['discount'] != null ? product['price_after_discount'] : product['price'];
                                 updateContent += `
                     <li class="product-item">
                         <div class="product-image">
@@ -168,7 +181,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="product-text">
                             <span class="product-title">${product['product_name']}</span>
                             <div class="product-purchase">
-                                <span class="product-price">$${product['price']}</span>
+                                <span class="product-price">$${price}</span>
+                                <span>Discount ${discount}</span>
                                 <a href="productveiwpage.php?product_id=${product['product_id']}">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                     
@@ -203,6 +217,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     if (products.length > 0) {
                         products.forEach(function (product) {
+                            let discount = product['discount'] != null ? product['discount'] : "none";
+                                let price = product['discount'] != null ? product['price_after_discount'] : product['price'];
                             updateContent += `
                     <li class="product-item">
                         <div class="product-image">
@@ -211,7 +227,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="product-text">
                             <span class="product-title">${product['product_name']}</span>
                             <div class="product-purchase">
-                                <span class="product-price">$${product['price']}</span>
+                                <span class="product-price">$${price}</span>
+                                <span>Discount: ${discount}</span>
                                 <a href="productveiwpage.php?product_id=${product['product_id']}">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                     
