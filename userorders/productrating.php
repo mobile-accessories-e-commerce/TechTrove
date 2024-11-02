@@ -137,6 +137,9 @@ if (!isset($_SESSION['userid'])) {
                 <textarea name="review" id="review" rows="4" placeholder="Write your review here..."></textarea>
 
                 <br><br>
+                <label for="image">Add image</label>
+                <input type="file" name="image">
+                <br><br>
 
                 <input type="submit" value="Submit Rating">
             </form>

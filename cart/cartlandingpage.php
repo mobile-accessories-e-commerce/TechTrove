@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../connect.php';
+include '../layouts/header.php';
 
 
 $userId = $_SESSION['userid'];
@@ -58,11 +59,12 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
-    <div><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
+  
     <div class="container">
         <h1>Your Cart</h1>
         <?php if (empty($cartItems)): ?>
             <p>Your cart is empty.</p>
+            <iframe src="https://giphy.com/embed/giXLnhxp60zEEIkq8K" width="400" height="400" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/shopping-skeleton-cart-giXLnhxp60zEEIkq8K">via GIPHY</a></p>
         <?php else: ?>
             <div class="row">
 

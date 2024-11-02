@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['userid'];  // Get the logged-in user ID from session
     $item_id = $_POST['item_id'];  // Get product_id from the form
     $rating = intval($_POST['rating']);  // Ensure rating is an integer
+    $image_link = $_POST['image'];
     $review = $con->real_escape_string($_POST['review']);
 
 
@@ -27,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // User has purchased the product, allow rating
-    $sql = "INSERT INTO ratings (user_id, product_id, rating, review, created_at) 
-                VALUES (?, ?, ?, ?, NOW())";
+    $sql = "INSERT INTO ratings (user_id, product_id, rating, review, created_at,image_link) 
+                VALUES (?, ?, ?, ?, NOW(),?)";
     $stmt = $con->prepare($sql);
-    $stmt->bind_param("iiis", $user_id, $product_id, $rating, $review);
+    $stmt->bind_param("iiiss", $user_id, $product_id, $rating, $review,$image_link);
 
     if ($stmt->execute()) {
         $update_order_item_sql = "UPDATE order_items SET can_feedback=0 WHERE item_id='$item_id'";
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = "UPDATE products SET rating = (SELECT AVG(rating) FROM ratings WHERE product_id = '$product_id') WHERE product_id = '$product_id'";
             $result = mysqli_query($con, $sql);
             if ($result) {
-                echo "Thank you for your rating!";
+                header("location:userorders.php");
             }
         }
     } else {

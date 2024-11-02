@@ -71,10 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $cart_id = $item['cart_id'];
         $price = $item['price'];
         $order_status = "pending";
+        $can_feedback = 1;
 
 
-        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price,shipping_detail_id,order_status,payment_method) 
-            VALUES ('$order_id', '$product_id', '$quantity', '$price','$shipping_details_id','$order_status','$payment_method')";
+        $sql = "INSERT INTO order_items (order_id, product_id, quantity, price,shipping_detail_id,order_status,payment_method,can_feedback) 
+            VALUES ('$order_id', '$product_id', '$quantity', '$price','$shipping_details_id','$order_status','$payment_method','$can_feedback')";
 
         // Execute the query
         if (mysqli_query($con, $sql)) {

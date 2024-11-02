@@ -159,17 +159,21 @@ body {
 }
 
 .product-image {
-    background-color: rgb(231, 238, 252);
+    background: transparent;
     height: 210px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 30px;
+   
 }
 
 .product-image img {
+    overflow: hidden;
+    object-fit: cover;
     height: 100%;
     width: auto;
+    border-radius: 10px;
 }
 
 .product-text {

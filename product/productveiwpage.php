@@ -31,7 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     }
 
-
+$sql = "SELECT * FROM ratings WHERE product_id='$product_id'";
+$result = mysqli_query($con,$sql);
+$feedback_list = array();
+while($row=mysqli_fetch_assoc($result)){
+    array_push($feedback_list,$row);
+}
 
 }
 ?>
@@ -74,6 +79,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 </a>
             </div>
         </div>
+    </div>
+    <div class="feedback-container">
+        <h1>Feedback</h1>
+        <?php if(count($feedback_list)==0):?>
+            <h3>No Feedback yet</h3>
+        <?php endif; ?>
+        <?php foreach($feedback_list as $feedback):?>
+            <div class="feedback-card">
+                <div class="feedback-content">
+                    <h2><?php echo $feedback['review'] ?></h2>
+                    <p>Rating:
+                    <span class="star-rating">
+                        <?php for($i = 0; $i < $feedback['rating']; $i++): ?>
+                            ★
+                        <?php endfor; ?>
+                    </span>
+</p>
+
+                    
+                </div>
+                <?php if($feedback['image_link']!=null): ?>
+                <img id="feedback-img" src="../images/<?php echo $feedback['image_link'] ?>" alt="image">
+                <img src="../images/<?php echo $feedback['image_link'] ?>" alt="popup image" class="popup-image">
+               <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+
+            
+            
     </div>
     <script>
         const quantityInput = document.getElementById('quantity');

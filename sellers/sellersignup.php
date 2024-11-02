@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <style>
         body {
             font-family: Arial, sans-serif;
+            
         }
 
         .container {

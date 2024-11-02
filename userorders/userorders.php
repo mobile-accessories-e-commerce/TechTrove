@@ -1,3 +1,7 @@
+<?php
+include '../layouts/header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,12 +16,16 @@
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
             margin: 0;
+           
+        }
+        
+        .main-content{
             display: flex;
         }
-
         .side-bar {
             background-color: #ffffff;
             width: 200px;
+            height: 100vh;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #e1e1e1;
@@ -62,14 +70,11 @@
             font-size: 24px;
             color: #333;
         }
-
-        /* Orders container and order card styles */
-        .orders-container {
+        .orders-list{
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 20px; 
         }
-
         .order-card {
             background-color: #ffffff;
             border-radius: 8px;
@@ -219,7 +224,7 @@
     <!-- Order data will be displayed here -->
     <!-- </div> -->
 
-
+<div class="main-content">
 
     <div class="side-bar">
         <div class="side-bar-icon">
@@ -243,8 +248,8 @@
 
     <!-- Main content area -->
     <div class="content" id="order-container">
-
-
+    </div>
+    </div>
         <script src="../script/userorder.js"></script>
 </body>
 

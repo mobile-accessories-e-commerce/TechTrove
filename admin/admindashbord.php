@@ -48,15 +48,55 @@ if (mysqli_num_rows($result) > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../style/admindashbord.css">
+
+        <style>
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            cursor: pointer;
+        }
+    </style> 
 </head>
 
 <body>
+
+<!--form html-->
+
+
+
+
     <!-- Navbar -->
     <div class="navbar">
         <a href="admindashbord.php">Dashboard</a>
-        <button onclick="addCategory()">addcatogory</button>
-        <a href="#">All Products</a>
-        <a href="#">Reports</a>
+        <a onclick="addCategory()">addcatogory</a>
+        <a onclick="getAllProduct()">All Products</a>
+        <a onclick="getSearchKeyword()">Search keyword</a>
+        <a onclick="getFeatureProduct()">Approve Feature Product</a>
+        <a onclick="givePromotion()">Promotion</a>
         <a href="#">Logout</a>
     </div>
 

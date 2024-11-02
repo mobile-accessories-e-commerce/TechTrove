@@ -22,7 +22,7 @@ if (isset($_GET['query'])) {
             array_push($productList, $row);
         }
     } else {
-        echo json_encode($productList);
+        array_push($productList,"false");
     }
     echo json_encode($productList);
 

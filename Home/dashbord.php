@@ -48,7 +48,7 @@ while ($row = mysqli_fetch_assoc($products_result)) {
 
 
 
-$query = "SELECT product_id,title, description, image_link FROM featured_products WHERE approved = 0";
+$query = "SELECT product_id,title, description, image_link FROM featured_products WHERE approved = 1";
 $hero_result = mysqli_query($con, $query);
 $hero_products = array();
 while ($row = mysqli_fetch_assoc($hero_result)) {
@@ -95,68 +95,157 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         .slider-controls {
             margin: 10px 0;
         }
+
+
+
+        /* nav bar style */
+        .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fffff; /* Blue background */
+    padding: 2px 40px;
+}
+
+.nav-bar-logo img {
+    flex:2;
+    display: block;
+}
+
+.search-container {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    border: solid;
+    border-color: black;
+    border-radius: 4px;
+    outline: black;
+    width: 500px; /* Search bar takes up 50% width */
+}
+
+.search-form button {
+    background-color: #0056b3; /* Darker blue for button */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+}
+
+.search-form button:hover {
+    background-color: #004494; /* Even darker blue on hover */
+}
+
+.cart {
+    position: relative;
+}
+
+.cart a {
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.nav-bar-link select {
+    cursor: pointer;
+    flex: 3;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    background-color:  white; /* White background for dropdown */
+    color: #333; /* Dark text color */
+}
+
+
+
+/* Style for option elements with icons */
+.nav-bar-link select option {
+    padding: 10px;
+}
+
+        
     </style>
 
 </head>
 
 <body>
 
-    <nav>
-        <div class="nav-bar">
+<nav class="nav-bar">
+        <div class="nav-bar-logo">
+            <a href="index.php">
+                <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
+            </a>
+        </div>
 
-            <div class="nav-bar-logo">
-                <img src="../images/elife_logo.png" width="140" height="70">
+        <div class="search-container">
+            <form action="../product/products.php" method="post" class="search-form">
+                <input type="text" id="search" name="search_value" placeholder="Search products...">
+                <button id="search-btn" type="submit">🔍</button>
+            </form>
+
+            <div class="cart">
+                <a href="../cart/cartlandingpage.php">
+                &#x1F6D2;   
+                    <span class="cart-count">3</span>
+                </a>
             </div>
+        </div>
 
-
-            <div class="nav-bar-link">
-
-                <ul>
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="../product/products.php">Product</a>
-                    </li>
-                    <li>
-                        <a href="../service/services.php">Services</a>
-                    </li>
-                    <li>
-                        <a href="../cart/cartlandingpage.php">Cart</a>
-                    </li>
-                    <li>
-                        <a href="../userorders/userorders.php">orders</a>
-                    </li>
-                    <li>
-                        <a href="../sellers/sellersignup.php">Seller</a>
-                    </li>
-                    <li>
-                        <a href="../serviceprovider/servicesignup.php">Service Provider</a>
-                    </li>
-                    <li>
-                        <a href="../userprofile.php">profile </a>
-                    </li>
-                </ul>
-                <button class="blue-btn"><a href="../authentication/logout.php">LogOut</a></button>
-
-            </div>
-
-
+        <div class="nav-bar-link">
+            <select id="product-dropdown" onchange="navigateToPage()">
+                <option value="">Account</option>
+                <option value="../product/products.php">🛍️ Products</option>
+                <option value="../service/services.php">🛠️ Services</option>
+                <option value="../userorders/userorders.php">📦 Orders</option>
+                <option value="../sellers/sellersignup.php">👩‍💼 Seller Signup</option>
+                <option value="../serviceprovider/servicesignup.php">🤝 Service Provider Signup</option>
+                <option value="../userprofile.php">👤 Profile</option>
+                <option value="../authentication/logout.php">🚪 LogOut</option>
+            </select>
         </div>
     </nav>
 
     <!-- Top-->
     <div class="home-top-container">
+        
         <div class="home-top-wrapper" id="home-top-wrapper">
 
         </div>
 
     </div>
 
+  
+
     <!---our collection/type of product selling-->
+    <div class="collection-header"> <h1>Our Collection</h1></div>
+   
     <div class="collection-container">
 
-        <h1>Our collection</h1>
+       
         <div class="catogory">
             <p onclick="loadProductCatogory()" class="cat-btn">Product</p>
             <p onclick="loadServiceCatogory()" class="cat-btn">Service</p>
@@ -181,6 +270,9 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     </div>
 
+    <div class="marquee-container">
+  <span class="marquee-text">&#9734;&nbsp;&#9734;&nbsp;Place you get your Best item Free Shipping &nbsp;&#9734;&nbsp;&#9734;</span>
+</div>
     <!--Best Sellers -product seection-->
     <div class="product-section-container">
         <h1>Best Selling Product</h1>
@@ -190,13 +282,15 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             leo.
         </span>
 
-        <div class="slider-controls">
-            <button id="prevBtn">Previous</button>
-            <button id="nextBtn">Next</button>
-        </div>
+       
 
         <div class="product-slider">
+        <div class="slider-controls">
+            <button class="slide-btn" id="prevBtn">&#8249;</button>
+            <button class="slide-btn" id="nextBtn">&#8250;</button>
+        </div>
             <ul class="product-section-item-wrapper">
+           
                 <?php foreach ($product_list as $product): ?>
                     <li class="product-item">
                         <div class="product-image">
@@ -431,6 +525,18 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                 updateSliderPosition();
             }
         });
+
+
+        function navigateToPage() {
+        const dropdown = document.getElementById("product-dropdown");
+        const selectedValue = dropdown.value;
+        
+        if (selectedValue) {
+            window.location.href = selectedValue; 
+        }
+    }
+        
+
 
     </script>
 </body>

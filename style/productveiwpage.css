@@ -121,3 +121,83 @@ button.add-to-cart:hover {
     border-radius: 4px;
     z-index: +1;
 }
+
+/* feed back section*/
+/* Container styling */
+.feedback-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+}
+
+.feedback-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+   
+}
+
+/* Feedback card styling */
+.feedback-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 60%;
+    
+}
+
+.feedback-content {
+    flex-grow: 1;
+}
+
+.feedback-content h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.feedback-content p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Star rating */
+.star-rating {
+    color: #f39c12; /* Star color */
+    font-size: 18px;
+}
+
+.feedback-card img {
+    width: 90px;
+    height: 90px;
+   
+    margin-left: 15px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Pop-up container that appears on hover */
+.feedback-card:hover .popup-image {
+    display: block;
+}
+
+.popup-image {
+    display: none;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    width: 200px !important;  /* Ensures the image enlarges */
+    height: 200px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    z-index: 10;
+}

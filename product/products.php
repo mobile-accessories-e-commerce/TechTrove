@@ -2,6 +2,12 @@
 session_start();
 include '../connect.php';
 
+
+
+
+function storeSearchQuary($input){
+    
+}
 // Fetch all products with categories
 $products_query = "
     SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity
@@ -21,6 +27,13 @@ $product_category_result = $con->query($product_category_query);
 $product_category_list = array();
 while ($row = mysqli_fetch_assoc($product_category_result)) {
     $product_category_list[] = $row;
+}
+
+$search_value ="";
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    if(isset($_POST['search_value'])){
+        $search_value = $_POST['search_value'];
+    }
 }
 ?>
 
@@ -51,7 +64,7 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
         </div>
         <div class="search-container">
             <form action="javascript:void(0);" class="search">
-                <input type="text" id="search" placeholder="Search products..." />
+                <input type="text" id="search" placeholder="Search products..." value="<?php echo $search_value; ?>" />
                 <button id="search-btn" type="button" onclick="searchProducts()">Search</button>
             </form>
         </div>
@@ -134,7 +147,12 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
                 if (xhr.status === 200) {
                     let products = JSON.parse(xhr.responseText);
                     let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
-
+                    if(products == "false"){
+                        const xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}`, true);
+                        xhr2.send();
+                        updateContent +=`<h1>No product found try different keyword</h1>`;
+                    }else{
                     if (products.length > 0) {
                         products.forEach(function (product) {
                             updateContent += `
@@ -157,6 +175,7 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
                     } else {
                         updateContent += `<p>No products found</p>`;
                     }
+                }
 
                     updateContent += `</ul>`;
                     main_container.innerHTML = updateContent;
@@ -207,6 +226,14 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
 
             xhr.send();
         }
+
+
+        window.onload = function() {
+        const searchTerm = document.getElementById('search').value;
+        if (searchTerm) {
+            searchProducts();  // Automatically call searchProducts to display results
+        }
+    };
     </script>
 </body>
 
