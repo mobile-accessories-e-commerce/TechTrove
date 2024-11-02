@@ -70,138 +70,6 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <link rel="stylesheet" href="../style/dashbord.css">
 
     <style>
-
-
-
-        /* nav bar style */
-        .nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fffff; /* Blue background */
-    padding: 2px 40px;
-}
-
-.nav-bar-logo img {
-    flex:2;
-    display: block;
-}
-
-.search-container {
-
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.search-form {
-   position: relative;
-    display: flex;
-    align-items: center;
-    
-}
-
-.search-form input[type="text"] {
-    
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 5px 6px 6px rgba(0,0,0,0.1);
-    border-style: solid;
-    border-color: gray;
-    border-width: 1px;
-    width: 500px;
-       
-    
-}
-#search-btn{
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-    
-    
-    
-}
-#search-btn svg{
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-    margin-top: 0;
-    cursor: pointer;
-    transform: translate(3px, -13px); /* Move right by 50px and down by 20px */
-    
-}
-
-
-
-#search-btn:hover {
-    
-    background-color: gray; 
-    border: none;
-}
-.account-icon{
-    margin-right: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.account-icon p{
-    font-size: 14px;
-}
-
-
-
-
-
-
-.nav-bar-link select {
-    cursor: pointer;
-    flex: 3;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    background-color:  white; /* White background for dropdown */
-    color: #333; /* Dark text color */
-}
-
-
-
-/* Style for option elements with icons */
-.nav-bar-link select option {
-    padding: 10px;
-}
-
-
-.product-section-container {
-            max-width: 980px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .product-slider {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
-        }
-
-        .product-section-item-wrapper {
-            display: flex;
-            transition: transform 0.5s ease;
-            width: 100%;
-        }
-
-        .product-item {
-            flex: 1 0 33.333%;
-            box-sizing: border-box;
-            padding: 10px;
-        }
-
-        .slider-controls {
-            margin: 10px 0;
-        }
         
     </style>
 
@@ -219,28 +87,35 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         <div class="search-container">
             <form action="../product/products.php" method="post" class="search-form">
                 <input type="text" id="search" name="search_value" placeholder="Search products...">
-                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" ><g class="style-scope yt-icon"><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z" class="style-scope yt-icon"></path></g></svg>
+                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37"
+                        preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon">
+                        <g class="style-scope yt-icon">
+                            <path
+                                d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
+                                class="style-scope yt-icon"></path>
+                        </g>
+                    </svg>
                 </button>
             </form>
-            
+
             <div class="cart">
                 <a href="../cart/cartlandingpage.php">
-                <img src="../images/cart.png" alt="cart">
+                    <img src="../images/cart.png" alt="cart">
                 </a>
             </div>
-               
-                
-           
+
+
+
         </div>
         </div>
 
         <div class="nav-bar-link">
 
-        <div class="account-icon">
-            
-            <img src="../images/user.png" alt="Account" width="40" height="40">
-            <p>Account</p>
-        </div>
+            <div class="account-icon">
+
+                <img src="../images/user.png" alt="Account" width="40" height="40">
+                <p>Account</p>
+            </div>
             <!-- <select id="product-dropdown" onchange="navigateToPage()">
                 <option value="">Account</option>
                 <option value="../product/products.php">🛍️ Products</option>
@@ -493,16 +368,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
      <?php foreach ($service_category_list as $catogory): ?>
-                <div class="collection-item">
-                    <div class="collection-icon">
-                        <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-            <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-            <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-            </svg></a>
+                    <div class="collection-item">
+                        <div class="collection-icon">
+                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+                <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+                </svg></a>
+                        </div>
+                        <span class="collection-name"><?php echo $catogory['name'] ?></span>
                     </div>
-                    <span class="collection-name"><?php echo $catogory['name'] ?></span>
-                </div>
     <?php endforeach; ?>`
 
         }
@@ -512,16 +387,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
     <?php foreach ($product_category_list as $catogory): ?>
-                <div class="collection-item">
-                    <div class="collection-icon">
-                        <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-            <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-            <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-            </svg></a>
+                    <div class="collection-item">
+                        <div class="collection-icon">
+                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+                <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+                </svg></a>
+                        </div>
+                        <span class="collection-name"><?php echo $catogory['name'] ?></span>
                     </div>
-                    <span class="collection-name"><?php echo $catogory['name'] ?></span>
-                </div>
     <?php endforeach; ?>
     `
         }
