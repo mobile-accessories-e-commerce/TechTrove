@@ -17,7 +17,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #04609e;
 }
 
 .row {
@@ -81,6 +81,22 @@ h1 {
 
 .button:hover {
     background-color: #45a049;
+}
+
+
+video{
+    width: 200px;
+    margin-left: 500px;
+    
+}
+.container p{
+    font-size: 15px;
+    text-align: center;
+    color: #025981;
+}
+.container a:hover{
+    color: rgb(236, 4, 4);
+
 }
 
 .quantity_container {

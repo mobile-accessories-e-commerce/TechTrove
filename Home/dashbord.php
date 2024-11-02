@@ -70,6 +70,124 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <link rel="stylesheet" href="../style/dashbord.css">
 
     <style>
+        .product-section-container {
+            max-width: 980px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .product-slider {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        .product-section-item-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 100%;
+        }
+
+        .product-item {
+            flex: 1 0 33.333%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .slider-controls {
+            margin: 10px 0;
+        }
+
+
+
+        /* nav bar style */
+        .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fffff; /* Blue background */
+    padding: 2px 40px;
+}
+
+.nav-bar-logo img {
+    flex:2;
+    display: block;
+}
+
+.search-container {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    border: solid;
+    border-color: black;
+    border-radius: 4px;
+    outline: black;
+    width: 500px; /* Search bar takes up 50% width */
+}
+
+.search-form button {
+    background-color: #0056b3; /* Darker blue for button */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+}
+
+.search-form button:hover {
+    background-color: #004494; /* Even darker blue on hover */
+}
+
+.cart {
+    position: relative;
+}
+
+.cart a {
+    font-size: 1.5em;
+    color: white;
+    text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+.nav-bar-link select {
+    cursor: pointer;
+    flex: 3;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    background-color:  white; /* White background for dropdown */
+    color: #333; /* Dark text color */
+}
+
+
+
+/* Style for option elements with icons */
+.nav-bar-link select option {
+    padding: 10px;
+}
 
 
     </style>
@@ -88,19 +206,26 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         <div class="search-container">
             <form action="../product/products.php" method="post" class="search-form">
                 <input type="text" id="search" name="search_value" placeholder="Search products...">
-                <button id="search-btn" type="submit">🔍</button>
+                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" ><g class="style-scope yt-icon"><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z" class="style-scope yt-icon"></path></g></svg>
+                </button>
             </form>
-
+            
             <div class="cart">
                 <a href="../cart/cartlandingpage.php">
-                    &#x1F6D2;
+                &#x1F6D2;   
                     <span class="cart-count">3</span>
                 </a>
             </div>
         </div>
 
         <div class="nav-bar-link">
-            <select id="product-dropdown" onchange="navigateToPage()">
+
+        <div class="account-icon">
+            
+            <img src="../images/user.png" alt="Account" width="40" height="40">
+            <p>Account</p>
+        </div>
+            <!-- <select id="product-dropdown" onchange="navigateToPage()">
                 <option value="">Account</option>
                 <option value="../product/products.php">🛍️ Products</option>
                 <option value="../service/services.php">🛠️ Services</option>
@@ -109,7 +234,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                 <option value="../serviceprovider/servicesignup.php">🤝 Service Provider Signup</option>
                 <option value="../userprofile.php">👤 Profile</option>
                 <option value="../authentication/logout.php">🚪 LogOut</option>
-            </select>
+            </select> -->
         </div>
     </nav>
 

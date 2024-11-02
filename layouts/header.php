@@ -23,59 +23,59 @@
 
 .search-container {
 
-    display: flex;
-    align-items: center;
-    gap: 20px;
+display: flex;
+align-items: center;
+gap: 20px;
 }
 
 .search-form {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+position: relative;
+display: flex;
+align-items: center;
+
 }
 
 .search-form input[type="text"] {
-    padding: 10px;
-    border: solid;
-    border-color: black;
-    border-radius: 4px;
-    outline: black;
-    width: 500px; /* Search bar takes up 50% width */
+
+padding: 10px;
+border-radius: 4px;
+box-shadow: 5px 6px 6px rgba(0,0,0,0.1);
+border-style: solid;
+border-color: gray;
+border-width: 1.5px;
+width: 500px; /* Search bar takes up 50% width */
+height: 21px;
+font-size: 15px;
+
+}
+#search-btn{
+position: absolute;
+right: 0;
+width: 41px;
+height: 42px;
+
+
+
+}
+#search-btn svg{
+position: absolute;
+right: 0;
+width: 41px;
+height: 42px;
+margin-top: 0;
+transform: translate(3px, -13px); /* Move right by 50px and down by 20px */
+
 }
 
-.search-form button {
-    background-color: #0056b3; /* Darker blue for button */
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    color: white;
+
+
+#search-btn:hover {
+
+background-color: gray; 
+border: none;
+cursor: pointer;
 }
 
-.search-form button:hover {
-    background-color: #004494; /* Even darker blue on hover */
-}
-
-.cart {
-    position: relative;
-}
-
-.cart a {
-    font-size: 1.5em;
-    color: white;
-    text-decoration: none;
-}
-
-.cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: red;
-    color: white;
-    font-size: 0.8em;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
 
 .nav-bar-link select {
     cursor: pointer;
@@ -108,13 +108,12 @@
         <div class="search-container">
             <form action="../product/products.php" method="post" class="search-form">
                 <input type="text" id="search" name="search_value" placeholder="Search products...">
-                <button id="search-btn" type="submit">🔍</button>
+                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" ><g class="style-scope yt-icon"><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z" class="style-scope yt-icon"></path></g></svg></button>
             </form>
 
             <div class="cart">
                 <a href="../cart/cartlandingpage.php">
-                &#x1F6D2;   
-                    <span class="cart-count">3</span>
+                <img src="../images/cart.png" alt="cart">
                 </a>
             </div>
         </div>
