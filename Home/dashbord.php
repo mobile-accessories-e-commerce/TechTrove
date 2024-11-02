@@ -168,7 +168,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     border: none;
 }
 .account-icon{
-    margin-right: 60px;
+    margin-right: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -176,30 +176,77 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 .account-icon p{
     font-size: 14px;
 }
+/* Container for account icon and dropdown */
+.account-container {
+    position: relative;
+    display: inline-block;
+}
 
-
-
-
-
-
-.nav-bar-link select {
+/* Account icon styling */
+.account-icon img {
     cursor: pointer;
-    flex: 3;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 100%; /* Position below the icon */
+    right: 0; /* Align to the right of the icon */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Links inside the dropdown */
+.dropdown-menu a {
+    display: block;
     padding: 10px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    background-color:  white; /* White background for dropdown */
-    color: #333; /* Dark text color */
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
+
+/* Show dropdown on hover */
+.account-container:hover .dropdown-menu {
+    display: block;
+}
+.nav-bar-link li{
+    display: flex;
+    align-items: center;
+   
+    
+
+}
+.nav-bar-link a{
+    font-size: 16px;
+    
+}
+.nav-sp-link{
+    color: rgb(64, 105, 225);
+}
+
+.nav-sp-link:hover{
+    color: rgb(64,64,64);
 }
 
 
 
-/* Style for option elements with icons */
-.nav-bar-link select option {
-    padding: 10px;
-}
+
+
+
+
+
+
 
         
     </style>
@@ -231,12 +278,28 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         </div>
 
         <div class="nav-bar-link">
-
+            <ul>
+            <li ><a class="nav-sp-link" href="../product/products.php">Products</a></li>
+            <li ><a class="nav-sp-link" href="../service/services.php">Services</a></li>
+                <li>
+        <div class="account-container">
         <div class="account-icon">
             
             <img src="../images/user.png" alt="Account" width="40" height="40">
-            <p>Account</p>
+            <p class="nav-sp-link" >Account</p>
+         </div>
+        <div class="dropdown-menu">
+            <a href="../userprofile.php">My Profile</a>
+            <a href="../userorders/userorders.php">My Orders</a>
+            <a href="../sellers/sellersignup.php">Seller Signup</a>
+            <a href="../serviceprovider/servicesignup.php">Service Provider Signup</a>
+            <a href="../authentication/logout.php">Log Out</a>
+            
         </div>
+        </div>
+        </li>
+               
+        </ul>
             <!-- <select id="product-dropdown" onchange="navigateToPage()">
                 <option value="">Account</option>
                 <option value="../product/products.php">🛍️ Products</option>
