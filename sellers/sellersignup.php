@@ -80,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            
         }
 
         .container {
@@ -121,7 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
 <body>
     <div class="container">
-        <h2>Seller Signup</h2>
+    
+
+    <h1>Become A <img src="../images/elife_logo.png" alt="elife" width="140" height="70"> Seller Today!</h1>
+    
+
+    <div class="form-container">
+    
+        
 
         <!--check for error-->
         <?php if (!empty($error)): ?>
@@ -142,16 +148,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" id="phone_number" name="phone_number" required>
 
-                <label for="bank_ac_num">Bank Account Number:</label>
-                <input type="text" id="bank_ac_num" name="bank_ac_num" required>
-
-                <label for="store_description">Store Description:</label>
-                <textarea id="store_description" name="store_description" required></textarea>
 
                 <input type="submit" value="Sign Up">
             </form>
         <?php endif; ?>
+        </div>
     </div>
+
 </body>
 
 </html>

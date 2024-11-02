@@ -270,9 +270,6 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     </div>
 
-    <div class="marquee-container">
-  <span class="marquee-text">&#9734;&nbsp;&#9734;&nbsp;Place you get your Best item Free Shipping &nbsp;&#9734;&nbsp;&#9734;</span>
-</div>
     <!--Best Sellers -product seection-->
     <div class="product-section-container">
         <h1>Best Selling Product</h1>
@@ -389,11 +386,11 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                 </li>
             </ul>
 
-            <p>
-                Coppyright &#xA9; 2024 eLife. All Right Receved
-            </p>
-        </div>
-    </footer>
+        <p>
+            Coppyright &#xA9; 2024 eLife. All Right Receved
+        </p>
+    </div>
+</footer>
 
 
     <script>
