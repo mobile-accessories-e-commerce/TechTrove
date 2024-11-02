@@ -27,9 +27,11 @@ while ($row = mysqli_fetch_assoc($service_category_result)) {
 
 
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name ,pro.discount
     FROM products p
-    JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id LIMIT 10
+    JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
+    LEFT JOIN promotions pro ON p.product_id = pro.product_id 
+    LIMIT 10
 ";
 
 $services_query = "
@@ -298,9 +300,15 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                                 <?php echo $product['product_name'] ?>
                             </span>
                             <div class="product-purchase">
-                                <span class="product-price">
-                                    <?php echo "$" . $product['price'] ?>
+                            <?php if($product['discount'] == null):?>
+                            <span class="product-price">
+                                <?php echo "$" . $product['price']; ?>
                                 </span>
+                        <?php endif;?>
+                                <?php if($product['discount'] != null):?>
+                                    <span>Discount <?php echo $product['discount']?>%</span><br>
+                                    <span class="product-price">Price After Discount <?php echo "$".($product['price']-(($product['price']/100)*$product['discount']))?></span>
+                                <?php endif;?>
                                 <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                 </a>

@@ -5,14 +5,16 @@ include '../connect.php';
 
 
 
-function storeSearchQuary($input){
-    
+function storeSearchQuary($input)
+{
+
 }
 // Fetch all products with categories
 $products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity
+    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity,pro.discount
     FROM products p
     JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
+    LEFT JOIN promotions pro ON p.product_id = pro.product_id
 ";
 $products_result = $con->query($products_query);
 
@@ -29,9 +31,9 @@ while ($row = mysqli_fetch_assoc($product_category_result)) {
     $product_category_list[] = $row;
 }
 
-$search_value ="";
-if($_SERVER['REQUEST_METHOD']==='POST'){
-    if(isset($_POST['search_value'])){
+$search_value = "";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['search_value'])) {
         $search_value = $_POST['search_value'];
     }
 }
@@ -122,9 +124,17 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                                 echo "This is out of stock"; ?>
                         </span>
                         <div class="product-purchase">
-                            <span class="product-price">
-                                <?php echo "$" . $product['price']; ?>
-                            </span>
+                            <?php if ($product['discount'] == null): ?>
+                                <span class="product-price">
+                                    <?php echo "$" . $product['price']; ?>
+                                </span>
+                            <?php endif; ?>
+                            <?php if ($product['discount'] != null): ?>
+                                <span>Discount <?php echo $product['discount'] ?>%</span><br>
+                                <span class="product-price">Price After Discount
+                                    <?php echo "$" . ($product['price'] - (($product['price'] / 100) * $product['discount'])) ?></span>
+                            <?php endif; ?>
+
                             <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                                 <button class="blue-btn add-to-cart">View Product</button>
                             </a>
@@ -147,15 +157,17 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 if (xhr.status === 200) {
                     let products = JSON.parse(xhr.responseText);
                     let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
-                    if(products == "false"){
+                    if (products == "false") {
                         const xhr2 = new XMLHttpRequest();
                         xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}`, true);
                         xhr2.send();
-                        updateContent +=`<h1>No product found try different keyword</h1>`;
-                    }else{
-                    if (products.length > 0) {
-                        products.forEach(function (product) {
-                            updateContent += `
+                        updateContent += `<h1>No product found try different keyword</h1>`;
+                    } else {
+                        if (products.length > 0) {
+                            products.forEach(function (product) {
+                                let discount = product['discount'] != null ? product['discount'] : "none";
+                                let price = product['discount'] != null ? (product['price'] - ((product['price'] / 100) * product['discount'])) : product['price'];
+                                updateContent += `
                     <li class="product-item">
                         <div class="product-image">
                             <img src="../images/${product['image_link']}" alt="smart watch">
@@ -163,7 +175,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                         <div class="product-text">
                             <span class="product-title">${product['product_name']}</span>
                             <div class="product-purchase">
-                                <span class="product-price">$${product['price']}</span>
+                                <span class="product-price">$${price}</span>
+                                <span>Discount ${discount}</span>
                                 <a href="productveiwpage.php?product_id=${product['product_id']}">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                     
@@ -171,11 +184,11 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                             </div>
                         </div>
                     </li>`;
-                        });
-                    } else {
-                        updateContent += `<p>No products found</p>`;
+                            });
+                        } else {
+                            updateContent += `<p>No products found</p>`;
+                        }
                     }
-                }
 
                     updateContent += `</ul>`;
                     main_container.innerHTML = updateContent;
@@ -228,12 +241,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         }
 
 
-        window.onload = function() {
-        const searchTerm = document.getElementById('search').value;
-        if (searchTerm) {
-            searchProducts();  // Automatically call searchProducts to display results
-        }
-    };
+        window.onload = function () {
+            const searchTerm = document.getElementById('search').value;
+            if (searchTerm) {
+                searchProducts();  // Automatically call searchProducts to display results
+            }
+        };
     </script>
 </body>
 
