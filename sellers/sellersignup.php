@@ -77,17 +77,117 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Signup</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-        label, input, textarea { display: block; width: 100%; margin-bottom: 10px; }
-        input[type="submit"] { width: auto; padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #218838; }
-        .error { color: red; margin-bottom: 10px; }
+        
+
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+           
+           
+            
+        }
+        
+
+        h1{
+            margin-left: 370px;
+            font-size: 70px;
+            color: #1A3C60;
+            margin-top: 30px;
+            
+            
+        }
+        
+        
+        .container{
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../images/2.jpg');
+            background-size:  100vw ;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .form-container{
+            position: absolute;
+            right: 100px;
+            bottom:70px;
+           
+            
+        }
+        
+
+        
+
+        form {
+            background: #fff; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.2); 
+            width: 400px; 
+            
+        }
+
+        input[type="text"] ,input[type="email"]{
+            width: 100%;
+            padding: 10px; 
+            margin: 10px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 10px;
+            box-sizing: border-box; 
+        }
+
+        input[type="submit"] {
+            background-color: #28a745; 
+            color: white;
+            border: none; 
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px; 
+            transition: background-color 0.3s; 
+            width: 100%
+           
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838; 
+        }
+        .back{
+        position:absolute;
+        left: 40px;
+        top: 40px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 4px;
+        z-index: +1;
+        
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Seller Signup</h2>
+    
+
+    <h1>Become A <img src="../images/elife_logo.png" alt="elife" width="140" height="70"> Seller Today!</h1>
+    
+
+    <div class="form-container">
+    
+        
 
 <!--check for error-->
         <?php if (!empty($error)): ?>
@@ -108,15 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" id="phone_number" name="phone_number" required>
 
-                <label for="bank_ac_num">Bank Account Number:</label>
-                <input type="text" id="bank_ac_num" name="bank_ac_num" required>
-
-                <label for="store_description">Store Description:</label>
-                <textarea id="store_description" name="store_description" required></textarea>
 
                 <input type="submit" value="Sign Up">
             </form>
         <?php endif; ?>
+        </div>
     </div>
+
 </body>
 </html>

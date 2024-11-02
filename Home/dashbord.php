@@ -180,7 +180,7 @@ while($row = mysqli_fetch_assoc($hero_result)){
 
 <!--Best Sellers -product seection-->
 <div class="product-section-container">
-    <h1>Best Selling Product</h1>
+    <h1>Best Selling Products</h1>
     <span class="product-section-description">
         ctus et netus et malesuada fames aVestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.
     </span>
@@ -284,7 +284,7 @@ while($row = mysqli_fetch_assoc($hero_result)){
         </ul>
 
         <p>
-            Coppyright &#xA9; 2024 eLife. All Right Receved
+            Copyright &#xA9; 2024 eLife. All Right Receved
         </p>
     </div>
 </footer>
