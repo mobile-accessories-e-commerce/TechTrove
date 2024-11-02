@@ -2,7 +2,7 @@
 include "../connect.php";
 
 $sql = "SELECT p.product_id, p.seller_id, p.product_name, p.description, p.image_link,
-               pr.discount, pr.start_date, pr.end_date
+               pr.discount, pr.start_date, pr.end_date , pr.price_after_discount
         FROM products p
         JOIN promotions pr ON p.product_id = pr.product_id";
 

@@ -49,9 +49,9 @@ if (mysqli_num_rows($result) > 0) {
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../style/admindashbord.css">
 
-        <style>
+    <style>
         .modal {
-            display: none; 
+            display: none;
             position: fixed;
             z-index: 1000;
             padding-top: 100px;
@@ -61,6 +61,7 @@ if (mysqli_num_rows($result) > 0) {
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
         }
+
         .modal-content {
             background-color: white;
             margin: auto;
@@ -68,23 +69,25 @@ if (mysqli_num_rows($result) > 0) {
             border: 1px solid #888;
             width: 300px;
         }
+
         .close {
             color: #aaa;
             float: right;
             font-size: 24px;
             font-weight: bold;
         }
+
         .close:hover,
         .close:focus {
             color: #000;
             cursor: pointer;
         }
-    </style> 
+    </style>
 </head>
 
 <body>
 
-<!--form html-->
+    <!--form html-->
 
 
 
