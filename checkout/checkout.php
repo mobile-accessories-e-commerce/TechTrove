@@ -17,13 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         p.product_name,
         p.price,
         p.image_link,
-        cpi.quantity
+        cpi.quantity,
+         pro.discount,
+        pro.price_after_discount
     FROM 
         carts AS c
     JOIN 
         cart_product_items AS cpi ON c.cart_id = cpi.cart_id
     JOIN 
         products AS p ON cpi.product_id = p.product_id
+    LEFT JOIN 
+        promotions AS pro ON p.product_id = pro.product_id
     WHERE 
         c.cart_id = ?
     ";
@@ -40,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
 
     foreach ($cart_items as $item) {
+        if ($item['discount'] !== null && $item['discount'] !== "null") {
+            $price = $item['price_after_discount'];
+        } else {
+            $price = $item['price'];
+        }
         $lineItems[] = [
             'price_data' => [
                 'currency' => 'usd',
@@ -47,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     'name' => $item['product_name'],
                     'images' => [$item['image_link']],
                 ],
-                'unit_amount' => $item['price'] * 100,
+                'unit_amount' => $price * 100,
             ],
             'quantity' => $item['quantity'],
         ];

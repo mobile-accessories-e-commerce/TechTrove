@@ -255,9 +255,9 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
 <body>
 
-<nav class="nav-bar">
+    <nav class="nav-bar">
         <div class="nav-bar-logo">
-            <a href="index.php">
+            <a href="#">
                 <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
             </a>
         </div>
@@ -265,15 +265,25 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         <div class="search-container">
             <form action="../product/products.php" method="post" class="search-form">
                 <input type="text" id="search" name="search_value" placeholder="Search products...">
-                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" ><g class="style-scope yt-icon"><path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z" class="style-scope yt-icon"></path></g></svg>
+                <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37"
+                        preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon">
+                        <g class="style-scope yt-icon">
+                            <path
+                                d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"
+                                class="style-scope yt-icon"></path>
+                        </g>
+                    </svg>
                 </button>
             </form>
-            
+
             <div class="cart">
                 <a href="../cart/cartlandingpage.php">
-                <img src="../images/cart.png" alt="cart"></a>
-                
-           
+                    <img src="../images/cart.png" alt="cart">
+                </a>
+            </div>
+
+
+
         </div>
         </div>
 
@@ -300,6 +310,12 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         </li>
                
         </ul>
+
+            <div class="account-icon">
+
+                <img src="../images/user.png" alt="Account" width="40" height="40">
+                <p>Account</p>
+            </div>
             <!-- <select id="product-dropdown" onchange="navigateToPage()">
                 <option value="">Account</option>
                 <option value="../product/products.php">🛍️ Products</option>
@@ -315,21 +331,23 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!-- Top-->
     <div class="home-top-container">
-        
+
         <div class="home-top-wrapper" id="home-top-wrapper">
 
         </div>
 
     </div>
 
-  
+
 
     <!---our collection/type of product selling-->
-    <div class="collection-header"> <h1>Our Collection</h1></div>
-   
-    <div class="collection-container">
+    <div class="collection-header">
+        <h1>Our Collection</h1>
+    </div>
 
-       
+    <div class="collection-container scroll-animate">
+
+
         <div class="catogory">
             <p onclick="loadProductCatogory()" class="cat-btn">Product</p>
             <p onclick="loadServiceCatogory()" class="cat-btn">Service</p>
@@ -355,7 +373,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     </div>
 
     <!--Best Sellers -product seection-->
-    <div class="product-section-container">
+    <div class="product-section-container scroll-animate">
         <h1>Best Selling Product</h1>
         <span class="product-section-description">
             ctus et netus et malesuada fames aVestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet,
@@ -363,15 +381,15 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             leo.
         </span>
 
-       
+
 
         <div class="product-slider">
-        <div class="slider-controls">
-            <button class="slide-btn" id="prevBtn">&#8249;</button>
-            <button class="slide-btn" id="nextBtn">&#8250;</button>
-        </div>
+            <div class="slider-controls">
+                <button class="slide-btn" id="prevBtn">&#8249;</button>
+                <button class="slide-btn" id="nextBtn">&#8250;</button>
+            </div>
             <ul class="product-section-item-wrapper">
-           
+
                 <?php foreach ($product_list as $product): ?>
                     <li class="product-item">
                         <div class="product-image">
@@ -382,15 +400,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                                 <?php echo $product['product_name'] ?>
                             </span>
                             <div class="product-purchase">
-                            <?php if($product['discount'] == null):?>
-                            <span class="product-price">
-                                <?php echo "$" . $product['price']; ?>
-                                </span>
-                        <?php endif;?>
-                                <?php if($product['discount'] != null):?>
-                                    <span>Discount <?php echo $product['discount']?>%</span><br>
-                                    <span class="product-price">Price After Discount <?php echo "$".($product['price']-(($product['price']/100)*$product['discount']))?></span>
-                                <?php endif;?>
+                                <?php if ($product['discount'] == null): ?>
+                                    <span class="product-price">
+                                        <?php echo "$" . $product['price']; ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php if ($product['discount'] != null): ?>
+                                    <span>Discount <?php echo $product['discount'] ?>%</span><br>
+                                    <span class="product-price">Price After Discount
+                                        <?php echo "$" . ($product['price'] - (($product['price'] / 100) * $product['discount'])) ?></span>
+                                <?php endif; ?>
                                 <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                                     <button class="blue-btn add-to-cart">View Product</button>
                                 </a>
@@ -404,7 +423,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!--IPAD PROMO-->
 
-    <div class="promo-container">
+    <div class="promo-container scroll-animate">
         <div class="promo-box">
             <div class="promo-image">
                 <img src="../images/07.png" alt="i pad">
@@ -427,7 +446,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <!--Footer-->
 
-    <footer>
+    <footer class="scroll-animate">
         <div class="footer-top">
             <img src="../images/elife_logo.png" width="220px" height="110px">
 
@@ -476,11 +495,11 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                 </li>
             </ul>
 
-        <p>
-            Coppyright &#xA9; 2024 eLife. All Right Receved
-        </p>
-    </div>
-</footer>
+            <p>
+                Coppyright &#xA9; 2024 eLife. All Right Receved
+            </p>
+        </div>
+    </footer>
 
 
     <script>
@@ -549,16 +568,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
      <?php foreach ($service_category_list as $catogory): ?>
-            <div class="collection-item">
-                <div class="collection-icon">
-                    <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-        <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-        <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-        </svg></a>
-                </div>
-                <span class="collection-name"><?php echo $catogory['name'] ?></span>
-            </div>
+                    <div class="collection-item">
+                        <div class="collection-icon">
+                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+                <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+                </svg></a>
+                        </div>
+                        <span class="collection-name"><?php echo $catogory['name'] ?></span>
+                    </div>
     <?php endforeach; ?>`
 
         }
@@ -568,16 +587,16 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             const item_wraper = document.getElementById("collection-item-wrapper")
             item_wraper.innerHTML = `
     <?php foreach ($product_category_list as $catogory): ?>
-            <div class="collection-item">
-                <div class="collection-icon">
-                    <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
-        <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
-        <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
-        </svg></a>
-                </div>
-                <span class="collection-name"><?php echo $catogory['name'] ?></span>
-            </div>
+                    <div class="collection-item">
+                        <div class="collection-icon">
+                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
+                <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
+                <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+                </svg></a>
+                        </div>
+                        <span class="collection-name"><?php echo $catogory['name'] ?></span>
+                    </div>
     <?php endforeach; ?>
     `
         }
@@ -615,15 +634,59 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
 
         function navigateToPage() {
-        const dropdown = document.getElementById("product-dropdown");
-        const selectedValue = dropdown.value;
-        
-        if (selectedValue) {
-            window.location.href = selectedValue; 
-        }
-    }
-        
+            const dropdown = document.getElementById("product-dropdown");
+            const selectedValue = dropdown.value;
 
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-active');
+                        observer.unobserve(entry.target);  // Stop observing once the animation is triggered
+                    }
+                });
+            }, observerOptions);
+
+            // Select all sections to animate on scroll
+            document.querySelectorAll('.scroll-animate').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const collectionContainer = document.querySelector('.collection-container');
+            const backgroundImages = [
+                '../images/cat-slider1.jpg',
+                '../images/cat-slider2.jpg',
+                '../images/cat-slider3.jpg',
+                '../images/cat-slider4.jpg'
+            ];
+            let currentImageIndex = 0;
+
+            // Function to update background image
+            function updateBackgroundImage() {
+                collectionContainer.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
+                currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+            }
+
+            // Initial background setup
+            updateBackgroundImage();
+
+            // Set interval to change background image every 5 seconds
+            setInterval(updateBackgroundImage, 5000);  // Adjust as needed
+        });
 
     </script>
 </body>

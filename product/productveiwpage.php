@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!$result) {
             header("location:../Home/dashbord.php");
         }
-        $query = "  SELECT * FROM products p
+        $query = "  SELECT p.image_link,p.price,p.product_id,p.description,pro.discount,p.product_name,pro.price_after_discount FROM products p
                     LEFT JOIN promotions pro ON p.product_id = pro.product_id
                     WHERE p.product_id=?";
         $stmt = $con->prepare($query);
@@ -55,8 +55,10 @@ while($row=mysqli_fetch_assoc($result)){
 
 <body>
     <div><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
+    
 
     <div class="main-container">
+   
         <div class="container">
             <div class="image">
                 <img src="../images/<?php echo $product['image_link']; ?>" alt="Product Image">
@@ -69,10 +71,10 @@ while($row=mysqli_fetch_assoc($result)){
                 <?php if($product['discount'] != null):?>
                                    <div>
                                         <span>Discount <?php echo $product['discount']?>%</span><br>
-                                        <span class="product-price">Price After Discount <?php echo "$".($product['price']-(($product['price']/100)*$product['discount']))?></span>
+                                        <span class="product-price">Price After Discount <?php echo "$".$product['price_after_discount']?></span>
 
                                     </div> 
-                                <?php endif;?>
+                 <?php endif;?>
                            
 
                 <div class="quantity">
@@ -86,7 +88,8 @@ while($row=mysqli_fetch_assoc($result)){
                 <a href="../cart/add_to_cart.php?product_id=<?php echo $product['product_id']; ?>&quantity=1"
                     id="addToCartLink">
                     <button class="add-to-cart">Add to Cart</button>
-                </a>
+                   
+                </a> 
             </div>
         </div>
     </div>
@@ -125,20 +128,46 @@ while($row=mysqli_fetch_assoc($result)){
         const price = document.getElementById('price');
 
         function increaseQuantity() {
-            let currentValue = parseInt(quantityInput.value);
-            quantityInput.value = currentValue + 1;
-            price.innerHTML = (<?php echo ($product['price']); ?> * quantityInput.value);
-            updateCartLink();
-        }
+    let currentValue = parseInt(quantityInput.value);
+    quantityInput.value = currentValue + 1;
+
+    // Use echo to properly output PHP values
+    let discount = <?php echo json_encode($product['discount']); ?>; 
+    let priceValue;
+
+    // Use strict equality check for null
+    if (discount === null) {
+        priceValue = <?php echo json_encode($product['price']); ?>; // Use the original price
+    } else {
+        priceValue = <?php echo json_encode($product['price_after_discount']); ?>; // Use the discounted price
+    }
+
+    // Update the price display
+    price.innerHTML = (priceValue * quantityInput.value).toFixed(2);
+    
+    updateCartLink();
+}
+
 
         function decreaseQuantity() {
             let currentValue = parseInt(quantityInput.value);
             if (currentValue > 1) {
                 quantityInput.value = currentValue - 1;
-                price.innerHTML = <?php echo ($product['price']); ?> * quantityInput.value;
-                updateCartLink();
-            }
-        }
+            let discount = <?php echo json_encode($product['discount']); ?>; 
+    let priceValue;
+
+    // Use strict equality check for null
+    if (discount === null) {
+        priceValue = <?php echo json_encode($product['price']); ?>; // Use the original price
+    } else {
+        priceValue = <?php echo json_encode($product['price_after_discount']); ?>; // Use the discounted price
+    }
+
+    // Update the price display
+    price.innerHTML = (priceValue * quantityInput.value).toFixed(2);
+    
+    updateCartLink();
+}}
 
         function updateCartLink() {
             const productId = "<?php echo $product['product_id']; ?>";

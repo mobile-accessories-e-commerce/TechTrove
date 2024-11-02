@@ -1,36 +1,33 @@
 function addCategory() {
-    const main_container = document.getElementById('main_container');
-    const xhr = new XMLHttpRequest();
-    let catogoryHTML = `<div class="cat-container"><h1>Product Catogory</h1><table>
+  const main_container = document.getElementById("main_container");
+  const xhr = new XMLHttpRequest();
+  let catogoryHTML = `<div class="cat-container"><h1>Product Catogory</h1><table>
                         <tr>
                             <th>cat_id</th>
                             <th>Name</th>
                             
                         </tr>`;
 
-    xhr.open('GET', 'getcatogory.php?type=product', true); 
+  xhr.open("GET", "getcatogory.php?type=product", true);
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            
-            const data = JSON.parse(xhr.responseText);
-            
-        
-            const productCategories = data.productCategories;
-            const serviceCategories = data.serviceCategories;
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
 
-        
-            productCategories.forEach(function(cat) {
-                    catogoryHTML += `
+      const productCategories = data.productCategories;
+      const serviceCategories = data.serviceCategories;
+
+      productCategories.forEach(function (cat) {
+        catogoryHTML += `
                         <tr>
                             <td>${cat.product_cat_id}</td>
                             <td>${cat.name}</td>
                             
                         </tr>
                     `;
-                });
+      });
 
-            catogoryHTML += `</table>
+      catogoryHTML += `</table>
                     <div>
                         <form action='addcatogory.php' method='POST'>
                         <input type='hidden' name='cat_type' value='product'>
@@ -39,15 +36,15 @@ function addCategory() {
                         </form>
                     </div>
             </div>`;
-            
-            catogoryHTML += `<div class="cat-container"><h1>service Catogory</h1> <table>
+
+      catogoryHTML += `<div class="cat-container"><h1>service Catogory</h1> <table>
                         <tr>
                             <th>cat_id</th>
                             <th>Name</th>
                             
                         </tr>`;
-            serviceCategories.forEach(function(cat) {
-                catogoryHTML += `
+      serviceCategories.forEach(function (cat) {
+        catogoryHTML += `
                     
                         <tr>
                             <td>${cat.service_cat_id}</td>
@@ -57,9 +54,9 @@ function addCategory() {
                         
                         
                     `;
-            });
+      });
 
-            catogoryHTML +=`</table>
+      catogoryHTML += `</table>
             <div>
                         <form action='addcatogory.php' method='POST'>
                         <input type='hidden' name='cat_type' value='service'>
@@ -68,18 +65,17 @@ function addCategory() {
                         </form>
                     </div>
             </div>`;
-            main_container.innerHTML = catogoryHTML;  
-        }
-    };
+      main_container.innerHTML = catogoryHTML;
+    }
+  };
 
-
-    xhr.send();
+  xhr.send();
 }
 
-function getAllProduct(){
-    const main_container = document.getElementById('main_container');
+function getAllProduct() {
+  const main_container = document.getElementById("main_container");
 
-    let productsHTML = `<div class="cat-container"><h1>Products</h1><table>
+  let productsHTML = `<div class="cat-container"><h1>Products</h1><table>
                         <tr>
                          <th></th>
                             <th>product name</th>
@@ -94,18 +90,16 @@ function getAllProduct(){
 
           
                         </tr>`;
-    const xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
 
+  xhr.open("GET", "getproduct.php", true);
 
-    xhr.open('GET', 'getproduct.php', true); 
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const product_list = JSON.parse(xhr.responseText);
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            
-            const product_list = JSON.parse(xhr.responseText);
-
-            product_list.forEach(function(product){
-                productsHTML += `
+      product_list.forEach(function (product) {
+        productsHTML += `
                         <tr>
                         <td><img src="../images/${product.image_link}" width="100" height="100"></td>
                         <td>${product.product_name}</td>
@@ -118,21 +112,20 @@ function getAllProduct(){
                         <td>${product.rating}</td>
                         
                         </tr>    
-                `
-            });
-            productsHTML +=`</table>`;
-              main_container.innerHTML = productsHTML;  
-}
+                `;
+      });
+      productsHTML += `</table>`;
+      main_container.innerHTML = productsHTML;
     }
+  };
 
-    xhr.send();
+  xhr.send();
 }
 
+function getSearchKeyword() {
+  const main_container = document.getElementById("main_container");
 
-function getSearchKeyword(){
-    const main_container = document.getElementById('main_container');
-
-    let keyWordHTML = `<div class="cat-container"><h1>Search KeyWord</h1><table>
+  let keyWordHTML = `<div class="cat-container"><h1>Search KeyWord</h1><table>
                         <tr>
                          
                             <th>Id</th>
@@ -140,18 +133,16 @@ function getSearchKeyword(){
                             <th>Quary</th>
                             <th>Search_count</th>
                         </tr>`;
-    const xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
 
+  xhr.open("GET", "getkeyword.php", true);
 
-    xhr.open('GET', 'getkeyword.php', true); 
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const keyword_list = JSON.parse(xhr.responseText);
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            
-            const keyword_list = JSON.parse(xhr.responseText);
-
-            keyword_list.forEach(function(keyword){
-                keyWordHTML += `
+      keyword_list.forEach(function (keyword) {
+        keyWordHTML += `
                         <tr>
                        
                         <td>${keyword.id}</td>
@@ -159,20 +150,20 @@ function getSearchKeyword(){
                         <td>${keyword.quary}</td>
                         <td>${keyword.search_count}</td> 
                         </tr>    
-                `
-            });
-            keyWordHTML +=`</table>`;
-              main_container.innerHTML = keyWordHTML;  
-}
+                `;
+      });
+      keyWordHTML += `</table>`;
+      main_container.innerHTML = keyWordHTML;
     }
+  };
 
-    xhr.send();
+  xhr.send();
 }
 
-function getFeatureProduct(){
-    const main_container = document.getElementById('main_container');
+function getFeatureProduct() {
+  const main_container = document.getElementById("main_container");
 
-    let productsHTML = `<div class="cat-container"><h1>Feature Products</h1><table>
+  let productsHTML = `<div class="cat-container"><h1>Feature Products</h1><table>
                         <tr>
                          <th></th>
                             <th>product_id</th>
@@ -183,45 +174,48 @@ function getFeatureProduct(){
                               <th>status</th>
           
                         </tr>`;
-    const xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
 
+  xhr.open("GET", "getfeatureproduct.php", true);
 
-    xhr.open('GET', 'getfeatureproduct.php', true); 
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const product_list = JSON.parse(xhr.responseText);
 
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            
-            const product_list = JSON.parse(xhr.responseText);
-
-            product_list.forEach(function(product){
-                
-                productsHTML += `
+      product_list.forEach(function (product) {
+        productsHTML += `
                         <tr>
-                        <td><img src="../images/${product.image_link}" width="100" height="100"></td>
+                        <td><img src="../images/${
+                          product.image_link
+                        }" width="100" height="100"></td>
                         <td>${product.product_id}</td>
                         <td>${product.seller_id}</td>
                         <td>${product.title}</td>
                         <td>${product.description}</td>
                         <td>${product.start_date}</td>
-                        <td ><a class="${product.approved == 1 ? "block" : "approve"}" href="changefetureproductstatus.php?id=${product.id}">${product.approved == 1 ? "Block" : "Approved"}</a></td>
+                        <td ><a class="${
+                          product.approved == 1 ? "block" : "approve"
+                        }" href="changefetureproductstatus.php?id=${
+          product.id
+        }">${product.approved == 1 ? "Block" : "Approved"}</a></td>
                        
                         
                         
                         </tr>    
-                `
-            });
-            productsHTML +=`</table>`;
-              main_container.innerHTML = productsHTML;  
+                `;
+      });
+      productsHTML += `</table>`;
+      main_container.innerHTML = productsHTML;
+    }
+  };
+
+  xhr.send();
 }
-        }
 
-    xhr.send();
-}
+function givePromotion() {
+  const main_container = document.getElementById("main_container");
 
-function givePromotion(){
-    const main_container = document.getElementById('main_container');
-
-    let promotionHTML = `<div>
+  let promotionHTML = `<div>
     <button onclick='displayForm()'>Give Promotion</button>
     
                             <div id="myModal" class="modal">
@@ -240,8 +234,8 @@ function givePromotion(){
                                     </form>
                                 </div>
                             </div>
-    `
-     promotionHTML += `<div class="cat-container"><h1>Promotion Products</h1><table>
+    `;
+  promotionHTML += `<div class="cat-container"><h1>Promotion Products</h1><table>
     <tr>
         <th></th>
         <th>Product ID</th>
@@ -250,17 +244,18 @@ function givePromotion(){
         <th>Description</th>
         <th>Discount</th>
         <th>Start Date</th>
-        <th>End Date </th>`
+        <th>End Date </th>
+        <th>Final Price</th>`;
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getPromotionProduct.php', true);
-    
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const product_list = JSON.parse(xhr.responseText);
-    
-                product_list.forEach(function(product) {
-                    promotionHTML += `
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "getPromotionProduct.php", true);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const product_list = JSON.parse(xhr.responseText);
+
+      product_list.forEach(function (product) {
+        promotionHTML += `
                         <tr>
                             <td><img src="../images/${product.image_link}" width="100" height="100"></td>
                             <td>${product.product_id}</td>
@@ -270,68 +265,63 @@ function givePromotion(){
                             <td>${product.discount}%</td>
                             <td>${product.start_date}</td>
                             <td>${product.end_date}</td>
+                            <td>${product.price_after_discount}</td>
                         </tr>
                     `;
-                });
-                promotionHTML += `</table></div></div>`;
-                main_container.innerHTML = promotionHTML;
-               
-            }
-        };
-        xhr.send(); 
-  
+      });
+      promotionHTML += `</table></div></div>`;
+      main_container.innerHTML = promotionHTML;
+    }
+  };
+  xhr.send();
 }
 
-function displayForm(){
-    
-        document.getElementById('myModal').style.display = "block";
-    
-    document.getElementsByClassName('close')[0].onclick = function() {
-        document.getElementById('myModal').style.display = "none";
-    };
-    
-    window.onclick = function(event) {
-        if (event.target == document.getElementById('myModal')) {
-            document.getElementById('myModal').style.display = "none";
+function displayForm() {
+  document.getElementById("myModal").style.display = "block";
+
+  document.getElementsByClassName("close")[0].onclick = function () {
+    document.getElementById("myModal").style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == document.getElementById("myModal")) {
+      document.getElementById("myModal").style.display = "none";
+    }
+  };
+}
+
+function submitForm() {
+  document.getElementById("popupForm").onsubmit = function (event) {
+    event.preventDefault(); // Prevent form from submitting normally
+
+    const product_id = document.getElementById("product_id").value;
+    const discount = document.getElementById("discount").value;
+    const end_date = document.getElementById("end_date").value;
+
+    // Send data via AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      `update_promotion.php?product_id=${product_id}&discount=${discount}&end_date=${end_date}`,
+      true
+    );
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        const messageElement = document.getElementById("message");
+        messageElement.textContent = response.message;
+
+        // Display message in red for errors, green for success
+        if (response.status === "success") {
+          messageElement.style.color = "green";
+        } else {
+          messageElement.style.color = "red";
         }
+      } else {
+        alert("An error occurred while processing your request.");
+      }
     };
-
-
-  
-  
-
-}
-
-
-function submitForm(){
-    document.getElementById('popupForm').onsubmit = function(event) {
-        event.preventDefault(); // Prevent form from submitting normally
-    
-        const product_id = document.getElementById('product_id').value;
-        const discount = document.getElementById('discount').value;
-        const end_date = document.getElementById('end_date').value;
-    
-        // Send data via AJAX
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `update_promotion.php?product_id=${product_id}&discount=${discount}&end_date=${end_date}`, true);
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                const messageElement = document.getElementById('message');
-                messageElement.textContent = response.message;
-    
-                // Display message in red for errors, green for success
-                if (response.status === 'success') {
-                    messageElement.style.color = 'green';
-                } else {
-                    messageElement.style.color = 'red';
-                }
-            } else {
-                alert('An error occurred while processing your request.');
-            }
-        };
     xhr.send();
+  };
 }
-}
-

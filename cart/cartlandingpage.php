@@ -25,13 +25,18 @@ $query = "
         p.price,
         p.image_link,
         cpi.quantity,
-        p.stock_quantity
+        p.stock_quantity,
+        pro.discount,
+        pro.price_after_discount
     FROM 
         carts AS c
     JOIN 
         cart_product_items AS cpi ON c.cart_id = cpi.cart_id
     JOIN 
         products AS p ON cpi.product_id = p.product_id
+    LEFT JOIN 
+        promotions AS pro ON p.product_id = pro.product_id
+
     WHERE 
         c.user_id = ?
 ";
@@ -71,6 +76,11 @@ if ($result->num_rows > 0) {
 
 
                 <?php foreach ($cartItems as $item): ?>
+                    <?php if($item['discount'] !== null && $item['discount'] !== "null"){
+                        $price = $item['price_after_discount'];
+                    } else{
+                        $price = $item['price'];
+                    }?>
                     <div class="card">
                         <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>">
                         <div class="product_detail">
@@ -78,18 +88,22 @@ if ($result->num_rows > 0) {
                         </div>
                         <div class="product_detail">
                             <p>$<?php echo number_format($item['price'], 2); ?></p>
+                            <?php if($item['discount'] != null): ?>
+                                <p> <?php echo $item['discount'] ?></p>
+                                <p><?php echo ($item['price']-(($item['price']/100)*$item['discount'])) ?></p>
+                            <?php endif;?>
                         </div>
                         <div class="quantity_container product_detail">
                             <button
-                                onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">-</button>
+                                onclick="decreaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $price?>,<?php echo $item['stock_quantity'] ?>)">-</button>
                             <input type="number" id="quantity_<?php echo $item['item_id']; ?>"
                                 value="<?php echo $item['quantity']; ?>" min="1">
                             <button
-                                onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $item['price']; ?>,<?php echo $item['stock_quantity'] ?>)">+</button>
+                                onclick="increaseQuantity(<?php echo $item['item_id']; ?>, <?php echo $price?>,<?php echo $item['stock_quantity'] ?>)">+</button>
                         </div>
                         <div class="product_detail">
                             <p id="price_<?php echo $item['item_id']; ?>">
-                                $<?php echo number_format($item['price'] * $item['quantity'], 2); ?></p>
+                                $<?php echo number_format($price * $item['quantity'], 2); ?></p>
                         </div>
                         <p id="stock_erro" style="color:red;"></p>
                         <div><a href="deletecartitem.php?item_id=<?php echo $item['item_id']; ?>"><button
@@ -111,8 +125,13 @@ if ($result->num_rows > 0) {
             let totalCost = 0; // Reset the total cost
             let itemQuantity;
             <?php foreach ($cartItems as $item): ?>
+                <?php if($item['discount'] !== null && $item['discount'] !== "null"){
+                        $price = $item['price_after_discount'];
+                    } else{
+                        $price = $item['price'];
+                    }?>
                 itemQuantity = document.getElementById('quantity_<?php echo $item['item_id']; ?>').value;
-                totalCost += <?php echo $item['price']; ?> * itemQuantity;
+                totalCost += <?php echo $price;?> * itemQuantity;
             <?php endforeach; ?>
             document.getElementById('totalCost').innerHTML = totalCost.toFixed(2);
         }
