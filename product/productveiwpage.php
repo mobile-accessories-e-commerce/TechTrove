@@ -19,7 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!$result) {
             header("location:../Home/dashbord.php");
         }
-        $query = "SELECT * FROM products WHERE product_id=?";
+        $query = "  SELECT * FROM products p
+                    LEFT JOIN promotions pro ON p.product_id = pro.product_id
+                    WHERE p.product_id=?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $product_id);
         $stmt->execute();
@@ -64,6 +66,14 @@ while($row=mysqli_fetch_assoc($result)){
                 <div class="title"><?php echo $product['product_name']; ?></div>
                 <div class="description"><?php echo $product['description']; ?></div>
                 <div class="price">$<span id="price"><?php echo $product['price']; ?></span></div>
+                <?php if($product['discount'] != null):?>
+                                   <div>
+                                        <span>Discount <?php echo $product['discount']?>%</span><br>
+                                        <span class="product-price">Price After Discount <?php echo "$".($product['price']-(($product['price']/100)*$product['discount']))?></span>
+
+                                    </div> 
+                                <?php endif;?>
+                           
 
                 <div class="quantity">
                     <button onclick="decreaseQuantity()">-</button>
