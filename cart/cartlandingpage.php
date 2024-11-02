@@ -63,8 +63,9 @@ if ($result->num_rows > 0) {
     <div class="container">
         <h1>Your Cart</h1>
         <?php if (empty($cartItems)): ?>
-            <p>Your cart is empty.</p>
-            <iframe src="https://giphy.com/embed/giXLnhxp60zEEIkq8K" width="400" height="400" style="" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/shopping-skeleton-cart-giXLnhxp60zEEIkq8K">via GIPHY</a></p>
+            
+            <video src="../images/Animation.mp4" autoplay loop muted width="100%" height="auto"></video>
+            <p>No items yet? Continue shopping to <a href="../product/products.php">explore more.</a></p>
         <?php else: ?>
             <div class="row">
 

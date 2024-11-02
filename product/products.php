@@ -68,6 +68,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 <button id="search-btn" type="button" onclick="searchProducts()">Search</button>
             </form>
         </div>
+        <div class="cart">
+            <a href="../cart/cartlandingpage.php">
+            <img src="../images/cart.png" alt="cart"></a>
+        </div>
         <div id="search-results"></div>
     </div>
 
