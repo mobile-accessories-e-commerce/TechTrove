@@ -1,25 +1,25 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include '../connect.php';
+if($_SERVER['REQUEST_METHOD']=== 'POST'){
+    include'../connect.php';
 
     $USERNAME = $_POST['username'];
     $PASSWORD = $_POST['password'];
-
+    
 
 
     $sql = "select * from `users` where username = '$USERNAME' and password = '$PASSWORD'";
-
-
+   
+  
     $result = mysqli_query($con, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
+  
+    if(mysqli_num_rows($result)> 0){
         $row = mysqli_fetch_assoc($result);
         session_start();
         $_SESSION["username"] = $USERNAME;
         $_SESSION['userid'] = $row['user_id'];
         header('location:../Home/dashbord.php');
     }else{
-        echo'Cheack your user name and password and try again';
+        echo'Check your user name and password and try again';
 
     }
 }
@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0; 
+            background-color:  #d9e5f4; 
             margin: 0;
             padding: 0;
             display: flex;
@@ -68,34 +67,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         h1 {
-            color: #333; 
+            color:rgb(24, 144, 180); 
             text-align: center;
             margin-bottom: 20px; 
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+        .text{
+            text-align: center;
+            font-size: 15px;
+            margin-top: 5px;
+            color: rgb(2, 60, 82);
+            
+            
         }
 
-        form {
+        .form-container {
             background: #fff; 
-            padding: 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-            width: 300px; 
+            padding: 50px; 
+            border-radius: 12px; 
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.3); 
+            width: 350px;
+            height: 300px 
         }
 
         input[type="text"], input[type="password"] {
             width: 100%; 
-            padding: 10px; 
+            padding: 12px; 
+            text-align: center;
             margin: 10px 0; 
             border: 1px solid #ccc; 
-            border-radius: 4px; 
+            border-radius: 10px; 
             box-sizing: border-box; 
+            font-size: 14px;
         }
 
         input[type="submit"] {
             background-color: #007bff; 
+            width: 100%;
             color: white; 
             border: none; 
             padding: 10px; 
-            border-radius: 4px;
+            border-radius: 7px;
+            margin-top: 10px;
             cursor: pointer; 
             font-size: 16px; 
             transition: background-color 0.3s; 
@@ -105,28 +119,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #0056b3;
         }
 
-        button {
-            background-color: #28a745; 
-            color: white; 
-            border: none; 
-            padding: 10px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            margin-top: 10px; 
+       
+        .signup{
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
         }
-
-        button a {
-            color: white; 
-            text-decoration: none; 
+        .signup a{
+            color: blue;
         }
-
-        button:hover {
-            background-color: #218838; 
+        .signup a:hover{
+            color: red;
         }
     </style>
 </head>
-
 <body>
     <header><img src="../images/elife_logo.png" alt="elife" width="140" height="70"></header>
     <div class="form-container">
@@ -143,5 +149,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
 </body>
-
 </html>
