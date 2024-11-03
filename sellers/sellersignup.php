@@ -118,27 +118,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
 
         }
-
-
-
+        .close-btn {
+            
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: gray;
+        }
+        .close-btn a:hover {
+        color: #f00; 
+        }
 
         form {
             background: #fff;
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 7px;
             box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.2);
             width: 400px;
+        
 
         }
+        label{
+            font-size: 13px;
+            color:#333;
+        }
+        
 
         input[type="text"],
         input[type="email"] {
             width: 100%;
-            padding: 10px;
+            padding: 7px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            border-radius: 4px;
             box-sizing: border-box;
+            font-size: 15px;
         }
 
         input[type="submit"] {
@@ -158,20 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             background-color: #218838;
         }
 
-        .back {
-            position: absolute;
-            left: 40px;
-            top: 40px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-            z-index: +1;
-
-        }
+       
     </style>
 </head>
 
@@ -183,16 +193,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
 
         <div class="form-container">
-
-
+            
+        
+        <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
 
             <!--check for error-->
             <?php if (!empty($error)): ?>
                 <div class="error"><?php echo $error; ?></div>
                 <a href="../Home/dashbord.php"><button>Go to Dashboard</button></a>
             <?php else: ?>
-
+                
                 <form action="sellersignup.php" method="POST">
+        
                     <label for="store_name">Store Name:</label>
                     <input type="text" id="store_name" name="store_name" required>
 

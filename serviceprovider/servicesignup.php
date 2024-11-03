@@ -74,35 +74,94 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-image: url(../images/service3.jpg);
+            background-repeat: repeat;
+           
+          
+         
         }
-
+        .gohome{
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            color: #f0f0f0;
+            background-color: black;
+            width: 200px;
+            
+        }
+       
         .container {
-            width: 500px;
+            width: 400px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 40px;
+            padding-right: 60px;
             border: 1px solid #ccc;
-            border-radius: 10px;
+            border-radius: 7px;
+            background-color: #fff;
+            position: relative;
+         
+        }
+        .close-btn {
+            
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: gray;
+        }
+        .close-btn a:hover {
+        color: #f00; 
+        }
+        .container img{
+           display: flex;
+           align-items: center;
+           margin-left: 120px;
+        }
+    
+        .container p{
+            text-align: left;
+            color: black;
+            margin-top: 0;
+            font-size: 26px;
         }
 
         label,
-        input,
-        textarea {
+        input{
             display: block;
             width: 100%;
             margin-bottom: 10px;
         }
+        label{
+            font-size: 13px;
+            color: #333;
+        }
 
         input[type="submit"] {
-            width: auto;
+            width: 100%;
+            border-radius: 4px;
             padding: 10px;
             background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
+            text-align: center;
+            margin-top: 20px;
         }
 
         input[type="submit"]:hover {
             background-color: #218838;
+        }
+        input[type="text"],input[type="email"]{
+            padding: 8px;
+            font-size: 14px;
         }
 
         .error {
@@ -113,21 +172,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 </head>
 
 <body>
+   
     <div class="container">
-        <h2>Service Provider Signup</h2>
+        <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
+        <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
+        <p> Sign Up</p>
 
 
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
-            <a href="../Home/dashbord.php"><button>Go to Dashboard</button></a>
+            <a href="../Home/dashbord.php"><button class="gohome">Go to Home</button></a>
         <?php else: ?>
 
             <form action="servicesignup.php" method="POST">
                 <label for="service_name">Service Name:</label>
                 <input type="text" id="service_name" name="service_name" required>
-
-                <label for="service_description">Service Description:</label>
-                <textarea id="service_description" name="service_description" required></textarea>
 
                 <label for="provider_name">Provider Name:</label>
                 <input type="text" id="provider_name" name="provider_name" required>
@@ -137,9 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
                 <label for="phone_number">Phone Number:</label>
                 <input type="text" id="phone_number" name="phone_number" required>
-
-                <label for="bank_ac_num">Bank Account Number:</label>
-                <input type="text" id="bank_ac_num" name="bank_ac_num" required>
 
                 <input type="submit" value="Sign Up">
             </form>
