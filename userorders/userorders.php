@@ -1,5 +1,13 @@
 <?php
 include '../layouts/header.php';
+
+session_start();
+
+if(!isset($_SESSION['userid'])){
+    header("location:../authentication/loging.php");
+}
+
+
 ?>
 
 <!DOCTYPE html>

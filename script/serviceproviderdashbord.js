@@ -41,7 +41,7 @@ function loadContent(section) {
                                 <div class="product-stock">${service.location}</div>
                                  <div class="product-stock">${service.description}</div>
                                   <div class="product-stock">${service.contact_number}</div>
-                                <a href="#">Confirm</a>
+                                <a href="confirmorder.php?service_request_id=${service.id}">Confirm</a>
                             </div>
                         `;
           });

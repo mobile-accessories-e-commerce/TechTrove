@@ -46,7 +46,7 @@ if($section=="service_request"){
     $serviceList = array();
     $accept = 0;
 
-    $query = "SELECT s.image_link,s.service_name,sr.user_name,sr.description,sr.location,sr.contact_number FROM service_requests sr
+    $query = "SELECT s.image_link,s.service_name,sr.user_name,sr.description,sr.location,sr.contact_number,sr.id FROM service_requests sr
     JOIN services s ON sr.service_id = s.service_id
      WHERE s.service_provider_id=? and sr.accept=?";
     $stmt = $con->prepare($query);

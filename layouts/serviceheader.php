@@ -16,8 +16,8 @@
         </div>
 
         <div class="search-container">
-            <form action="../product/products.php" method="post" class="search-form">
-                <input type="text" id="search" name="search_value" placeholder="Search products...">
+            <form action="../service/services.php" method="POST" class="search-form">
+                <input type="text" id="search" name="search_value" placeholder="Search services...">
                 <button id="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 37"
                         preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon">
                         <g class="style-scope yt-icon">
