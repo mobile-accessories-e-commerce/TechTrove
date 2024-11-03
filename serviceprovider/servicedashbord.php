@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['userid'])){
+    header("location:../authentication/loging.php");
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 

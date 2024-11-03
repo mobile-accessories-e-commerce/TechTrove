@@ -3,9 +3,8 @@
 session_start();
 
 
-if (!isset($_SESSION['userid'])) {
-    header("Location: ../login.php");
-    exit();
+if(!isset($_SESSION['userid'])){
+    header("location:../authentication/loging.php");
 }
 
 

@@ -2,9 +2,7 @@
 session_start();
 include '../connect.php';
 
-if (!isset($_SESSION["username"])) {
-    header("location:../authentication/loging.php");
-}
+
 
 // include '../layouts/header.php';
 
@@ -166,6 +164,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
         <div class="dropdown-menu">
             <a href="../userprofile.php">My Profile</a>
             <a href="../userorders/userorders.php">My Orders</a>
+            <a href="../userservicerequest/userservicerequest.php">My Request</a>
             <a href="../sellers/sellersignup.php">Seller Signup</a>
             <a href="../serviceprovider/servicesignup.php">Service Provider Signup</a>
             <a href="../authentication/logout.php">Log Out</a>

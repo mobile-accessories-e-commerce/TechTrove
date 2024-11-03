@@ -3,7 +3,9 @@ session_start();
 include '../connect.php';
 include '../layouts/header.php';
 
-
+if(!isset($_SESSION['userid'])){
+    header("location:../authentication/loging.php");
+}
 $userId = $_SESSION['userid'];
 
 function updateQuantity($value, $item_id)

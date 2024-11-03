@@ -24,6 +24,13 @@ while ($row = mysqli_fetch_assoc($service_category_result)) {
     $service_category_list[] = $row;
 }
 
+
+$search_value = "";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['search_value'])) {
+        $search_value = $_POST['search_value'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +60,7 @@ while ($row = mysqli_fetch_assoc($service_category_result)) {
         </div>
         <div class="search-container">
             <form action="javascript:void(0);" class="search">
-                <input type="text" id="search" placeholder="Search service..."  />
+                <input type="text" id="search" placeholder="Search service..." value="<?php echo $search_value?>" />
                 <button id="search-btn" type="button" onclick="searchServices()">Search</button>
             </form>
         </div>
@@ -94,101 +101,8 @@ while ($row = mysqli_fetch_assoc($service_category_result)) {
         </ul>
     </div>
 
-<script>
-     function searchServices() {
-            let searchTerm = document.getElementById('search').value;
-            const xhr = new XMLHttpRequest();
-            const main_container = document.getElementById('product-section-container');
-
-            xhr.open('GET', `search.php?query=${searchTerm}`, true);
-
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    let services = JSON.parse(xhr.responseText);
-                    let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
-                    if (services == "false") {
-                        const xhr2 = new XMLHttpRequest();
-                        xhr2.open('GET', `../product/storeSearchQuary.php?query=${searchTerm}&type=${"service"}`, true);
-                        xhr2.send();
-                        updateContent += `<h1>No service found try different keyword</h1>`;
-                    } else {
-                        if (services.length > 0) {
-                            services.forEach(function (service) {
-                               
-                                updateContent += `
-                    <li class="product-item">
-                        <div class="product-image">
-                            <img src="../images/${service['image_link']}" alt="smart watch">
-                        </div>
-                        <div class="product-text">
-                            <span class="product-title">${service['service_name']}</span>
-                            <div class="product-purchase">
-                                <span class="product-price">$${service['price']}</span>
-                            
-                                <a href="serviceveiwpage.php?service_id=${service['service_id']}">
-                                    <button class="blue-btn add-to-cart">View service</button>
-                                    
-                                </a>
-                            </div>
-                        </div>
-                    </li>`;
-                            });
-                        } else {
-                            updateContent += `<p>No service found</p>`;
-                        }
-                    }
-
-                    updateContent += `</ul>`;
-                    main_container.innerHTML = updateContent;
-                }
-            };
-
-            xhr.send();
-        }
+<script src="../script/serviceSearch.js">
         
-        function categorySearch() {
-            let searchTerm = document.getElementById('category').value;
-            const xhr = new XMLHttpRequest();
-            const main_container = document.getElementById('product-section-container');
-
-            xhr.open('GET', `categorysearch.php?query=${searchTerm}`, true);
-
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    let services = JSON.parse(xhr.responseText);
-                    let updateContent = `<div>Category Result</div><ul class="product-section-item-wrapper">`;
-
-                    if (services.length > 0) {
-                        services.forEach(function (service) {
-                            updateContent += `
-                    <li class="product-item">
-                        <div class="product-image">
-                            <img src="../images/${service['image_link']}" alt="smart watch">
-                        </div>
-                        <div class="product-text">
-                            <span class="product-title">${service['service_name']}</span>
-                            <div class="product-purchase">
-                                <span class="product-price">$${service['price']}</span>
-                                
-                                <a href="servuceveiwpage.php?product_id=${service['service_id']}">
-                                    <button class="blue-btn add-to-cart">View service</button>
-                                    
-                                </a>
-                            </div>
-                        </div>
-                    </li>`;
-                        });
-                    } else {
-                        updateContent += `<p>No service found in this category</p>`;
-                    }
-
-                    updateContent += `</ul>`;
-                    main_container.innerHTML = updateContent;
-                }
-            };
-
-            xhr.send();
-        }
 
 </script>
 
