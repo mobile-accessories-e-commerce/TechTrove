@@ -29,6 +29,9 @@ while ($row = mysqli_fetch_assoc($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Request</title>
     <style>
+        body{
+            background-color: #f0f0f0;
+        }
         .main-container {
             margin-top: 100px;
             display: flex;
@@ -53,6 +56,9 @@ while ($row = mysqli_fetch_assoc($result)) {
             background-color: gray;
             color: white;
         }
+        td{
+            background-color: white;
+        }
         td img {
             width: 100px;
             height: auto;
@@ -65,11 +71,11 @@ while ($row = mysqli_fetch_assoc($result)) {
         }
         .not-confirmed {
             color: red;
-            background-color:transparent;
+            
         }
         .confirmed {
             color: blue;
-            background-color: transparent;
+            
         }
         .delete-btn {
             padding: 15px 15px;

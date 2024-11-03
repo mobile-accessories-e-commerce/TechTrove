@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="product-section-container" id="product-section-container">
         <ul class="product-section-item-wrapper">
             <?php foreach ($product_list as $product): ?>
-                <li class="product-item">
+                <a class="product-link" href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>"><li class="product-item">
                     <div class="product-image">
                         <img src="../images/<?php echo $product['image_link']; ?>" alt="smart watch">
                     </div>
@@ -92,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="product-title">
                             <?php echo $product['product_name']; ?>
                         </span>
-                        <br>
-                        <span style="color:red;">
+                        
+                        <span style="color:red; font-size:13px">
                             <?php if ($product['stock_quantity'] == 0)
                                 echo "This is out of stock"; ?>
                         </span>
@@ -104,17 +104,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </span>
                             <?php endif; ?>
                             <?php if ($product['discount'] != null): ?>
-                                <span>Discount <?php echo $product['discount'] ?>%</span><br>
-                                <span class="product-price">Price After Discount
-                                    <?php echo "$" .$product['price_after_discount']?></span>
+                                <div class="price">
+                                    
+                                    <span class="product-price">
+                                        <?php echo "$" .$product['price_after_discount']?></span>
+                                        <div class="dis">
+                                        <del class="old-price"><?php echo "$" .$product['price'];?></del>
+                                        <span class="discount">-<?php echo $product['discount'] ?>%</span>
+                                        </div>
+                                </div>
+                                
                             <?php endif; ?>
 
-                            <a href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
-                                <button class="blue-btn add-to-cart">View Product</button>
-                            </a>
+                            
+                                
+                            
                         </div>
                     </div>
-                </li>
+                </li></a>
             <?php endforeach; ?>
         </ul>
     </div>
