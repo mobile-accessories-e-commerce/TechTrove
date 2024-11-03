@@ -41,5 +41,27 @@ if ($section == 'all_service') {
         echo json_encode([]);
     }
 }
+if($section=="service_request"){
+    $service_provider_id = $_SESSION['service_provider_id'];
+    $serviceList = array();
+    $accept = 0;
+
+    $query = "SELECT s.image_link,s.service_name,sr.user_name,sr.description,sr.location,sr.contact_number FROM service_requests sr
+    JOIN services s ON sr.service_id = s.service_id
+     WHERE s.service_provider_id=? and sr.accept=?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("ii", $service_provider_id,$accept);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $serviceList[] = $row;
+        }
+        echo json_encode($serviceList);
+    } else {
+        echo json_encode([]);
+    }
+}
 
 ?>

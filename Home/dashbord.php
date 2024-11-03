@@ -100,144 +100,9 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
 
 
-        /* nav bar style */
-        .nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fffff; /* Blue background */
-    padding: 2px 40px;
-}
-
-.nav-bar-logo img {
-    flex:2;
-    display: block;
-}
-
-.search-container {
-
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.search-form {
-   position: relative;
-    display: flex;
-    align-items: center;
-    
-}
-
-.search-form input[type="text"] {
-    
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 5px 6px 6px rgba(0,0,0,0.1);
-    border-style: solid;
-    border-color: gray;
-    border-width: 1px;
-    width: 500px;
-       
-    
-}
-#search-btn{
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-    
-    
-    
-}
-#search-btn svg{
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-    margin-top: 0;
-    cursor: pointer;
-    transform: translate(3px, -13px); /* Move right by 50px and down by 20px */
-    
-}
 
 
 
-#search-btn:hover {
-    
-    background-color: gray; 
-    border: none;
-}
-.account-icon{
-    margin-right: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.account-icon p{
-    font-size: 14px;
-}
-/* Container for account icon and dropdown */
-.account-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Account icon styling */
-.account-icon img {
-    cursor: pointer;
-}
-
-/* Dropdown menu styling */
-.dropdown-menu {
-    display: none; /* Initially hidden */
-    position: absolute;
-    top: 100%; /* Position below the icon */
-    right: 0; /* Align to the right of the icon */
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    z-index: 1000;
-    padding: 20px;
-}
-
-/* Links inside the dropdown */
-.dropdown-menu a {
-    display: block;
-    padding: 10px;
-    color: #333;
-    text-decoration: none;
-    font-size: 15px;
-    
-}
-
-.dropdown-menu a:hover {
-    background-color: #f0f0f0; /* Highlight on hover */
-}
-
-/* Show dropdown on hover */
-.account-container:hover .dropdown-menu {
-    display: block;
-}
-.nav-bar-link li{
-    display: flex;
-    align-items: center;
-   
-    
-
-}
-.nav-bar-link a{
-    font-size: 16px;
-    
-}
-.nav-sp-link{
-    color: rgb(64, 105, 225);
-}
-
-.nav-sp-link:hover{
-    color: rgb(64,64,64);
-}
 
 
 
@@ -311,22 +176,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                
         </ul>
 
-            <div class="account-icon">
-
-                <img src="../images/user.png" alt="Account" width="40" height="40">
-                <p>Account</p>
-            </div>
-            <!-- <select id="product-dropdown" onchange="navigateToPage()">
-                <option value="">Account</option>
-                <option value="../product/products.php">🛍️ Products</option>
-                <option value="../service/services.php">🛠️ Services</option>
-                <option value="../userorders/userorders.php">📦 Orders</option>
-                <option value="../sellers/sellersignup.php">👩‍💼 Seller Signup</option>
-                <option value="../serviceprovider/servicesignup.php">🤝 Service Provider Signup</option>
-                <option value="../userprofile.php">👤 Profile</option>
-                <option value="../authentication/logout.php">🚪 LogOut</option>
-            </select> -->
-        </div>
+          
     </nav>
 
     <!-- Top-->

@@ -80,38 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 
-    <!-- <div class="side-bar">
-    <div class="side-bar-icon">
-        <a href="../cart/cartlandingpage.php">
-            <i class="fas fa-shopping-cart"></i> Cart
-        </a>
-    </div>
-    <div class="side-bar-icon">
-        <a href="../Home/dashbord.php">
-            <i class="fas fa-home"></i> Home
-        </a>
-    </div>
-    <div class="side-bar-icon">
-        <a href="../shipping/free_shipping.php">
-            <i class="fas fa-truck"></i> Free Shipping
-        </a>
-    </div>
-    <div class="side-bar-icon">
-        <a href="../wishlist/wishlist.php">
-            <i class="fas fa-heart"></i> Wishlist
-        </a>
-    </div>
-    <div class="side-bar-icon">
-        <a href="../userprofile.php">
-            <i class="fas fa-user"></i> Profile
-        </a>
-    </div>
-    <div class="side-bar-icon">
-        <a href="../userorders/userorders.php">
-            <i class="fas fa-list-alt"></i> Orders
-        </a>
-    </div>
-</div> -->
 
     <div class="product-section-container" id="product-section-container">
         <ul class="product-section-item-wrapper">
@@ -203,6 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             xhr.send();
         }
+        
         function categorySearch() {
             let searchTerm = document.getElementById('category').value;
             const xhr = new XMLHttpRequest();

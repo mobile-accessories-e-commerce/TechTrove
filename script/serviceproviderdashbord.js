@@ -27,6 +27,31 @@ function loadContent(section) {
             "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
         }
       }
+      if (section === "service_request") {
+        let services = JSON.parse(xhr.responseText);
+        content.innerHTML = "<h1>All services</h1>";
+        if (services.length > 0) {
+          let productHTML = '<div class="product-list">';
+          services.forEach(function (service) {
+            productHTML += `
+                            <div class="product">
+                                <img src="../images/${service.image_link}" alt="${service.service_name}">
+                                <div class="product-name">${service.service_name}</div>
+                                <div class="product-stock">${service.user_name}</div>
+                                <div class="product-stock">${service.location}</div>
+                                 <div class="product-stock">${service.description}</div>
+                                  <div class="product-stock">${service.contact_number}</div>
+                                <a href="#">Confirm</a>
+                            </div>
+                        `;
+          });
+          productHTML += "</div>";
+          content.innerHTML += productHTML;
+        } else {
+          content.innerHTML =
+            "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
+        }
+      }
     }
   };
   xhr.send();

@@ -83,9 +83,7 @@ if ($result->num_rows > 0) {
                     }?>
                     <div class="card">
                         <img src="../images/<?php echo $item['image_link']; ?>" alt="<?php echo $item['product_name']; ?>">
-                        <div class="product_detail">
-                            <h2><?php echo $item['product_name']; ?></h2>
-                        </div>
+                        
                         <div class="product_detail">
                             <p>$<?php echo number_format($item['price'], 2); ?></p>
                             <?php if($item['discount'] != null): ?>

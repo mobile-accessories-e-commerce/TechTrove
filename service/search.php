@@ -3,7 +3,7 @@ include "../connect.php";
 
 if (isset($_GET['query'])) {
     $searchTerm = $_GET['query'];
-    $productList = array();
+    $serviceList = array();
 
 
     $query = "SELECT * FROM services WHERE service_name LIKE ?";
@@ -19,12 +19,12 @@ if (isset($_GET['query'])) {
     if (mysqli_num_rows($result) > 0) {
 
         while ($row = mysqli_fetch_assoc($result)) {
-            array_push($productList, $row);
+            array_push($serviceList, $row);
         }
-    } else {
-        echo json_encode($productList);
+    }else {
+        array_push($serviceList,"false");
     }
-    echo json_encode($productList);
+    echo json_encode($serviceList);
 
     mysqli_stmt_close($stmt);
     mysqli_close($con);
