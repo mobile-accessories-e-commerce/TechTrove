@@ -2,13 +2,25 @@
 include "../connect.php";
 session_start();
 
-$sql = "SELECT * FROM invalid_search_quary";
+$sql = "SELECT * FROM invalid_search_quary WHERE type='product'";
 $result = mysqli_query($con,$sql);
-$keyword_list = array();
+$product_keyword_list = array();
 while($row = mysqli_fetch_assoc($result)){
-    array_push($keyword_list,$row);
+    array_push($product_keyword_list,$row);
 }
 
-echo json_encode($keyword_list);
+
+$sql = "SELECT * FROM invalid_search_quary WHERE type='service'";
+$result = mysqli_query($con,$sql);
+$service_keyword_list = array();
+while($row = mysqli_fetch_assoc($result)){
+    array_push($service_keyword_list,$row);
+}
+
+$response = [
+    'productKeyword' => $product_keyword_list,
+    'serviceKeyword' => $service_keyword_list
+];
+echo json_encode($response);
 
 ?>

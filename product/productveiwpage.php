@@ -54,7 +54,7 @@ while($row=mysqli_fetch_assoc($result)){
 </head>
 
 <body>
-    <div><a href="../Home/dashbord.php"><button class="back">back</button></a></div>
+    <div><a href="products.php"><button class="back">back</button></a></div>
     
 
     <div class="main-container">

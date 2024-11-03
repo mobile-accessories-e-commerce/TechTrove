@@ -6,7 +6,7 @@ if (isset($_GET['query'])) {
     $productList = array();
 
 
-    $query = "SELECT * FROM products p 
+    $query = "SELECT p.product_name,p.price,p.image_link,p.product_id,pro.discount,pro.price_after_discount FROM products p 
      LEFT JOIN promotions pro ON p.product_id = pro.product_id
       WHERE p.product_name LIKE ?";
     $stmt = mysqli_prepare($con, $query);

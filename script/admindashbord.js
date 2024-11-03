@@ -125,7 +125,7 @@ function getAllProduct() {
 function getSearchKeyword() {
   const main_container = document.getElementById("main_container");
 
-  let keyWordHTML = `<div class="cat-container"><h1>Search KeyWord</h1><table>
+  let keyWordHTML = `<div class="cat-container"><h1>Product Search KeyWord</h1><table>
                         <tr>
                          
                             <th>Id</th>
@@ -139,9 +139,11 @@ function getSearchKeyword() {
 
   xhr.onload = function () {
     if (xhr.status === 200) {
-      const keyword_list = JSON.parse(xhr.responseText);
+      const data = JSON.parse(xhr.responseText);
+      const productKeyword = data.productKeyword;
+      const serviceKeyword = data.serviceKeyword;
 
-      keyword_list.forEach(function (keyword) {
+      productKeyword.forEach(function (keyword) {
         keyWordHTML += `
                         <tr>
                        
@@ -152,7 +154,30 @@ function getSearchKeyword() {
                         </tr>    
                 `;
       });
-      keyWordHTML += `</table>`;
+      keyWordHTML += `</table></div>`;
+
+       keyWordHTML += `<div class="cat-container"><h1>Service Search KeyWord</h1><table>
+      <tr>
+       
+          <th>Id</th>
+          <th>Date</th>
+          <th>Quary</th>
+          <th>Search_count</th>
+      </tr>`;
+
+      serviceKeyword.forEach(function (keyword) {
+        keyWordHTML += `
+                        <tr>
+                       
+                        <td>${keyword.id}</td>
+                        <td>${keyword.date}</td>
+                        <td>${keyword.quary}</td>
+                        <td>${keyword.search_count}</td> 
+                        </tr>    
+                `;
+      });
+
+      keyWordHTML += `</table></div>`;
       main_container.innerHTML = keyWordHTML;
     }
   };

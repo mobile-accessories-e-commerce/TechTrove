@@ -20,13 +20,142 @@ nav {
 }
 
 .nav-bar {
-    width: 98%;
+    width: 100%;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
 
+}
+.nav-bar-logo img {
+    flex:2;
+    display: block;
+}
+
+.search-container {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-form {
+   position: relative;
+    display: flex;
+    align-items: center;
+    
+}
+
+.search-form input[type="text"] {
+    
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 5px 6px 6px rgba(0,0,0,0.1);
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    width: 500px;
+       
+    
+}
+#search-btn{
+    position: absolute;
+    right: 0;
+    width: 41px;
+    height: 42px;
+    
+    
+    
+}
+#search-btn svg{
+    position: absolute;
+    right: 0;
+    width: 41px;
+    height: 42px;
+    margin-top: 0;
+    cursor: pointer;
+    transform: translate(3px, -13px); /* Move right by 50px and down by 20px */
+    
+}
+
+
+
+#search-btn:hover {
+    
+    background-color: gray; 
+    border: none;
+}
+.account-icon{
+    margin-right: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.account-icon p{
+    font-size: 14px;
+}
+/* Container for account icon and dropdown */
+.account-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Account icon styling */
+.account-icon img {
+    cursor: pointer;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 100%; /* Position below the icon */
+    right: 0; /* Align to the right of the icon */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Links inside the dropdown */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
+
+/* Show dropdown on hover */
+.account-container:hover .dropdown-menu {
+    display: block;
+}
+.nav-bar-link li{
+    display: flex;
+    align-items: center;
+}
+.nav-bar-link a{
+    text-decoration: none;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    
+}
+.nav-sp-link{
+    color: rgb(64, 105, 225);
+}
+
+.nav-sp-link:hover{
+    color: rgb(64,64,64);
 }
 
 .nav-bar-link {
@@ -43,19 +172,8 @@ nav {
     margin-left: 60px;
 }
 
-.nav-bar-link a {
-    text-decoration: none;
-    font-weight: 500;
-    -webkit-font-smoothing: antialiased;
-    font-size: 12px;
 
-}
 
-.user-name {
-    font-size: 18px;
-    color: rgb(65, 105, 225);
-    font-weight: 600;
-}
 
 
 
@@ -82,114 +200,11 @@ nav {
 
 
 
-/* nav bar style */
-.nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    /* Blue background */
-    padding: 2px 40px;
-}
-
-.nav-bar-logo img {
-    flex: 2;
-    display: block;
-}
-
-.search-container {
-
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.search-form {
-    position: relative;
-    display: flex;
-    align-items: center;
-
-}
-
-.search-form input[type="text"] {
-
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 5px 6px 6px rgba(0, 0, 0, 0.1);
-    border-style: solid;
-    border-color: gray;
-    border-width: 1px;
-    width: 500px;
-
-
-}
-
-#search-btn {
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-
-
-
-}
-
-#search-btn svg {
-    position: absolute;
-    right: 0;
-    width: 41px;
-    height: 42px;
-    margin-top: 0;
-    cursor: pointer;
-    transform: translate(3px, -13px);
-    /* Move right by 50px and down by 20px */
-
-}
-
-
-
-#search-btn:hover {
-
-    background-color: gray;
-    border: none;
-}
-
-.account-icon {
-    margin-right: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.account-icon p {
-    font-size: 14px;
-}
-
-
-
-
-
-
-.nav-bar-link select {
-    cursor: pointer;
-    flex: 3;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    background-color: white;
-    /* White background for dropdown */
-    color: #333;
-    /* Dark text color */
-}
 
 
 
 /* Style for option elements with icons */
-.nav-bar-link select option {
-    padding: 10px;
-}
+
 
 
 /* Top section*/

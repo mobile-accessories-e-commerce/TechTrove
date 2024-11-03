@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    
     <style>
         /* General Styles */
         body {
@@ -189,7 +188,7 @@
                 <li><a href="servicelisting.php">Add service</a></li>
                 <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
                 <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
-                <li><a href="#" onclick="loadContent('ordered_products')">Ordered Products</a></li>
+                <li><a href="#" onclick="loadContent('service_request')">Ordered Products</a></li>
                 <li><a href="#" onclick="loadContent('reports')">Reports</a></li>
                 <li><a href="../Home/dashbord.php">Back to Home</a></li>
             </ul>
