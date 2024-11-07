@@ -2,6 +2,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
+    
 }
 
 /* Sidebar Styles */
@@ -64,7 +65,7 @@ body {
 
 .product img {
     width: 100%;
-    height: 150px;
+    object-position: center;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -119,6 +120,7 @@ button {
 }
 
 .order {
+   
     width: 30%;
     /* Each item takes 30% of the container width */
     margin-bottom: 20px;
@@ -132,7 +134,8 @@ button {
 
 .order img {
     width: 100%;
-    height: 150px;
+    object-position: center;
+   
     object-fit: cover;
     border-radius: 8px;
 }
@@ -141,28 +144,29 @@ button {
     margin-top: 10px;
 }
 
-.order-details strong {
-    display: block;
-    font-size: 14px;
+.order-details strong{
+    display: inline;
+    font-size: 13px;
     margin: 5px 0;
 }
 
 .order .price {
-    color: green;
-    font-weight: bold;
+    color: rgb(7, 170, 211);
+    
     margin-top: 10px;
+    font-size: 20px;
 }
 
 .order .details {
     margin-top: 20px;
 }
 
-.order .details h3 {
-    margin-bottom: 10px;
+.order h3{
+    color: #0056b3;
 }
-
 .order .details p {
     margin: 5px 0;
+    font-size: 13px;
 }
 
 .order button {
@@ -173,6 +177,11 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+.shipped-link{
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
 }
 
 .order button:hover {
@@ -210,23 +219,28 @@ button {
 }
 
 /* Product Details - Styling */
-.product-details h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
+.product-details{
+    text-align: left;
+}
+
+.product-details h2 {
+    
+    font-size: 20px;
+    color: #023f81d2;
     margin-bottom: 8px;
 }
 
-.product-details p {
-    font-size: 14px;
-    color: #666;
+.product-details div {
+    font-size: 13px;
+    color:#333;
     margin: 5px 0;
 }
 
 /* Strong Label Styling */
-.product-details p strong {
-    color: #333;
-    font-weight: 600;
+.product-details div strong {
+    color: black;
+    font-size: 13px;
+    
 }
 
 
@@ -240,7 +254,7 @@ button {
 .product-details p span {
     display: inline-block;
     background-color: #f0f0f0;
-    padding: 2px 8px;
+    padding: 5px 8px;
     border-radius: 12px;
     font-size: 14px;
     font-weight: bold;
@@ -257,13 +271,16 @@ button {
 /* Stock and Orders Styling */
 .product-details .stock,
 .product-details .orders {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
-    color: #4caf50;
+    
+    color: #0a8d9e;
 }
 
 .product-details .low-stock {
     color: #f44336;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 /* Responsive Layout */
