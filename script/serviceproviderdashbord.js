@@ -49,7 +49,10 @@ function loadContent(section) {
           content.innerHTML += productHTML;
         } else {
           content.innerHTML =
-            "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
+              `<h1>No services Found</h1>
+              <p>hiii</p>
+            <img src="../images/backcover - Copy.jpeg">
+              <p>You haven't listed any service yet.</p>`;
         }
       }
     }

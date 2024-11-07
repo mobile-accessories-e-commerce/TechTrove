@@ -71,7 +71,12 @@ function loadContent(section) {
           content.innerHTML += ordersHTML;
         } else {
           content.innerHTML =
-            "<h1>No Orders Found</h1><p>No orders have been placed yet.</p>";
+            `
+
+            <h1>No Orders Found</h1>
+            
+            <p>No orders have been placed yet.</p>
+          `;
         }
       }
 

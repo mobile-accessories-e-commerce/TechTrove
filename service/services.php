@@ -1,22 +1,40 @@
 <?php
 session_start();
 include '../connect.php';
+include '../pagination.php';
+
+function getTotalService(){
+    include '../connect.php';
+    $sql = "SELECT COUNT(*) AS count FROM services";
+    $result = mysqli_query($con,$sql);
+    $row = mysqli_fetch_assoc($result);
+    $count = $row['count'];
+
+    return $count;
+ }
+
+ function getServices($offset,$itemsPerPage){
+    include "../connect.php";
+
+        $services_query = "
+            SELECT s.service_id,s.service_name, s.description, s.price, s.image_link, sc.name AS category_name
+            FROM services s
+            JOIN service_catogory sc ON s.catogory_id = sc.service_cat_id
+            LIMIT $itemsPerPage OFFSET $offset
+        ";
 
 
-$services_query = "
-    SELECT s.service_id,s.service_name, s.description, s.price, s.image_link, sc.name AS category_name
-    FROM services s
-    JOIN service_catogory sc ON s.catogory_id = sc.service_cat_id
-";
+        $services_result = $con->query($services_query);
+
+        $service_list = array();
+        while ($row = mysqli_fetch_assoc($services_result)) {
+            array_push($service_list, $row);
+        }
+
+        return $service_list;
 
 
-$services_result = $con->query($services_query);
-
-$service_list = array();
-while ($row = mysqli_fetch_assoc($services_result)) {
-    array_push($service_list, $row);
-}
-
+ }
 $service_category_query = "SELECT service_cat_id, name FROM service_catogory";
 $service_category_result = $con->query($service_category_query);
 $service_category_list = array();
@@ -31,6 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $search_value = $_POST['search_value'];
     }
 }
+
+
+
+$totalProducts = getTotalService(); 
+$itemsPerPage = 1; 
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $itemsPerPage;
+$service_list = getServices($offset, $itemsPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -100,6 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </ul>
     </div>
+    <?php echo paginate($totalProducts, $itemsPerPage, $currentPage, 'services.php'); ?>
+
 
 <script src="../script/serviceSearch.js">
         
