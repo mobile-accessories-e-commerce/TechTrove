@@ -89,7 +89,7 @@ while($row=mysqli_fetch_assoc($result)){
                                 <div class="price" >
                                     
                                     <span class="product-price" id="price">
-                                        <?php echo "$$" .$product['price_after_discount']?></span>
+                                        <?php echo "$" .$product['price_after_discount']?></span>
                                         <div class="dis">
                                         <del class="old-price"><?php echo "$" .$product['price'];?></del>
                                         <span class="discount">-<?php echo $product['discount'] ?>%</span>
