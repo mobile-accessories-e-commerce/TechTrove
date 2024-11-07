@@ -225,12 +225,12 @@ body {
     font-size: 13px;
     font-weight: bold;
     color:#f0f0f0;
-    background-color:  rgb(218, 30, 23);
+    background-color:  rgb(165, 32, 32);
     padding: 1px;
 }
 
 .product-price {
-    color:  rgb(201, 75, 3);
+    color: rgb(219, 55, 5);
     font-size: 22px;
     font-weight: bold;
 }

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!$result) {
             header("location:../Home/dashbord.php");
         }
-        $query = "  SELECT p.image_link,p.price,p.product_id,p.description,pro.discount,p.product_name,pro.price_after_discount FROM products p
+        $query = "  SELECT p.image_link,p.price,p.product_id,p.description,pro.discount,p.product_name,p.stock_quantity,pro.price_after_discount FROM products p
                     LEFT JOIN promotions pro ON p.product_id = pro.product_id
                     WHERE p.product_id=?";
         $stmt = $con->prepare($query);
@@ -40,6 +40,7 @@ while($row=mysqli_fetch_assoc($result)){
     array_push($feedback_list,$row);
 }
 
+
 }
 ?>
 
@@ -54,10 +55,11 @@ while($row=mysqli_fetch_assoc($result)){
 </head>
 
 <body>
-    <div><a href="products.php"><button class="back">back</button></a></div>
+    
     
 
     <div class="main-container">
+    <button class="close-btn"><a href="../product/products.php">&times;</a></button>
    
         <div class="container">
             <div class="image">
@@ -67,14 +69,39 @@ while($row=mysqli_fetch_assoc($result)){
             <div class="details">
                 <div class="title"><?php echo $product['product_name']; ?></div>
                 <div class="description"><?php echo $product['description']; ?></div>
-                <div class="price">$<span id="price"><?php echo $product['price']; ?></span></div>
-                <?php if($product['discount'] != null):?>
-                                   <div>
-                                        <span>Discount <?php echo $product['discount']?>%</span><br>
-                                        <span class="product-price">Price After Discount <?php echo "$".$product['price_after_discount']?></span>
+                <div class="stock">
+                    <span style="color:red; font-size:13px">
+                                <?php if ($product['stock_quantity'] == 0)
+                                    echo "This is out of stock"; ?>
+                            </span>
+                </div>
+                
+                <div class="product-purchase">
+                            <?php if ($product['discount'] == null): ?>
+                                <div class="price" id="price">
+                                <span class="product-price">
+                                    <?php echo "$" . $product['price']; ?>
+                                </span>
+                                </div>
+                               
+                            <?php endif; ?>
+                            <?php if ($product['discount'] != null): ?>
+                                <div class="price" >
+                                    
+                                    <span class="product-price" id="price">
+                                        <?php echo "$" .$product['price_after_discount']?></span>
+                                        <div class="dis">
+                                        <del class="old-price"><?php echo "$" .$product['price'];?></del>
+                                        <span class="discount">-<?php echo $product['discount'] ?>%</span>
+                                        </div>
+                                </div>
+                                
+                            <?php endif; ?>
 
-                                    </div> 
-                 <?php endif;?>
+                            
+                                
+                            
+                        </div>
                            
 
                 <div class="quantity">

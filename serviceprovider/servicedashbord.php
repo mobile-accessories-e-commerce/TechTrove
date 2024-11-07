@@ -23,6 +23,8 @@ if(!isset($_SESSION['userid'])){
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
+            position: relative;
+            background-color: #f0f0f0;
         }
 
         /* Sidebar Styles */
@@ -61,6 +63,8 @@ if(!isset($_SESSION['userid'])){
         .main-content {
             margin-left: 200px;
             padding: 20px;
+            
+           
         }
 
         /* Product Styles */
@@ -71,16 +75,17 @@ if(!isset($_SESSION['userid'])){
         }
 
         .product {
-            width: 30%;
+            
             /* Each item takes 30% of the container width */
             margin-bottom: 20px;
             /* Add space between rows */
             box-sizing: border-box;
             border: 1px solid #ddd;
             border-radius: 8px;
-            padding: 15px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 300px;
+            margin-right: 10px;
         }
 
         .product img {
@@ -91,18 +96,20 @@ if(!isset($_SESSION['userid'])){
         }
 
         .product-name {
-            font-size: 18px;
+            font-size: 16px;
             margin: 10px 0;
         }
 
         .product-price {
             color: green;
             font-weight: bold;
+            font-size: 20px;
         }
 
         .product-stock {
-            font-size: 14px;
+            font-size: 13px;
             color: #555;
+            text-align: left;
         }
 
         .product a {
@@ -110,14 +117,25 @@ if(!isset($_SESSION['userid'])){
             margin-top: 10px;
             background-color: #007bff;
             color: white;
-            padding: 8px 12px;
+            padding: 8px ;
             text-decoration: none;
             border-radius: 5px;
+            width: 100px;
         }
 
         .product a:hover {
             background-color: #0056b3;
         }
+        .empty-service{
+            position: absolute;
+            top: 25vh;
+            left: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        
 
         /* Order Styles */
         .order-list {

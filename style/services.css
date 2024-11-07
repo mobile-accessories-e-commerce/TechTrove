@@ -148,6 +148,9 @@ body {
     margin-top: 100px;
 
 }
+.service-link{
+    text-decoration: none;
+}
 
 .product-item {
     width: 250px;
@@ -164,7 +167,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    
    
 }
 
@@ -172,20 +175,28 @@ body {
     overflow: hidden;
     object-fit: cover;
     height: 100%;
-    width: auto;
+    
     border-radius: 10px;
 }
 
 .product-text {
     text-align: center;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
 
+}
+.product-text .service-name{
+    text-align: left;
+    
 }
 
 .product-title {
     color: rgb(50, 50, 50);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
+    
 }
 
 .product-purchace {
@@ -198,9 +209,9 @@ body {
 }
 
 .product-price {
-    color: rgb(65, 105, 255);
-    font-size: 18px;
-    font-weight: 500;
+    color: rgb(219, 55, 5);
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .add-to-cart {

@@ -28,13 +28,46 @@ if($result){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            position: relative;
+        }
+        .container{
+            position: absolute;
+            top: 25vh;
+            left: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .back{
+            border: none;
+            background-color: black;
+            padding: 10px;
+            width: 150px;
+            color: white;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            
+        }
+        .back:hover{
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <?php if($sucuss==1): ?>
-        <h1>Service Provider contact you</h1>
+        <div class="container">
+            <h1>Service Provider will contact you soon.</h1>
+            <img src="../images/contact.png" width="200px" height="160px">
+            <a href="../Home/dashbord.php"><button class="back">Back to home</button></a>
+        </div>
+        
    
     <?php else: ?>
-    <h1>oops Some erro occur try again</h1>
+    <h1>Oops! Some error has occured.Please try again.</h1>
     <?php endif; ?>
 </body>
 </html>

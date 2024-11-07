@@ -72,30 +72,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <ul class="product-section-item-wrapper">
             <?php foreach ($service_list as $service): ?>
-                <li class="product-item">
+                <a class="service-link" href="serviceviewpage.php?service_id='<?php echo $service['service_id']; ?>'"><li class="product-item">
                     <div class="product-image">
                         <img src="../images/<?php echo $service['image_link'] ?>" alt="smart watch">
 
                     </div>
                     <div class="product-text">
-                        <span class="product-title">
-                            <?php echo $service['service_name'] ?>
-                        </span>
+                        <div class="service-name">
+                            <span class="product-title">
+                                <?php echo $service['service_name'] ?>
+                            </span>
+                        </div>
+                        
                         <div class="product-purchace">
                             <span class="product-price">
                                 <?php echo "$" . $service['price'] ?>
                             </span>
                             <!-- Todo need to implement serviceview page -->
-                            <a href="serviceviewpage.php?service_id='<?php echo $service['service_id']; ?>'"><button
-                                    class="blue-btn add-to-cart">
-                                    Veiw service
-                                </button></a>
+                            
 
                         </div>
 
                     </div>
 
-                </li>
+                </li></a>
 
             <?php endforeach; ?>
         </ul>

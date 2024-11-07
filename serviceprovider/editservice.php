@@ -57,8 +57,12 @@ if ($_GET['service_id']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
     <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
         body {
-            background-color: #ffeefe;
+            background-color:  #d9e5f4;
+            
         }
 
         .container {
@@ -67,6 +71,33 @@ if ($_GET['service_id']) {
             padding: 20px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 15px 15px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .close-btn {
+            
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: gray;
+        }
+        .close-btn a:hover {
+        color: #f00; 
+        }
+        label,option{
+            font-size: 13px;
+            color: #333;
+
         }
 
         input[type=text],
@@ -86,12 +117,15 @@ if ($_GET['service_id']) {
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
+    <button class="close-btn"><a href="../serviceprovider/servicedashbord.php">&times;</a></button>
         <h2>Edit Product</h2>
 
         <form action="serviceupdate.php" method="POST">

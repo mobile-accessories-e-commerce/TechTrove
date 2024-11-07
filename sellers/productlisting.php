@@ -72,12 +72,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Listing</title>
     <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+        body{
+            background-color:  #d9e5f4;
+        }
         .container {
             width: 60%;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
             background-color: #f9f9f9;
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.1);
+        }
+        .close-btn {
+            
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: gray;
+        }
+        .close-btn a:hover {
+        color: #f00; 
+        }
+        .container p{
+            font-size: 22px;
+            color: black;
+        }
+        label,option{
+            font-size: 13px;
+            color: #333;
         }
 
         input[type=text],
@@ -98,6 +135,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838; 
         }
 
         .error {
@@ -112,7 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container">
-        <h2>Product Listing</h2>
+    <button class="close-btn"><a href="../sellers/sellerdashbord.php">&times;</a></button>
+        <p>Product Listing</p>
 
 
         <?php if (!empty($error)): ?>

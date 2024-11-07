@@ -240,7 +240,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             <ul class="product-section-item-wrapper">
 
                 <?php foreach ($product_list as $product): ?>
-                    <li class="product-item">
+                    <li class="product-item"><a class="product-link" href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
                         <div class="product-image">
                             <img src="../images/<?php echo $product['image_link'] ?>" alt="smart watch">
                         </div>
@@ -255,16 +255,22 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                                     </span>
                                 <?php endif; ?>
                                 <?php if ($product['discount'] != null): ?>
-                                    <span>Discount <?php echo $product['discount'] ?>%</span><br>
-                                    <span class="product-price">Price After Discount
-                                        <?php echo "$" . ($product['price'] - (($product['price'] / 100) * $product['discount'])) ?></span>
+                                    <div class="price">
+                                    <span class="product-price">
+                                    <?php echo "$" .$product['price']-$product['price']*$product['discount']/100?></span>
+                                    <div class="dis">
+                                    <del class="old-price"><?php echo "$" .$product['price'];?></del>
+                                    <span class="discount">-<?php echo $product['discount'] ?>%</span>
+                                    </div>
+                                    </div>
                                 <?php endif; ?>
-                                <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
-                                    <button class="blue-btn add-to-cart">View Product</button>
-                                </a>
+                                
+                                    
+                                
+                                
                             </div>
                         </div>
-                    </li>
+                        </a></li>
                 <?php endforeach; ?>
             </ul>
         </div>

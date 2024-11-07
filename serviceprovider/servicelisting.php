@@ -65,8 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Listing</title>
     <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
         body {
-            background-color: #ffeefe;
+            background-color:  #d9e5f4;
         }
 
         .container {
@@ -74,7 +77,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .close-btn {
+            
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: gray;
+        }
+        .close-btn a:hover {
+        color: #f00; 
+        }
+        
+        .container p{
+            font-size: 22px;
+            font-weight: 500;
         }
 
         input[type=text],
@@ -86,6 +116,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 8px;
             margin: 8px 0;
             box-sizing: border-box;
+            
+        }
+        label,option{
+            font-size: 13px;
+            color: #333;
         }
 
         input[type=submit] {
@@ -95,6 +130,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838; 
         }
 
         .error {
@@ -109,7 +149,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container">
-        <h2>Service Listing</h2>
+    
+    <button class="close-btn"><a href="../serviceprovider/servicedashbord.php">&times;</a></button>
+        <p>Service Listing</p>
 
 
         <?php if (!empty($error)): ?>

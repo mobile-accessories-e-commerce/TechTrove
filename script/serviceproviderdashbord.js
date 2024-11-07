@@ -12,7 +12,7 @@ function loadContent(section) {
           services.forEach(function (service) {
             productHTML += `
                             <div class="product">
-                                <img src="../images/${service.image_link}" alt="${service.service_name}">
+                                <img src="../images/${service.image_link}" alt="${service.service_name}">                              
                                 <div class="product-name">${service.service_name}</div>
                                 <div class="product-price">$${service.price}</div>
                                 <div class="product-stock">Stock: ${service.service_status}</div>
@@ -49,7 +49,11 @@ function loadContent(section) {
           content.innerHTML += productHTML;
         } else {
           content.innerHTML =
-            "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
+            `<div class='empty-service'>
+            <h1>No services Found</h1>
+            <img src="../images/empty.jpg" width="150px" height="150px">
+            <p>You haven't listed any service yet.</p>
+            </div>`;
         }
       }
     }

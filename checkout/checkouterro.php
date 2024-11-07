@@ -12,7 +12,7 @@
 
         .container{
             position: absolute;
-            left: 400px;
+            left: 25%;
             top: 180px;
             display: flex;
             flex-direction: column;

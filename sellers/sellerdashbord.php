@@ -18,6 +18,8 @@ if(!isset($_SESSION['userid'])){
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
     <link rel="stylesheet" href="../style/sellerdashbord.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>

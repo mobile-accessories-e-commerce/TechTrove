@@ -51,10 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         .form-container form {
             display: flex;
             flex-direction: column;
+            padding-right: 18px;
         }
 
         .form-container label {
             margin-top: 10px;
+            font-size: 13px;
+            color:#333;
         }
 
         .form-container input[type="text"],
@@ -64,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             padding: 8px;
             margin-top: 5px;
             border-radius: 4px;
-            border: 1px solid #ccc;
+            border: 1px solid ;
         }
 
         .form-container input[type="submit"] {
@@ -75,6 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            width: 100%;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #218838; 
         }
 
         .form-container .close-btn {
@@ -86,6 +93,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             background: none;
             border: none;
             color: #888;
+        }
+        .form-container .close-btn:hover{
+            color: red;
         }
 
         /* Background overlay */
