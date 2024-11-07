@@ -83,7 +83,11 @@
         <button class="cart-btn"><a href="../cart/cartlandingpage.php">Back to Cart</a></button>
     </div>
 
-
+    <script>
+        setTimeout(function() {
+    window.location.href = "../cart/cartlandingpage.php"; // Replace with your target URL
+}, 5000);
+    </script>
     
 </body>
 </html>

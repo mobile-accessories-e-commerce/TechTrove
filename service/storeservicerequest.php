@@ -73,7 +73,7 @@ if($result){
     <script>
         setTimeout(function() {
     window.location.href = "../userservicerequest/userservicerequest.php"; // Replace with your target URL
-}, 500);
+}, 5000);
     </script>
 </body>
 </html>
