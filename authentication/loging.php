@@ -2,6 +2,7 @@
 if($_SERVER['REQUEST_METHOD']=== 'POST'){
     include'../connect.php';
 
+   
     $USERNAME = $_POST['username'];
     $PASSWORD = $_POST['password'];
     
@@ -10,7 +11,7 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
     $sql = "select * from `users` where username = '$USERNAME' and password = '$PASSWORD'";
    
   
-    $result = mysqli_query($con, $sql);
+    $result = mysqli_query($con, query: $sql);
   
     if(mysqli_num_rows($result)> 0){
         $row = mysqli_fetch_assoc($result);

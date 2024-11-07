@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 $totalProducts = getTotalProduct(); 
-$itemsPerPage = 12; 
+$itemsPerPage = 32; 
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $itemsPerPage;
 $product_list = getProducts($offset, $itemsPerPage);

@@ -7,7 +7,7 @@ include '../connect.php';
 // include '../layouts/header.php';
 
 
-$product_category_query = "SELECT product_cat_id, name FROM product_catogory";
+$product_category_query = "SELECT product_cat_id, name FROM product_catogory LIMIT 5";
 $product_category_result = $con->query($product_category_query);
 $product_category_list = array();
 while ($row = mysqli_fetch_assoc($product_category_result)) {
@@ -206,7 +206,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             <?php foreach ($product_category_list as $catogory): ?>
                 <div class="collection-item">
                     <div class="collection-icon">
-                        <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
+                        <a href="../product/catogoryproduct.php?cat_id=<?php echo  $catogory['product_cat_id']; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                                 class="bi bi-tablet-landscape" viewBox="0 0 16 16">
                                 <path
