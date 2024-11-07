@@ -54,6 +54,10 @@ function loadContent(section) {
             <img src="../images/empty.jpg" width="150px" height="150px">
             <p>You haven't listed any service yet.</p>
             </div>`;
+              `<h1>No services Found</h1>
+              <p>hiii</p>
+            <img src="../images/backcover - Copy.jpeg">
+              <p>You haven't listed any service yet.</p>`;
         }
       }
     }

@@ -221,6 +221,11 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     </div>
 
+
+    <div class="marquee-container">
+  <span class="marquee-text">&#9734;&nbsp;&#9734;&nbsp;We Ship Your Items In 2 to 4 days with 100% free Shipping  &nbsp;&#9734;&nbsp;&#9734;</span>
+</div>
+
     <!--Best Sellers -product seection-->
     <div class="product-section-container scroll-animate">
         <h1>Best Selling Product</h1>
@@ -241,6 +246,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
                 <?php foreach ($product_list as $product): ?>
                     <li class="product-item"><a class="product-link" href="../product/productveiwpage.php?product_id=<?php echo $product['product_id']; ?>">
+                   <a href="../product/productveiwpage.php?product_id=<?php echo $product['product_id'] ?>"  class="product-item"><li>
                         <div class="product-image">
                             <img src="../images/<?php echo $product['image_link'] ?>" alt="smart watch">
                         </div>
@@ -271,6 +277,10 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
                             </div>
                         </div>
                         </a></li>
+                               
+                            </div>
+                        </div>
+                       </li></a>
                 <?php endforeach; ?>
             </ul>
         </div>

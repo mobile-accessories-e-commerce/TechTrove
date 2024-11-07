@@ -1,28 +1,38 @@
 <?php
 session_start();
 include '../connect.php';
+include '../pagination.php';
+ function getTotalProduct(){
+    include '../connect.php';
+    $sql = "SELECT COUNT(*) AS count FROM products";
+    $result = mysqli_query($con,$sql);
+    $row = mysqli_fetch_assoc($result);
+    $count = $row['count'];
+
+    return $count;
+ }
 
 
+function getProducts($offset,$itemsPerPage){
+                include "../connect.php";
 
+            // Fetch all products with categories
+            $products_query = "
+                SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity,pro.discount,pro.price_after_discount
+                FROM products p
+                JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
+                LEFT JOIN promotions pro ON p.product_id = pro.product_id
+                LIMIT $itemsPerPage OFFSET $offset
+            ";
+            $products_result = $con->query($products_query);
 
-function storeSearchQuary($input)
-{
+            $product_list = array();
+            while ($row = mysqli_fetch_assoc($products_result)) {
+                $product_list[] = $row;
+            }
 
+            return $product_list;
 }
-// Fetch all products with categories
-$products_query = "
-    SELECT p.product_id, p.seller_id, p.product_name, p.description, p.price, p.image_link, pc.name AS category_name, p.stock_quantity,pro.discount,pro.price_after_discount
-    FROM products p
-    JOIN product_catogory pc ON p.catogory_id = pc.product_cat_id
-    LEFT JOIN promotions pro ON p.product_id = pro.product_id
-";
-$products_result = $con->query($products_query);
-
-$product_list = array();
-while ($row = mysqli_fetch_assoc($products_result)) {
-    $product_list[] = $row;
-}
-
 // Fetch all product categories
 $product_category_query = "SELECT product_cat_id, name FROM product_catogory";
 $product_category_result = $con->query($product_category_query);
@@ -37,6 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $search_value = $_POST['search_value'];
     }
 }
+
+
+
+
+$totalProducts = getTotalProduct(); 
+$itemsPerPage = 12; 
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($currentPage - 1) * $itemsPerPage;
+$product_list = getProducts($offset, $itemsPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -123,8 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </li></a>
             <?php endforeach; ?>
+
         </ul>
     </div>
+    <?php echo paginate($totalProducts, $itemsPerPage, $currentPage, 'products.php'); ?>
 
   <script src="../script/productSearch.js"></script>
 </body>
