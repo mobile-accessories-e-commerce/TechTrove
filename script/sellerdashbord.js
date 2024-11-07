@@ -49,7 +49,7 @@ function loadContent(section) {
                             <div class="order">
                                 <img src="../images/${order.image_link}" alt="${order.product_name}">
                                 <div class="order-details">
-                                    <strong>Product:</strong> ${order.product_name}
+                                    <strong>Product:</strong> ${order.product_name}<br>
                                     <strong>Quantity:</strong> ${order.quantity}
                                     <div class="price">$${order.price}</div>
                                 </div>
@@ -62,7 +62,7 @@ function loadContent(section) {
                                     <p><strong>Email:</strong> ${order.email}</p>
                                     <p><strong>Payment Method:</strong> ${order.payment_method}</p>
                                 </div>
-                                <button> <a href='confirmorder.php?oder_item_id=${order.item_id}'>Make as ship</a></button>
+                                <button> <a class="shipped-link" href='confirmorder.php?oder_item_id=${order.item_id}'>Mark as shipped</a></button>
                                 
                             </div>
                         `;
@@ -92,11 +92,11 @@ function loadContent(section) {
                             <div class="product-card">
                                 <img src="../images/${product.image_link}" alt="${product.product_name}">
                                 <div class="product-details">
-                                    <h3>${product.product_name}</h3>
-                                    <p><strong>Available Stock:</strong> <span class="${stockClass}">${product.stock_quantity}</span></p>
-                                    <p><strong>View Count:</strong> <span>${product.view_count}</span></p>
-                                    <p><strong>Rating:</strong> <span class="rating">${product.rating} / 5</span></p>
-                                    <p><strong>Number of Orders:</strong> <span class="orders">${product.total_orders}</span></p>
+                                    <h2>${product.product_name}</h2>
+                                    <div><strong>Available Stock:</strong> <span class="${stockClass}">${product.stock_quantity}</span></div>
+                                    <div><strong>View Count:</strong> <span>${product.view_count}</span></div>
+                                    <div><strong>Rating:</strong> <span class="rating">${product.rating} / 5</span></div>
+                                    <div><strong>Number of Orders:</strong> <span class="orders">${product.total_orders}</span></div>
                                 </div>
                             </div>
                         `;

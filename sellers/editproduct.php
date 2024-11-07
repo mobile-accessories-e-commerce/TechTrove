@@ -64,12 +64,56 @@ if ($_GET['product_id']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Product</title>
     <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+        body{
+            background-color: #f0f0f0;
+        }
         .container {
             width: 60%;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.1);
+        }
+        .container p{
+            font-size: 22px;
+            color: black;
+        }
+        .close-btn {
+            
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            background-color: lightgrey;
+
+        }
+        .close-btn:hover{
+            background-color: red;
+            color: white;
+        }
+        .close-btn a{
+            text-decoration: none;
+            color: white;
+            
+        }
+        .close-btn a:hover {
+        color: white; 
+
+        }
+        label,option{
+            font-size: 13px;
+            color: #333;
         }
 
         input[type=text],
@@ -89,13 +133,19 @@ if ($_GET['product_id']) {
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838; 
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2>Edit Product</h2>
+    <button class="close-btn"><a href="../sellers/sellerdashbord.php">&times;</a></button>
+        <p>Edit Product</p>
 
         <form action="productupdate.php" method="POST">
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
