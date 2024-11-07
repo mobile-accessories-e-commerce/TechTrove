@@ -69,5 +69,11 @@ if($result){
     <?php else: ?>
     <h1>Oops! Some error has occured.Please try again.</h1>
     <?php endif; ?>
+
+    <script>
+        setTimeout(function() {
+    window.location.href = "../userservicerequest/userservicerequest.php"; // Replace with your target URL
+}, 500);
+    </script>
 </body>
 </html>
