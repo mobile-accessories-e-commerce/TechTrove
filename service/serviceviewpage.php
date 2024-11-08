@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 </head>
 
 <body>
-    <div><a href="services.php"><button class="back">back</button></a></div>
+<button class="close-btn"><a href="../service/services.php">&times;</a></button>
 
     <div class="main-container">
         <div class="container">
