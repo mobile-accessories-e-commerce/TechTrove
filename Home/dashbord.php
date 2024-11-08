@@ -7,6 +7,15 @@ include '../connect.php';
 // include '../layouts/header.php';
 
 
+
+$new_arrival_quary ="SELECT * FROM products 
+                    ORDER BY product_id DESC 
+                    LIMIT 1;";
+$result = mysqli_query($con,$new_arrival_quary);
+
+$new_arrival_product = mysqli_fetch_assoc($result);
+
+
 $product_category_query = "SELECT product_cat_id, name FROM product_catogory LIMIT 5";
 $product_category_result = $con->query($product_category_query);
 $product_category_list = array();
@@ -121,7 +130,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <nav class="nav-bar">
         <div class="nav-bar-logo">
             <a href="#">
-                <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
+                <img src="../images/elife_logo.png" width="120" height="64" alt="Logo">
             </a>
         </div>
 
@@ -165,8 +174,8 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             <a href="../userprofile.php">My Profile</a>
             <a href="../userorders/userorders.php">My Orders</a>
             <a href="../userservicerequest/userservicerequest.php">My Request</a>
-            <a href="../sellers/sellersignup.php">Seller Signup</a>
-            <a href="../serviceprovider/servicesignup.php">Service Provider Signup</a>
+            <a href="../sellers/sellersignup.php">Seller</a>
+            <a href="../serviceprovider/servicesignup.php">Service Provider</a>
             <a href="../authentication/logout.php">Log Out</a>
             
         </div>
@@ -281,24 +290,24 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <!--IPAD PROMO-->
 
     <div class="promo-container scroll-animate">
-        <div class="promo-box">
-            <div class="promo-image">
-                <img src="../images/07.png" alt="i pad">
-            </div>
-            <div class="promo-content">
-                <h1>New Arrivals</h1>
-                <h2>Sunshine Ipad</h2>
-                <p>
-                    Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-                    eleifend leo
-                </p>
-
-                <button class="white-button">
-                    SHOP NOW
-                </button>
-            </div>
+    <div class="promo-box">
+        <!-- Left side with image -->
+        <div class="promo-image">
+            <img src="../images/<?php echo $new_arrival_product['image_link']; ?>" alt="Product Image">
+        </div>
+        
+        <!-- Right side with content -->
+        <div class="promo-content">
+            <h1>New Arrivals</h1>
+            <h2><?php echo $new_arrival_product['product_name']; ?></h2>
+            <p><?php echo $new_arrival_product['description']; ?></p>
+            <a href="../product/productveiwpage.php?product_id=<?php echo $new_arrival_product['product_id']; ?>">
+                <button class="white-button">SHOP NOW</button>
+            </a>
         </div>
     </div>
+</div>
+
 
 
     <!--Footer-->
