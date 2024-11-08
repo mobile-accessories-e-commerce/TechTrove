@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color:  #d9e5f4; 
+            background: linear-gradient(135deg,#00feba, #5b548a);
             margin: 0;
             padding: 0;
             display: flex;

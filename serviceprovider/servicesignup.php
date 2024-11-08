@@ -73,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url(../images/service3.jpg);
-            background-repeat: repeat;
+            background: linear-gradient(135deg,#00feba, #5b548a);
+          
            
           
          

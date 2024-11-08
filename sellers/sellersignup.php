@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
 
         h1 {
-            margin-left: 370px;
+            text-align: center;
             font-size: 70px;
             color: #1A3C60;
             margin-top: 30px;
@@ -103,26 +103,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             position: relative;
             width: 100vw;
             height: 100vh;
-            background-image: url('../images/2.jpg');
-            background-size: 100vw;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: linear-gradient(135deg,#00feba, #5b548a);
+
+
+
+           
         }
 
         .form-container {
             position: absolute;
-            right: 100px;
-            bottom: 70px;
+            right:25%;
+            left: 30%;
+            bottom: 30px;
 
 
         }
         .close-btn {
             
             position: absolute;
-            right: 2px;
-            top: 2px;
-            background: none;
+            right: 100px;
+            top: 5px;
+            background-color: #f1f1f1;
             border: none;
+           border-radius: 4px;
             font-size: 24px;
             color: #333;
             cursor: pointer;
@@ -132,8 +135,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             text-decoration: none;
             color: gray;
         }
-        .close-btn a:hover {
-        color: #f00; 
+        .close-btn:hover {
+            background-color: #f00;
+            color: white;
+       
+        }
+        .close-btn a:hover{
+            color: white;
         }
 
         form {
