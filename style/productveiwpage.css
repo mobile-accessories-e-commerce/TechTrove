@@ -87,6 +87,11 @@ color: white;
     font-size: 16px;
     color: #555;
 }
+.price,.location,.contact_details{
+    font-size: 14px;
+    
+    
+}
 
 
 .product-price {
