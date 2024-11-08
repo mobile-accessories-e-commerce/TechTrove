@@ -103,7 +103,7 @@ $product_list = getProducts($offset, $itemsPerPage);
     <div class="product-section-container" id="product-section-container">
         <ul class="product-section-item-wrapper">
             <?php foreach ($product_list as $product): ?>
-                <a class="product-link" href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>"><li class="product-item">
+                <a class="product-link" href="productveiwpage.php?product_id=<?php echo $product['product_id']; ?>&back_link=products.php"><li class="product-item">
                     <div class="product-image">
                         <img src="../images/<?php echo $product['image_link']; ?>" alt="smart watch">
                     </div>

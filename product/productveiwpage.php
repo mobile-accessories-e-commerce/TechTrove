@@ -5,6 +5,7 @@ $stock_erro = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if (isset($_GET['product_id'])) {
+        $back_link = $_GET['back_link'];
         $product_id = $_GET['product_id'];
 
         $getviewquary = "SELECT view_count FROM products WHERE product_id='$product_id'";
@@ -59,7 +60,7 @@ while($row=mysqli_fetch_assoc($result)){
     
 
     <div class="main-container">
-    <button class="close-btn"><a href="../product/products.php">&times;</a></button>
+    <button class="close-btn"><a href="<?php echo $back_link ?>">&times;</a></button>
    
         <div class="container">
             <div class="image">
