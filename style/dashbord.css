@@ -25,10 +25,14 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-bottom: 8px;
 
 
 }
 .nav-bar-logo img {
+  
     flex:2;
     display: block;
 }
@@ -592,11 +596,9 @@ nav {
     width: 68%;
     height: 450px;
     display: flex;
-    flex-direction: raw;
-    justify-content: center;
     border-radius: 10px;
-    margin: 50px;
     overflow: hidden;
+    background-color: #f0f0f0; /* Optional: adds a background color */
 }
 
 .promo-image {
@@ -604,44 +606,50 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    width: 100%;
+    width: 50%; /* Takes 50% of the container */
 }
 
-.product-image img {
+.promo-image img {
     width: 90%;
+    height: auto;
+    object-fit: contain; /* Keeps the image within the container */
+    max-height: 100%;
 }
 
 .promo-content {
-    padding: 60px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    width: 50%; /* Takes the other 50% of the container */
     background-color: rgb(65, 105, 225);
+    color: white;
 }
 
 .promo-content h1 {
-    color: white;
-    font-size: 22px;
+    margin-top: 0;
+    font-size: 48px;
     font-weight: 500;
-    -webkit-font-smoothing: antialiased;
-}
-
-.promo-content h2 {
-    color: white;
-    font-size: 40px;
-    font-weight: 600;
-    -webkit-font-smoothing: antialiased;
     margin-bottom: 10px;
 }
 
+.promo-content h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Keeps the title on one line */
+}
+
 .promo-content p {
-    color: white;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 16px;
     margin-bottom: 30px;
-    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
 }
 
 .promo-content button {
@@ -650,7 +658,6 @@ nav {
     color: rgb(65, 105, 225);
     font-size: 17px;
     font-weight: 600;
-    -webkit-font-smoothing: antialiased;
     border: 0;
     border-radius: 30px;
     transition: 0.4s ease-in-out;
@@ -662,63 +669,11 @@ nav {
     background-color: rgb(15, 46, 138);
 }
 
+
+
 /* FOOTER*/
 
-footer {
-    background-color: #d9e5f4;
-    text-align: center;
-    padding: 30px;
-    color: rgb(64, 64, 64);
-}
 
-.footer-top {
-    padding: 20px;
-    width: 60%;
-    margin: auto;
-}
-
-.footer-socials-wrapper {
-    padding: 40px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.footer-social {
-    display: flex;
-    align-items: center;
-}
-
-.footer-social span {
-    margin-left: 20px;
-    font-size: 16px;
-}
-
-.footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    margin: auto;
-    border-top: 1px solid rgb(169, 169, 169);
-    padding-top: 30px;
-    margin-top: 20px;
-}
-
-.footer-bottom ul {
-    list-style: none;
-    display: flex;
-}
-
-.footer-bottom a {
-    margin-right: 20px;
-    text-decoration: none;
-    color: rgb(64, 64, 64);
-    transition: 0.4s ease-in-out;
-}
-
-.footer-bottom a:hover {
-    color: rgb(65, 105, 225);
-}
 
 
 

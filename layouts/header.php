@@ -11,7 +11,7 @@
 <nav class="nav-bar">
         <div class="nav-bar-logo">
             <a href="../Home/dashbord.php">
-                <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
+                <img src="../images/elife_logo.png" width="120" height="64" alt="Logo">
             </a>
         </div>
 

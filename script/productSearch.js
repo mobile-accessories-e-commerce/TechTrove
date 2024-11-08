@@ -32,7 +32,7 @@ function searchProducts() {
                                         </div>
                                 </div>`;
                         updateContent += `
-            <a class="product-link" href="productveiwpage.php?product_id=${product['product_id']}"><li class="product-item">
+            <a class="product-link" href="productveiwpage.php?product_id=${product['product_id']}&back_link=products.php"><li class="product-item">
                     <div class="product-image">
                         <img src="../images/${product['image_link']}" alt="smart watch">
                     </div>
@@ -95,7 +95,7 @@ function categorySearch() {
                                         </div>
                                 </div>`;
                         updateContent += `
-            <a class="product-link" href="productveiwpage.php?product_id=${product['product_id']}"><li class="product-item">
+            <a class="product-link" href="productveiwpage.php?product_id=${product['product_id']}&back_link=products.php"><li class="product-item">
                     <div class="product-image">
                         <img src="../images/${product['image_link']}" alt="smart watch">
                     </div>
