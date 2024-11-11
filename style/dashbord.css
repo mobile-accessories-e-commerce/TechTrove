@@ -99,6 +99,7 @@ nav {
 .account-icon p{
     font-size: 14px;
 }
+
 /* Container for account icon and dropdown */
 .account-container {
     position: relative;
@@ -129,10 +130,14 @@ nav {
 .dropdown-menu a {
     display: block;
     padding: 10px;
+    padding-left: 5px;
     color: #333;
     text-decoration: none;
     font-size: 15px;
     
+}
+.dropdown-menu img{
+    margin-right: 15px;
 }
 
 .dropdown-menu a:hover {
@@ -735,4 +740,24 @@ nav {
 
 footer.scroll-active {
     animation: fadeInUp 1.2s ease-out forwards;
+}
+
+
+@media(max-width: 768px){
+     .search-container,.nav-sp-link {
+        display: none;
+    }
+    .home-top-text h1{
+        font-size: 24px;
+    }
+    .home-top-text p{
+        display: none;
+    }
+    .home-top-image img{
+        width: 200px;
+    }
+    .home-top-wrapper{
+        margin: 0;
+        flex-direction: column;
+    }
 }

@@ -79,8 +79,8 @@ while($row=mysqli_fetch_assoc($result)){
                 
                 <div class="product-purchase">
                             <?php if ($product['discount'] == null): ?>
-                                <div class="price" id="price">
-                                <span class="product-price">
+                                <div class="price">
+                                <span class="product-price"  id="price">
                                     <?php echo "$" . $product['price']; ?>
                                 </span>
                                 </div>
@@ -113,7 +113,7 @@ while($row=mysqli_fetch_assoc($result)){
                 <?php if ($stock_erro): ?>
                     <p style="color:red;">Stock is not suffcieant</p>
                 <?php endif; ?>
-                <a href="../cart/add_to_cart.php?product_id=<?php echo $product['product_id']; ?>&quantity=1"
+                <a href="../cart/add_to_cart.php?product_id=<?php echo $product['product_id']; ?>&quantity=1&back_link=<?php echo $back_link ?>"
                     id="addToCartLink">
                     <button class="add-to-cart">Add to Cart</button>
                    

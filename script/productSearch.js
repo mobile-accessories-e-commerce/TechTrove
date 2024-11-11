@@ -20,7 +20,7 @@ function searchProducts() {
                     products.forEach(function (product) {
                         let discount = product['discount'] != null ? product['discount'] : "none";
                         let price = product['discount'] != null ? product['price_after_discount'] : product['price'];
-                        let stockstatus = (product['stock_quantity'] ==0 )? "" : "This is out of stock.";
+                        let stockstatus = (product['stock_quantity'] ==0 )? "This is out of stock." :"" ;
                         let discountStatus = (product['discount'] == null)?`<span class="product-price"> $${product['price']}</span>` : 
                         `<div class="price">
                                     
@@ -83,7 +83,7 @@ function categorySearch() {
                 products.forEach(function (product) {
                     let discount = product['discount'] != null ? product['discount'] : "none";
                         let price = product['discount'] != null ? product['price_after_discount'] : product['price'];
-                        let stockstatus = (product['stock_quantity'] ==0 )? "" : "This is out of stock.";
+                        let stockstatus = (product['stock_quantity'] ==0 )? "This is out of stock." : "" ;
                         let discountStatus = (product['discount'] == null)?`<span class="product-price"> $${product['price']}</span>` : 
                         `<div class="price">
                                     

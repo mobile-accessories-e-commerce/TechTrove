@@ -118,9 +118,11 @@ $product_list = getProducts($offset, $itemsPerPage);
                         </span>
                         <div class="product-purchase">
                             <?php if ($product['discount'] == null): ?>
+                                <div class="price">
                                 <span class="product-price">
                                     <?php echo "$" . $product['price']; ?>
                                 </span>
+                                </div>
                             <?php endif; ?>
                             <?php if ($product['discount'] != null): ?>
                                 <div class="price">
@@ -132,6 +134,7 @@ $product_list = getProducts($offset, $itemsPerPage);
                                         <span class="discount">-<?php echo $product['discount'] ?>%</span>
                                         </div>
                                 </div>
+                              
                                 
                             <?php endif; ?>
 
