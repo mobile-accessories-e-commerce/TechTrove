@@ -4,6 +4,7 @@ include '../connect.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $back_link = $_GET['back_link'];
     $product_id = $_GET['product_id'];
     $quantity = $_GET['quantity'];
 
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if ($stock_quantity < $quantity) {
         $stock_erro = 1;
-        header("location:../product/productveiwpage.php?erro=1&&product_id=$product_id");
+        header("location:../product/productveiwpage.php?erro=1&product_id=$product_id&back_link=$back_link");
     } else {
 
 

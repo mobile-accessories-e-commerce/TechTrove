@@ -171,12 +171,12 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             <p class="nav-sp-link" >Account</p>
          </div>
         <div class="dropdown-menu">
-            <a href="../userprofile.php">My Profile</a>
-            <a href="../userorders/userorders.php">My Orders</a>
-            <a href="../userservicerequest/userservicerequest.php">My Request</a>
-            <a href="../sellers/sellersignup.php">Seller</a>
-            <a href="../serviceprovider/servicesignup.php">Service Provider</a>
-            <a href="../authentication/logout.php">Log Out</a>
+            <a href="../userprofile.php"><img src="../images/user2.png" width="20" height="20" alt="">My Profile</a>
+            <a href="../userorders/userorders.php"><img src="../images/shopping-bag.png" width="20" height="20" alt="">My Orders</a>
+            <a href="../userservicerequest/userservicerequest.php"><img src="../images/interview.png" width="20" height="20" alt="">My Request</a>
+            <a href="../sellers/sellersignup.php"><img src="../images/business-man.png" width="20" height="20" alt="">Seller</a>
+            <a href="../serviceprovider/servicesignup.php"><img src="../images/employee.png" width="20" height="20" alt="">Service Provider</a>
+            <a href="../authentication/logout.php"><img src="../images/logout.png" width="20" height="20" alt="">Log Out</a>
             
         </div>
         </div>
