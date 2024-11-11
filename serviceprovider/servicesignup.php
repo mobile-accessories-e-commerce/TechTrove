@@ -73,40 +73,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg,#00feba, #5b548a);
-          
-           
-          
-         
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+
+
         }
-        .gohome{
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            color: #f0f0f0;
-            background-color: black;
-            width: 200px;
-            
+
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            color: #1A3C60;
+            margin-top: 30px;
+
+
         }
-       
+
+
         .container {
-            width: 400px;
-            margin: 50px auto;
-            padding: 40px;
-            padding-right: 60px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            background-color: #fff;
             position: relative;
-         
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg,#00feba, #5b548a);
+
+
+
+           
+        }
+        .container img{
+            position: absolute;
+            left: 10%;
+            top: 25%;
+        }
+
+        .form-container {
+
+            position: absolute;
+            right:12%;
+            
+            bottom: 7%;
+
+
         }
         .close-btn {
             
             position: absolute;
-            right: 2px;
-            top: 2px;
-            background: none;
+            right: 3%;
+            top: 3%;
+            background-color: #f1f1f1;
             border: none;
+           border-radius: 4px;
             font-size: 24px;
             color: #333;
             cursor: pointer;
@@ -116,51 +139,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             text-decoration: none;
             color: gray;
         }
-        .close-btn a:hover {
-        color: #f00; 
+        .close-btn:hover {
+            background-color: #f00;
+            color: white;
+       
         }
-        .container img{
-           display: flex;
-           align-items: center;
-           margin-left: 120px;
-        }
-    
-        .container p{
-            text-align: left;
-            color: black;
-            margin-top: 0;
-            font-size: 26px;
+        .close-btn a:hover{
+            color: white;
         }
 
-        label,
-        input{
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
+        form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            height: 320px;
+            
+        
+
         }
-        label{
+        form p{
+            font-size: 22px;
+            color: #023e61;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 7px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
             font-size: 13px;
-            color: #333;
+            text-align: center;
+            color: #555;
         }
 
         input[type="submit"] {
-            width: 100%;
-            border-radius: 4px;
-            padding: 10px;
-            background-color: #28a745;
+            background-color: #0a5c80;
             color: white;
             border: none;
-            cursor: pointer;
-            text-align: center;
+            padding: 10px;
+            border-radius: 4px;
             margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%
         }
 
         input[type="submit"]:hover {
-            background-color: #218838;
-        }
-        input[type="text"],input[type="email"]{
-            padding: 8px;
-            font-size: 14px;
+            background-color: #023e61;
         }
 
         .error {
@@ -171,11 +206,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 </head>
 
 <body>
+    <header><img src="../images/elife_logo.png" width="140" height="70" alt="Logo"></header>
    
     <div class="container">
-        <img src="../images/elife_logo.png" width="140" height="70" alt="Logo">
-        <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
-        <p> Sign Up</p>
+        
+        <h1>Start Offering Your Expert Services To eLife!</h1>
+        <img src="../images/service4.png" alt="" width="500px" height="400px">
+
+        <div class="form-container">
 
 
         <?php if (!empty($error)): ?>
@@ -184,21 +222,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
         <?php else: ?>
 
             <form action="servicesignup.php" method="POST">
-                <label for="service_name">Service Name:</label>
-                <input type="text" id="service_name" name="service_name" required>
+                <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
+                <p> Sign Up Here!</p>
+                
+                <input type="text" id="service_name" name="service_name" placeholder="Enter Your service" required>
 
-                <label for="provider_name">Provider Name:</label>
-                <input type="text" id="provider_name" name="provider_name" required>
+                
+                <input type="text" id="provider_name" name="provider_name" placeholder="Enter Your Name" required>
 
-                <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" required>
+                
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
 
-                <label for="phone_number">Phone Number:</label>
-                <input type="text" id="phone_number" name="phone_number" required>
+                
+                <input type="text" id="phone_number" name="phone_number" placeholder="Enter Your Mobile Number" required>
 
                 <input type="submit" value="Sign Up">
             </form>
         <?php endif; ?>
+        </div>
     </div>
 </body>
 

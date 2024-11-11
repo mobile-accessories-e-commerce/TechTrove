@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Signup</title>
     <style>
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -91,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
         h1 {
             text-align: center;
-            font-size: 70px;
+            font-size: 50px;
             color: #1A3C60;
             margin-top: 30px;
 
@@ -109,20 +110,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
            
         }
+        .container img{
+            position: absolute;
+            left: 10%;
+            top: 35%;
+        }
 
         .form-container {
+
             position: absolute;
-            right:25%;
-            left: 30%;
-            bottom: 30px;
+            right:8%;
+            
+            bottom: 7%;
 
 
         }
         .close-btn {
             
             position: absolute;
-            right: 100px;
-            top: 5px;
+            right: 3%;
+            top: 3%;
             background-color: #f1f1f1;
             border: none;
            border-radius: 4px;
@@ -147,16 +154,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
         form {
             background: #fff;
             padding: 40px;
-            border-radius: 7px;
+            border-radius: 12px;
             box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.2);
             width: 400px;
+            
         
 
         }
-        label{
-            font-size: 13px;
-            color:#333;
+        form p{
+            font-size: 22px;
+            color: #023e61;
+            font-weight: 500;
+            text-align: center;
         }
+        
         
 
         input[type="text"],
@@ -167,11 +178,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 15px;
+            font-size: 13px;
+            text-align: center;
+            color: #555;
         }
 
         input[type="submit"] {
-            background-color: #28a745;
+            background-color: #0a5c80;
             color: white;
             border: none;
             padding: 10px;
@@ -184,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
         }
 
         input[type="submit"]:hover {
-            background-color: #218838;
+            background-color: #023e61;
         }
 
        
@@ -192,16 +205,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 </head>
 
 <body>
+    <header><img src="../images/elife_logo.png" alt="elife" width="140" height="70">
+       
+</header>
     <div class="container">
 
 
-        <h1>Become A <img src="../images/elife_logo.png" alt="elife" width="140" height="70"> Seller Today!</h1>
+        <h1>Become A eLife Seller Today!</h1>
+        <img src="../images/seller-signup.png" width="480px" height="320px">
 
 
         <div class="form-container">
             
         
-        <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
+        
 
             <!--check for error-->
             <?php if (!empty($error)): ?>
@@ -210,18 +227,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
             <?php else: ?>
                 
                 <form action="sellersignup.php" method="POST">
+                    <button class="close-btn"><a href="../Home/dashbord.php">&times;</a></button>
+                    <p>Sellers Sign Up Here!</p>
         
-                    <label for="store_name">Store Name:</label>
-                    <input type="text" id="store_name" name="store_name" required>
+                    
+                    <input type="text" id="store_name" name="store_name" placeholder="Enter Store Name" required>
 
-                    <label for="seller_name">Seller Name:</label>
-                    <input type="text" id="seller_name" name="seller_name" required>
+                    
+                    <input type="text" id="seller_name" name="seller_name" placeholder="Enter Your Name" required>
 
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
 
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="text" id="phone_number" name="phone_number" required>
+                    
+                    <input type="text" id="phone_number" name="phone_number" placeholder="Enter Your Mobile number" required>
 
 
                     <input type="submit" value="Sign Up">
