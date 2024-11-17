@@ -99,4 +99,8 @@
             if (searchTerm) {
                 searchServices(); 
             }
+            const cat_id = document.getElementById('category').value;
+            if(cat_id){
+                categorySearch();
+            }
         };

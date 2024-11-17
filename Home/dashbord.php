@@ -380,7 +380,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
      <?php foreach ($service_category_list as $catogory): ?>
                     <div class="collection-item">
                         <div class="collection-icon">
-                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
+                            <a href="../service/services.php?cat_id=<?php echo $catogory['service_cat_id']; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
                 <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
                 <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
@@ -399,7 +399,7 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
     <?php foreach ($product_category_list as $catogory): ?>
                     <div class="collection-item">
                         <div class="collection-icon">
-                            <a href="../product/catogoryproduct.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
+                            <a href="../product/products.php?cat_id=<?php echo $catogory['product_cat_id']; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-tablet-landscape" viewBox="0 0 16 16">
                 <path d="M1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm-1 8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2z"/>
                 <path d="M14 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
