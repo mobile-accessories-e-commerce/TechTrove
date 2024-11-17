@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
    
     <div class="container">
         
-        <h1>Start Offering Your Expert Services To eLife!</h1>
+        <h1>Start Offering Your Expert Services In eLife!</h1>
         <img src="../images/service4.png" alt="" width="500px" height="400px">
 
         <div class="form-container">
@@ -226,14 +226,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
                 <p> Sign Up Here!</p>
                 
                 <input type="text" id="service_name" name="service_name" placeholder="Enter Your service" required>
-
-                
                 <input type="text" id="provider_name" name="provider_name" placeholder="Enter Your Name" required>
-
-                
                 <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
-
-                
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter Your Mobile Number" required>
 
                 <input type="submit" value="Sign Up">
