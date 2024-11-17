@@ -1,11 +1,42 @@
 <?php
 session_start();
+include "../connect.php";
 
-if(!isset($_SESSION['userid'])){
+if (!isset($_SESSION['userid'])) {
     header("location:../authentication/loging.php");
+    exit;
 }
 
+$user_id = $_SESSION['userid'];
+
+// Fetch total listings
+$queryListings = "SELECT COUNT(*) AS total_listings FROM services WHERE service_provider_id = (SELECT service_provider_id FROM service_providers WHERE user_id = $user_id)";
+$resultListings = mysqli_query($con, $queryListings);
+$totalListings = mysqli_fetch_assoc($resultListings)['total_listings'] ?? 0;
+
+// Fetch total customers
+$queryCustomers = "SELECT COUNT(DISTINCT user_id) AS total_customers FROM service_requests WHERE service_id IN (SELECT service_id FROM services WHERE service_provider_id = (SELECT service_provider_id FROM service_providers WHERE user_id = $user_id))";
+$resultCustomers = mysqli_query($con, $queryCustomers);
+$totalCustomers = mysqli_fetch_assoc($resultCustomers)['total_customers'] ?? 0;
+
+// Fetch total pending requests
+$queryPendingRequests = "SELECT COUNT(*) AS total_pending FROM service_requests WHERE accept = 0 AND service_id IN (SELECT service_id FROM services WHERE service_provider_id = (SELECT service_provider_id FROM service_providers WHERE user_id = $user_id))";
+$resultPendingRequests = mysqli_query($con, $queryPendingRequests);
+$totalPendingRequests = mysqli_fetch_assoc($resultPendingRequests)['total_pending'] ?? 0;
+
+// Fetch total completed requests
+$queryCompletedRequests = "SELECT COUNT(*) AS total_completed FROM service_requests WHERE accept = 1 AND service_id IN (SELECT service_id FROM services WHERE service_provider_id = (SELECT service_provider_id FROM service_providers WHERE user_id = $user_id))";
+$resultCompletedRequests = mysqli_query($con, $queryCompletedRequests);
+$totalCompletedRequests = mysqli_fetch_assoc($resultCompletedRequests)['total_completed'] ?? 0;
+
+
+
+$queryProvider = "SELECT provider_name FROM service_providers WHERE user_id = $user_id";
+$resultProvider = mysqli_query($con, $queryProvider);
+$providerName = mysqli_fetch_assoc($resultProvider)['provider_name'] ?? "Service Provider";
+
 ?>
+
 
 
 
@@ -15,196 +46,11 @@ if(!isset($_SESSION['userid'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Dashboard</title>
-    
-    <style>
-        /* General Styles */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            position: relative;
-            background-color: #f0f0f0;
-        }
+    <title>service Provider dashbord</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../style/serviceproviderdashbord.css">
 
-        /* Sidebar Styles */
-        .sidebar {
-            width: 200px;
-            background-color: #333;
-            position: fixed;
-            height: 100%;
-            padding-top: 20px;
-        }
-
-        .sidebar nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar nav ul li {
-            margin: 20px 0;
-        }
-
-        .sidebar nav ul li a {
-            text-decoration: none;
-            color: white;
-            display: block;
-            padding: 10px;
-            text-align: center;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar nav ul li a:hover {
-            background-color: #575757;
-        }
-
-        /* Main Content Styles */
-        .main-content {
-            margin-left: 200px;
-            padding: 20px;
-            
-           
-        }
-
-        /* Product Styles */
-        .product-list {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .product {
-            
-            /* Each item takes 30% of the container width */
-            margin-bottom: 20px;
-            /* Add space between rows */
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            height: 300px;
-            margin-right: 10px;
-        }
-
-        .product img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .product-name {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-
-        .product-price {
-            color: green;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .product-stock {
-            font-size: 13px;
-            color: #555;
-            text-align: left;
-        }
-
-        .product a {
-            display: inline-block;
-            margin-top: 10px;
-            background-color: #007bff;
-            color: white;
-            padding: 8px ;
-            text-decoration: none;
-            border-radius: 5px;
-            width: 100px;
-        }
-
-        .product a:hover {
-            background-color: #0056b3;
-        }
-        .empty-service{
-            position: absolute;
-            top: 25vh;
-            left: 45%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        
-
-        /* Order Styles */
-        .order-list {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .order {
-            width: 30%;
-            /* Each item takes 30% of the container width */
-            margin-bottom: 20px;
-            /* Add space between rows */
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .order img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .order-details {
-            margin-top: 10px;
-        }
-
-        .order-details strong {
-            display: block;
-            font-size: 14px;
-            margin: 5px 0;
-        }
-
-        .order .price {
-            color: green;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .order .details {
-            margin-top: 20px;
-        }
-
-        .order .details h3 {
-            margin-bottom: 10px;
-        }
-
-        .order .details p {
-            margin: 5px 0;
-        }
-
-        .order button {
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .order button:hover {
-            background-color: #218838;
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -213,7 +59,7 @@ if(!isset($_SESSION['userid'])){
     <div class="sidebar">
         <nav>
             <ul class="nav-links">
-                <li><a href="#" onclick="loadContent('home')">Home</a></li>
+                <li><a href="servicedashbord.php">Home</a></li>
                 <li><a href="servicelisting.php">Add service</a></li>
                 <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
                 <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
@@ -226,8 +72,42 @@ if(!isset($_SESSION['userid'])){
 
     <!-- Main Content -->
     <div class="main-content" id="main-content">
-        <h1>Service Provider Dashboard</h1>
-        <p>Welcome to your Service Provider dashboard. Here you can manage your services, orders, and view reports.</p>
+        <div class="container">
+    <div class="welcome-message">
+    <h1>Welcome, <span><?php echo $providerName; ?></span>!</h1>
+</div>
+
+<div class="statistics-container">
+    <!-- Card 1 -->
+    <div class="stat-card">
+        <i class="fas fa-list-alt"></i>
+        <h2>Total Listings</h2>
+        <p><?php echo $totalListings; ?></p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="stat-card">
+        <i class="fas fa-users"></i>
+        <h2>Total Customers</h2>
+        <p><?php echo $totalCustomers; ?></p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="stat-card">
+        <i class="fas fa-hourglass-half"></i>
+        <h2>Pending Requests</h2>
+        <p><?php echo $totalPendingRequests; ?></p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="stat-card">
+        <i class="fas fa-check-circle"></i>
+        <h2>Completed Requests</h2>
+        <p><?php echo $totalCompletedRequests; ?></p>
+    </div>
+</div>
+</div>
+
     </div>
 
     <script src="../script/serviceproviderdashbord.js"></script>

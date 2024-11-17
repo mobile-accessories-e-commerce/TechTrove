@@ -14,6 +14,7 @@ body {
     padding-top: 20px;
 }
 
+
 .sidebar nav ul {
     list-style-type: none;
     padding: 0;
@@ -44,17 +45,29 @@ body {
 }
 
 /* Product Styles */
+/* Product List Container */
 .product-list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    padding: 20px;
 }
 
+@media screen and (max-width: 1024px) {
+    .product-list {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .product-list {
+        grid-template-columns: 1fr; 
+    }
+}
+
+
 .product {
-    width: 30%;
-    /* Each item takes 30% of the container width */
     margin-bottom: 20px;
-    /* Add space between rows */
     box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -114,17 +127,27 @@ button {
 
 /* Order Styles */
 .order-list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    padding: 20px;
 }
 
+@media screen and (max-width: 1024px) {
+    .order-list {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .order-list {
+        grid-template-columns: 1fr; 
+    }
+}
+
+
 .order {
-   
-    width: 30%;
-    /* Each item takes 30% of the container width */
     margin-bottom: 20px;
-    /* Add space between rows */
     box-sizing: border-box;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -188,19 +211,30 @@ button {
     background-color: #218838;
 }
 
-/* order status*/
+/* product status*/
 
 /* Product Status List - Layout */
-.product-status-list {
-    display: flex;
-    flex-wrap: wrap;
+.product-status-list  {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
-    justify-content: center;
+    padding: 20px;
 }
 
-/* Product Card - Structure */
+@media screen and (max-width: 1024px) {
+    .product-status-list  {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .product-status-list  {
+        grid-template-columns: 1fr; 
+    }
+}
+
+
 .product-card {
-    width: 280px;
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
@@ -210,7 +244,7 @@ button {
     text-align: center;
 }
 
-/* Image - Styling */
+
 .product-card img {
     max-width: 100%;
     height: auto;
@@ -218,7 +252,7 @@ button {
     border-radius: 8px;
 }
 
-/* Product Details - Styling */
+
 .product-details{
     text-align: left;
 }
@@ -243,14 +277,6 @@ button {
     
 }
 
-
-/* Add Hover Effect on Product Card */
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Background Styling for Numbers */
 .product-details p span {
     display: inline-block;
     background-color: #f0f0f0;
@@ -261,14 +287,14 @@ button {
     color: #555;
 }
 
-/* Styling for Rating */
+
 .product-details p .rating {
     color: #ff9800;
     font-weight: bold;
     font-size: 16px;
 }
 
-/* Stock and Orders Styling */
+
 .product-details .stock,
 .product-details .orders {
     font-size: 13px;
@@ -283,77 +309,50 @@ button {
     font-weight: bold;
 }
 
-/* Responsive Layout */
-@media (max-width: 768px) {
-    .product-card {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-}
+
+
 
 /* Reports css*/
 
-/* General styling for the reports menu */
+
 .reports-menu {
     background-color: #ffffff;
-    /* White background for contrast */
     border-radius: 15px;
-    /* Rounded corners */
     padding: 20px;
-    /* Padding inside the box */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
     max-width: 300px;
-    /* Maximum width */
     margin: 20px auto;
     display: inline-block;
     margin: 20px;
 }
 
-/* Heading for the reports section */
+
 .reports-menu h2 {
     text-align: center;
-    /* Centered text */
     color: #333;
-    /* Dark color for the heading */
     margin-bottom: 15px;
-    /* Space below the heading */
 }
 
-/* List styling */
+
 .reports-menu ul {
     list-style-type: none;
-    /* Remove default bullet points */
     padding: 0;
-    /* Remove padding */
 }
 
-/* List item styling */
 .reports-menu li {
     margin: 10px 0;
-    /* Space between items */
 }
 
-/* Link styling */
 .reports-menu a {
     text-decoration: none;
-    /* Remove underline */
     color: #27ae60;
-    /* Green color for the links */
     font-weight: 500;
-    /* Slightly bold font */
     display: block;
-    /* Make the link fill the list item */
     padding: 10px;
-    /* Padding for the link area */
     border-radius: 5px;
-    /* Rounded corners for links */
     transition: background-color 0.3s ease;
-    /* Smooth background transition */
 }
 
-/* Link hover effect */
 .reports-menu a:hover {
     background-color: #f0f0f0;
-    /* Light grey background on hover */
 }

@@ -92,6 +92,12 @@ video{
     margin-left: 500px;
     
 }
+
+@media screen and (max-width: 768px) {
+    video{
+        margin-left: 150px;
+    }
+}
 .container p{
     font-size: 15px;
     text-align: center;
