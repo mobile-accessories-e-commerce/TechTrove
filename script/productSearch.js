@@ -129,8 +129,14 @@ function categorySearch() {
 
 
 window.onload = function () {
+    
     const searchTerm = document.getElementById('search').value;
     if (searchTerm) {
         searchProducts();  // Automatically call searchProducts to display results
     }
+    const cat_id = document.getElementById('category').value;
+    if(cat_id){
+        categorySearch();
+    }
+    console.log(cat_id);
 };
