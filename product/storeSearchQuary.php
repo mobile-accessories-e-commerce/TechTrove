@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $type = $_GET['type'];
 
 
-    if($type==="product"){
+    if($type=="product"){
 $sql = "SELECT * FROM invalid_search_quary WHERE quary='$input' and type='product'";
 $result = mysqli_query($con,$sql);
 if(mysqli_num_rows($result)>0){

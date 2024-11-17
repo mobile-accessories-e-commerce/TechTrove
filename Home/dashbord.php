@@ -105,21 +105,6 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             margin: 10px 0;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
     </style>
 

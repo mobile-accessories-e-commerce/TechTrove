@@ -12,7 +12,7 @@
                     let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
                     if (services == "false") {
                         const xhr2 = new XMLHttpRequest();
-                        xhr2.open('GET', `../product/storeSearchQuary.php?query=${searchTerm}&type=${"service"}`, true);
+                        xhr2.open('GET', `../product/storeSearchQuary.php?query=${searchTerm}&type=service`, true);
                         xhr2.send();
                         updateContent += `<h1>No service found try different keyword</h1>`;
                     } else {

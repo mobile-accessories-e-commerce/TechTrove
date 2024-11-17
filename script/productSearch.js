@@ -12,7 +12,7 @@ function searchProducts() {
             let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
             if (products == "false") {
                 const xhr2 = new XMLHttpRequest();
-                xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}?type`, true);
+                xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}&type=product`, true);
                 xhr2.send();
                 updateContent += `<h1>No product found try different keyword</h1>`;
             } else {

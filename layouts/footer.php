@@ -144,7 +144,7 @@
                 <div class="contactus-link">
                     <h6>Contact us</h6>
                     <ul>
-                        <li><a href="#">About us</a></li>
+                        <li><a href="../aboutUs/aboutus.php" target="_blank">About us</a></li>
                         <li><a href="#">Get help</a></li>
                         
                         
