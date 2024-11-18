@@ -50,67 +50,89 @@ $providerName = mysqli_fetch_assoc($resultProvider)['provider_name'] ?? "Service
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../style/serviceproviderdashbord.css">
 
-   
+
 </head>
 
 <body>
 
-    <!-- Left Sidebar Navigation -->
-    <div class="sidebar">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="servicedashbord.php">Home</a></li>
-                <li><a href="servicelisting.php">Add service</a></li>
-                <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
-                <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
-                <li><a href="#" onclick="loadContent('service_request')">Ordered Products</a></li>
-                <li><a href="#" onclick="loadContent('reports')">Reports</a></li>
-                <li><a href="../Home/dashbord.php">Back to Home</a></li>
-            </ul>
-        </nav>
+
+    <div class="hamburger" id="hamburger">
+        ☰
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content" id="main-content">
-        <div class="container">
-    <div class="welcome-message">
-    <h1>Welcome, <span><?php echo $providerName; ?></span>!</h1>
-</div>
+    <div class="main-container">
+        <!-- Left Sidebar Navigation -->
+        <div class="sidebar" id="sidebar">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="servicedashbord.php">Home</a></li>
+                    <li><a href="servicelisting.php">Add service</a></li>
+                    <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
+                    <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
+                    <li><a href="#" onclick="loadContent('service_request')">Ordered Products</a></li>
+                    <li><a href="#" onclick="loadContent('reports')">Reports</a></li>
+                    <li><a href="../Home/dashbord.php">Back to Home</a></li>
+                </ul>
+            </nav>
+        </div>
 
-<div class="statistics-container">
-    <!-- Card 1 -->
-    <div class="stat-card">
-        <i class="fas fa-list-alt"></i>
-        <h2>Total Listings</h2>
-        <p><?php echo $totalListings; ?></p>
+        <div class="main-content" id="main-content">
+            <div class="container">
+                <div class="welcome-message">
+                    <h1>Welcome, <span><?php echo $providerName; ?></span>!</h1>
+                </div>
+
+                <div class="statistics-container">
+                    <!-- Card 1 -->
+                    <div class="stat-card">
+                        <i class="fas fa-list-alt"></i>
+                        <h2>Total Listings</h2>
+                        <p><?php echo $totalListings; ?></p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h2>Total Customers</h2>
+                        <p><?php echo $totalCustomers; ?></p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="stat-card">
+                        <i class="fas fa-hourglass-half"></i>
+                        <h2>Pending Requests</h2>
+                        <p><?php echo $totalPendingRequests; ?></p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h2>Completed Requests</h2>
+                        <p><?php echo $totalCompletedRequests; ?></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <!-- Card 2 -->
-    <div class="stat-card">
-        <i class="fas fa-users"></i>
-        <h2>Total Customers</h2>
-        <p><?php echo $totalCustomers; ?></p>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="stat-card">
-        <i class="fas fa-hourglass-half"></i>
-        <h2>Pending Requests</h2>
-        <p><?php echo $totalPendingRequests; ?></p>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="stat-card">
-        <i class="fas fa-check-circle"></i>
-        <h2>Completed Requests</h2>
-        <p><?php echo $totalCompletedRequests; ?></p>
-    </div>
-</div>
-</div>
-
-    </div>
-
+    
     <script src="../script/serviceproviderdashbord.js"></script>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function () {
+            const handbager = document.getElementById('hamburger');
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+
+
+            } else {
+                sidebar.style.display = 'block';
+
+
+            }
+        });
+    </script>
 
 </body>
 

@@ -185,9 +185,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="stock_quantity">Stock Quantity:</label>
             <input type="number" id="stock_quantity" name="stock_quantity" required>
-
+            <br>
+            <br>
             <label for="image_link">Image:</label>
             <input type="file" id="image_link" name="image_link" accept="image/*" required>
+            <br>
+            <br>
 
             <label for="color">Color:</label>
             <input type="text" id="color" name="color">

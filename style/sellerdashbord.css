@@ -1,17 +1,36 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    display: flex;
+   
     
 }
 
+.hamburger{
+    display: none;
+    cursor: pointer;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 28px;
+}
 /* Sidebar Styles */
 .sidebar {
     width: 200px;
     background-color: #333;
-    position: fixed;
     height: 100%;
     padding-top: 20px;
+    position: fixed;
+    z-index: 200;
+    
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar{
+       display: none;
+    }
+    .hamburger{
+        display: block;
+    }
 }
 
 
@@ -39,9 +58,13 @@ body {
 }
 
 /* Main Content Styles */
-.main-content {
-    margin-left: 200px;
-    padding: 20px;
+.main-container{
+   display: flex;
+   
+}
+.main-content{
+    margin-left: 220px;
+    flex: 1;
 }
 
 /* Product Styles */
@@ -62,6 +85,10 @@ body {
 @media screen and (max-width: 768px) {
     .product-list {
         grid-template-columns: 1fr; 
+    }
+    .main-content{
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 

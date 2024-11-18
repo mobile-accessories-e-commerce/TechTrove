@@ -69,11 +69,11 @@ if ($row = mysqli_fetch_assoc($result)) {
 
 <style>
 
-    .container{
-        position: absolute;
-        left: 35%;
+    .main-content{
+        margin-top: 20px;
     }
     .statistics-container {
+       
         display: grid;
         grid-template-columns: repeat(2, minmax(250px, 1fr));
         gap: 50px;
@@ -187,8 +187,12 @@ if ($row = mysqli_fetch_assoc($result)) {
 
 <body>
 
-    <!-- Left Sidebar Navigation -->
-    <div class="sidebar">
+<div class="hamburger" id="hamburger">
+        ☰
+    </div>
+<div class="main-container">
+   
+    <div class="sidebar" id="sidebar">
         <nav>
             <ul class="nav-links">
                 <li><a href="sellerdashbord.php">Home</a></li>
@@ -236,8 +240,27 @@ if ($row = mysqli_fetch_assoc($result)) {
 
         </div>
     </div>
+</div>
+
+
+
 
     <script src="../script/sellerdashbord.js"></script>
+    <script>
+            document.getElementById('hamburger').addEventListener('click', function () {
+                const handbager =document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+   if(sidebar.style.display === 'block'){
+        sidebar.style.display = 'none';
+        
+        
+   }else{
+    sidebar.style.display = 'block';
+    
+
+   }
+});
+        </script>
 
 </body>
 

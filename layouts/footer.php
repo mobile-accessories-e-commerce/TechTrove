@@ -20,7 +20,7 @@
 }
 
 .footer-top {
-    align-items: c;
+    align-items: center;
     padding: 20px;
     width: 100%;
     
@@ -110,7 +110,7 @@
     margin: auto;
     border-top: 1px solid rgb(169, 169, 169);
     padding-top: 30px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .footer-bottom ul {
     list-style: none;
@@ -126,6 +126,15 @@
 
 .footer-bottom a:hover {
     color: rgb(65, 105, 225);
+}
+
+@media screen and (max-width: 768px) {
+    .social-media-link{
+        display: none;
+    }
+    .footer-bottom {
+        margin-top: 40px;
+    }
 }
 
 </style>

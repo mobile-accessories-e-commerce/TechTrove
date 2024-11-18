@@ -3,19 +3,39 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    display: flex;
-    position: relative;
-    background-color: #f0f0f0;
+    
 }
 
+
+
+.hamburger{
+    display: none;
+    cursor: pointer;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 28px;
+}
 /* Sidebar Styles */
 .sidebar {
     width: 200px;
     background-color: #333;
-    position: fixed;
     height: 100%;
     padding-top: 20px;
+    position: fixed;
+    z-index: 200;
+    
 }
+
+@media screen and (max-width: 768px) {
+    .sidebar{
+       display: none;
+    }
+    .hamburger{
+        display: block;
+    }
+}
+
 
 .sidebar nav ul {
     list-style-type: none;
@@ -41,12 +61,15 @@ body {
 }
 
 /* Main Content Styles */
-.main-content {
-    margin-left: 200px;
-    padding: 20px;
-
-
-}
+.main-container{
+    display: flex;
+    
+ }
+ .main-content{
+     margin-left: 220px;
+     flex: 1;
+     margin-top: 20px;
+ }
 
 /* Product Styles */
 .product-list {
@@ -65,6 +88,10 @@ body {
 @media screen and (max-width: 768px) {
     .product-list {
         grid-template-columns: 1fr; 
+    }
+    .main-content{
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 .product {
@@ -159,10 +186,7 @@ body {
 /* Welcome Message */
 
 
-.container{
-position: absolute;
-left: 35%;
-}
+
 .welcome-message {
 text-align: center;
 margin-bottom: 40px;

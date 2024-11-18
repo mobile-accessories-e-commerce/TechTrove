@@ -242,3 +242,16 @@ button.add-to-cart:hover {
     object-fit: cover;
     z-index: 10;
 }
+
+@media screen and (max-width: 768px) {
+    .container{
+        margin-top: 150px;
+        flex-direction: column;
+    }
+    img{
+        width: 200px;
+    }
+    .feedback-container {
+        margin-top: 100px;
+    }
+}

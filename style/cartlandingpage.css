@@ -119,6 +119,7 @@ video{
     text-align: center;
 }
 
+
 .total-container {
     display: flex;
     flex-direction: column;
@@ -170,4 +171,16 @@ video{
         width: 100%;
         /* Full width on mobile */
     }
+}
+
+@media screen and (max-width: 768px) {
+    .row{
+        align-items: center;
+
+    }
+    .card{
+        flex-direction: column;
+        gap: 10px;
+    }
+
 }
