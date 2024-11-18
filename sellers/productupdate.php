@@ -15,30 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = (int) $_POST['price'];
     $brand = htmlspecialchars(trim($_POST['brand']));
     $stockQuantity = (int) $_POST['stock_quantity'];
-    $shippingCost = (int) $_POST['shipping_cost'];
-    $imageLink = $_POST['image_link'];
-    $color = htmlspecialchars(trim($_POST['color']));
-    $size = htmlspecialchars(trim($_POST['size']));
-    $weight = (int) $_POST['weight'];
-    $isFreeShipping = isset($_POST['is_free_shiping']) ? 1 : 0;
-    $productStatus = isset($_POST['product_status']) ? 1 : 0;
-    $categoryId = (int) $_POST['catogory_id'];
+    
 
-
-    if (empty($productName) || empty($description) || empty($brand) || empty($categoryId)) {
+    if (empty($productName) || empty($description) || empty($brand)) {
         die("Error: All fields are required!");
-    }
-
-
-    if (isset($_FILES['image_link']) && $_FILES['image_link']['error'] == UPLOAD_ERR_OK) {
-
-        $uploadDir = 'uploads/';
-        $uploadFile = $uploadDir . basename($_FILES['image_link']['name']);
-
-
-        if (!move_uploaded_file($_FILES['image_link']['tmp_name'], $uploadFile)) {
-            die("Error: Could not upload the image.");
-        }
     }
 
 
@@ -48,21 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             price = ?, 
                             brand = ?, 
                             stock_quantity = ?, 
-                            shipping_cost = ?, 
-                            image_link = ?, 
-                            color = ?, 
-                            size = ?, 
-                            weight = ?, 
-                            is_free_shiping = ?, 
-                            product_status = ?, 
-                            catogory_id = ? 
+                            color = ? 
                             WHERE product_id = ?");
 
 
     $productId = (int) $_POST['product_id'];
 
 
-    $stmt->bind_param("ssisiisssiiiii", $productName, $description, $price, $brand, $stockQuantity, $shippingCost, $imageLink, $color, $size, $weight, $isFreeShipping, $productStatus, $categoryId, $productId);
+    $stmt->bind_param("ssisisi", $productName, $description, $price, $brand, $stockQuantity, $color, $productId);
 
     if ($stmt->execute()) {
 
