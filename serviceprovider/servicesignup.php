@@ -32,25 +32,22 @@ if ($result->num_rows > 0) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($error)) {
 
     $service_name = $con->real_escape_string($_POST['service_name']);
-    $service_description = $con->real_escape_string($_POST['service_description']);
     $provider_name = $con->real_escape_string($_POST['provider_name']);
     $email = $con->real_escape_string($_POST['email']);
     $phone_number = $con->real_escape_string($_POST['phone_number']);
-    $bank_ac_num = $con->real_escape_string($_POST['bank_ac_num']);
+    
 
 
-    if (empty($service_name) || empty($service_description) || empty($provider_name) || empty($email) || empty($phone_number) || empty($bank_ac_num)) {
+    if (empty($service_name)  || empty($provider_name) || empty($email) || empty($phone_number)) {
         $error = "All fields are required!";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format!";
     } elseif (!preg_match('/^[0-9]{10}$/', $phone_number)) {
         $error = "Invalid phone number! Please enter a 10-digit phone number.";
-    } elseif (!preg_match('/^[0-9]{9,18}$/', $bank_ac_num)) {
-        $error = "Invalid bank account number! It should be between 9 to 18 digits.";
     } else {
 
-        $sql = "INSERT INTO service_providers (user_id, service_name, service_description, provider_name, email, phone_number, bank_ac_num) 
-                VALUES ('$user_id', '$service_name', '$service_description', '$provider_name', '$email', '$phone_number', '$bank_ac_num')";
+        $sql = "INSERT INTO service_providers (user_id, service_name,provider_name, email, phone_number) 
+                VALUES ('$user_id', '$service_name', '$provider_name', '$email', '$phone_number')";
 
         if ($con->query($sql) === TRUE) {
 

@@ -34,7 +34,7 @@ function fetchPendingOrders(page = 1) {
           ordersHTML += `
                 <div class="order-card">
                 <div class="order-info">
-                    <h2>Order #${order.order_id}</h2>
+                    <h2>Order #${order.item_id}</h2>
                     <p><strong>Date:</strong> ${order.ordered_data}</p>
                     <p><strong>Status:</strong> ${order.order_status}</p>
                 </div>
@@ -191,6 +191,7 @@ function fetchOverallOrderData() {
     if (xhr.status === 200) {
       let content = document.getElementById("order-container");
       let orders = JSON.parse(xhr.responseText);
+      let cost = orders.total_cost ==null ? 0 : orders.total_cost;
 
       let ordersHTML = `<div class='container'>`;
 
@@ -212,7 +213,7 @@ function fetchOverallOrderData() {
                             </div>
                             <div class="summary-item">
                                 <h2>Total Cost</h2>
-                                <p id="total-cost">$${orders.total_cost}</p>
+                                <p id="total-cost">$${cost}</p>
                             </div>
                         </div>
                     </div>
