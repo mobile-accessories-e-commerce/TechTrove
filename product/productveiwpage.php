@@ -199,7 +199,7 @@ while($row=mysqli_fetch_assoc($result)){
         function updateCartLink() {
             const productId = "<?php echo $product['product_id']; ?>";
             const quantity = quantityInput.value;
-            addToCartLink.href = `../cart/add_to_cart.php?product_id=${productId}&quantity=${quantity}`;
+            addToCartLink.href = `../cart/add_to_cart.php?product_id=${productId}&quantity=${quantity}&back_link=<?php echo $back_link;?>`;
         }
     </script>
 
