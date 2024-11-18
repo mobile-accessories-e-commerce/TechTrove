@@ -4,7 +4,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Enable error repor
 
 if (isset($_GET['seller_id'])) {
     $seller_id = $_GET['seller_id'];
-    $query = "SELECT store_name, email, phone_number FROM sellers WHERE seller_id = ?";
+    $query = "SELECT store_name, email, phone_number,location FROM sellers WHERE seller_id = ?";
     $stmt = $con->prepare($query);
     $stmt->bind_param("i", $seller_id);
 
