@@ -247,8 +247,6 @@
         }
 
 
-        /* Keyframes for fading in and sliding up */
-/* Keyframes for fading in and sliding up */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -260,14 +258,14 @@
     }
 }
 
-/* Apply animation to elements when they are in view */
+
 .fade-in-up {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 1s, transform 1s;  /* Ensure smooth transition */
+    transition: opacity 1s, transform 1s;  
 }
 
-/* When the element is visible, apply the final styles */
+
 .fade-in-up-visible {
     opacity: 1;
     transform: translateY(0);

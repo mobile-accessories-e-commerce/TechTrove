@@ -299,18 +299,6 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
 
     <script>
 
-        // document.addEventListener('scroll',()=>{
-        //     let navBar = document.querySelector('nav');
-        //     if(window.scrollY > 0){
-        //         navBar.style.background = 'white';
-        //         navbar.style.boxShadow = '0 5px 20px rgba (190,190,190,0.15)';
-        //     }
-
-        //     else{
-        //         navBar.style.background = 'white';
-        //         navBar.style.boxShadow = 'none'
-        //     }
-        // });
 
         const heroProducts = <?php echo json_encode($hero_products); ?>;
         const slider = document.getElementById("home-top-wrapper");
@@ -470,17 +458,17 @@ while ($row = mysqli_fetch_assoc($hero_result)) {
             ];
             let currentImageIndex = 0;
 
-            // Function to update background image
+            
             function updateBackgroundImage() {
                 collectionContainer.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
                 currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
             }
 
-            // Initial background setup
+           
             updateBackgroundImage();
 
-            // Set interval to change background image every 5 seconds
-            setInterval(updateBackgroundImage, 5000);  // Adjust as needed
+           
+            setInterval(updateBackgroundImage, 5000);  
         });
 
     </script>
