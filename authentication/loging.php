@@ -1,30 +1,40 @@
 <?php
-if($_SERVER['REQUEST_METHOD']=== 'POST'){
-    include'../connect.php';
 
-   
-    $USERNAME = $_POST['username'];
-    $PASSWORD = $_POST['password'];
-    
+include "../connect.php";
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $sql = "select * from `users` where username = '$USERNAME' and password = '$PASSWORD'";
-   
-  
-    $result = mysqli_query($con, query: $sql);
-  
-    if(mysqli_num_rows($result)> 0){
-        $row = mysqli_fetch_assoc($result);
-        session_start();
-        $_SESSION["username"] = $USERNAME;
-        $_SESSION['userid'] = $row['user_id'];
-        header('location:../Home/dashbord.php');
-    }else{
-        echo'Check your user name and password and try again';
+    // Fetch the hashed password from the database
+    $sql = "SELECT user_id, username, password FROM users WHERE email = ? OR username = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("ss", $email,$email);
+    $stmt->execute();
+    $stmt->store_result();
 
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $username, $hashedPassword);
+        $stmt->fetch();
+
+        
+        if (password_verify($password, $hashedPassword)) {
+            
+            session_start();
+            $_SESSION['user_id'] = $id;
+            $_SESSION['username'] = $username;
+
+            header("location:../Home/dashbord.php");
+        } else {
+            echo "<span style='color: red; font-weight:bold; display: block; text-align: center;'>Invalid Password</span>";
+        }
+    } else {
+        echo "<span style='color: red; font-weight:bold; display: block; text-align: center;'>Invalid email or user name</span>";
     }
-}
 
+    $stmt->close();
+    $con->close();
+}
 ?>
 
 
@@ -141,7 +151,7 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
             <p class="text"> Start Your Journey Here</p>
 
         <form action="loging.php" method="post">
-            <input type="text" placeholder="Enter your Name" name="username" required>
+            <input type="text" placeholder="Enter your Name" name="email" required>
             <input type="password" placeholder="Enter Your Password" name="password" required>
             <input type="submit" value="Log In">
         </form>
