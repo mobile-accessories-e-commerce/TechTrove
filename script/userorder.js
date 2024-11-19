@@ -12,22 +12,29 @@ document.getElementById("dashbord-btn").addEventListener("click", function () {
 
 window.onload = fetchOverallOrderData();
 
-function fetchPendingOrders() {
+let currentPendingPage = 1; 
+const pendingLimit = 2; 
+
+function fetchPendingOrders(page = 1) {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "getpendingorders.php", true);
+  xhr.open("GET", `getpendingorders.php?page=${page}&limit=${pendingLimit}`, true);
   xhr.onload = function () {
     if (xhr.status === 200) {
       let content = document.getElementById("order-container");
-      let orders = JSON.parse(xhr.responseText);
+      let response = JSON.parse(xhr.responseText);
+      let orders = response.orders;
+      let total = response.total;
+      let totalPages = Math.ceil(total / pendingLimit);
+
+      let ordersHTML = "";
 
       if (orders.length > 0) {
-        let ordersHTML = '<div class="orders-list">';
-
+        ordersHTML = '<div class="orders-list">';
         orders.forEach(function (order) {
           ordersHTML += `
                 <div class="order-card">
                 <div class="order-info">
-                    <h2>Order #${order.order_id}</h2>
+                    <h2>Order #${order.item_id}</h2>
                     <p><strong>Date:</strong> ${order.ordered_data}</p>
                     <p><strong>Status:</strong> ${order.order_status}</p>
                 </div>
@@ -46,39 +53,68 @@ function fetchPendingOrders() {
                     </div>
                 </div>
                 <div class="order-actions">
-                    
-                    <a  href='trackorder.php?order_item_id=${
+                    <a href='trackorder.php?order_item_id=${
                       order.item_id
                     }'><button class="track-btn">Track Order</button></a>
                 </div>
                 </div>
             `;
         });
-
         ordersHTML += "</div>";
-        content.innerHTML = ordersHTML;
       } else {
-        content.innerHTML =
+        ordersHTML =
           "<h1>No orders Found</h1><p>You haven't listed any products yet.</p>";
       }
+
+     
+      content.innerHTML = ordersHTML;
+
+      
+      let paginationHTML = '<div class="pagination">';
+      if (page > 1) {
+        paginationHTML += `<button onclick="fetchPendingOrders(${
+          page - 1
+        })">Previous</button>`;
+      }
+      if (page < totalPages) {
+        paginationHTML += `<button onclick="fetchPendingOrders(${
+          page + 1
+        })">Next</button>`;
+      }
+      paginationHTML += "</div>";
+
+      content.innerHTML += paginationHTML;
+
+    
+      currentPendingPage = page;
     }
   };
 
   xhr.send();
 }
 
-function fetchCompletedOrders() {
+
+
+
+let currentPage = 1; 
+const limit = 2; 
+
+function fetchCompletedOrders(page = 1) {
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "getcompletedorders.php", true);
+  xhr.open("GET", `getcompletedorders.php?page=${page}&limit=${limit}`, true);
 
   xhr.onload = function () {
     if (xhr.status === 200) {
       let content = document.getElementById("order-container");
-      let orders = JSON.parse(xhr.responseText);
+      let response = JSON.parse(xhr.responseText);
+      let orders = response.orders;
+      let total = response.total;
+      let totalPages = Math.ceil(total / limit);
+
+      let ordersHTML = "";
 
       if (orders.length > 0) {
-        let ordersHTML = '<div class="orders-list">';
-
+        ordersHTML = '<div class="orders-list">';
         orders.forEach(function (order) {
           const feedbackButton =
             order.can_feedback == 1
@@ -106,24 +142,46 @@ function fetchCompletedOrders() {
                     </div>
                 </div>
                 <div class="order-actions">
-
                     ${feedbackButton}
                 </div>
                 </div>
             `;
         });
-
         ordersHTML += "</div>";
-        content.innerHTML = ordersHTML;
       } else {
-        content.innerHTML =
+        ordersHTML =
           "<h1>No orders Found</h1><p>You haven't listed any products yet.</p>";
       }
+
+      
+      content.innerHTML = ordersHTML;
+
+
+      let paginationHTML = '<div class="pagination">';
+      if (page > 1) {
+        paginationHTML += `<button onclick="fetchCompletedOrders(${
+          page - 1
+        })">Previous</button>`;
+      }
+      if (page < totalPages) {
+        paginationHTML += `<button onclick="fetchCompletedOrders(${
+          page + 1
+        })">Next</button>`;
+      }
+      paginationHTML += "</div>";
+
+      content.innerHTML += paginationHTML;
+
+      currentPage = page;
     }
   };
 
   xhr.send();
 }
+
+
+
+
 
 function fetchOverallOrderData() {
   const xhr = new XMLHttpRequest();
@@ -133,6 +191,7 @@ function fetchOverallOrderData() {
     if (xhr.status === 200) {
       let content = document.getElementById("order-container");
       let orders = JSON.parse(xhr.responseText);
+      let cost = orders.total_cost ==null ? 0 : orders.total_cost;
 
       let ordersHTML = `<div class='container'>`;
 
@@ -154,7 +213,7 @@ function fetchOverallOrderData() {
                             </div>
                             <div class="summary-item">
                                 <h2>Total Cost</h2>
-                                <p id="total-cost">$${orders.total_cost}</p>
+                                <p id="total-cost">$${cost}</p>
                             </div>
                         </div>
                     </div>

@@ -83,7 +83,7 @@ function getAllProduct() {
                             <th>Seller_id</th>
                             <th>quantity</th>
                              <th>category_id</th>
-                              <th>Product status</th>
+                              <th>Product id</th>
                                <th>View Count</th>
                             <th>rating</th>
                             
@@ -107,7 +107,7 @@ function getAllProduct() {
                         <td>${product.seller_id}</td>
                         <td>${product.stock_quantity}</td>
                         <td>${product.catogory_id}</td>
-                        <td>${product.product_status}</td>
+                        <td>${product.product_id}</td>
                         <td>${product.view_count}</td>
                         <td>${product.rating}</td>
                         
@@ -197,6 +197,7 @@ function getFeatureProduct() {
                             <th>description</th>
                              <th>start_date</th>
                               <th>status</th>
+                              <th>Action</th>
           
                         </tr>`;
   const xhr = new XMLHttpRequest();
@@ -223,6 +224,7 @@ function getFeatureProduct() {
                         }" href="changefetureproductstatus.php?id=${
           product.id
         }">${product.approved == 1 ? "Block" : "Approved"}</a></td>
+                        <td><button onclick="deleteFeatureProduct(${product.product_id})">Delete</button></td>
                        
                         
                         
@@ -234,6 +236,24 @@ function getFeatureProduct() {
     }
   };
 
+  xhr.send();
+}
+
+function deleteFeatureProduct(product_id){
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `deletefeatureproduct.php?product_id=${product_id}`, true);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const responce = JSON.parse(xhr.responseText);
+      if(responce==1){
+        console.log("sucsuss");
+        getFeatureProduct();
+
+      }
+}
+
+  };
   xhr.send();
 }
 
@@ -270,7 +290,8 @@ function givePromotion() {
         <th>Discount</th>
         <th>Start Date</th>
         <th>End Date </th>
-        <th>Final Price</th>`;
+        <th>Final Price</th>
+        <th>Action</th>`;
 
   const xhr = new XMLHttpRequest();
   xhr.open("GET", "getPromotionProduct.php", true);
@@ -291,12 +312,32 @@ function givePromotion() {
                             <td>${product.start_date}</td>
                             <td>${product.end_date}</td>
                             <td>${product.price_after_discount}</td>
+                            <td><button onclick="deletePromotion(${product.product_id})">Delete</button></td>
                         </tr>
                     `;
       });
       promotionHTML += `</table></div></div>`;
       main_container.innerHTML = promotionHTML;
     }
+  };
+  xhr.send();
+}
+
+
+function deletePromotion(product_id){
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", `deletepromotion.php?product_id=${product_id}`, true);
+
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const responce = JSON.parse(xhr.responseText);
+      if(responce==1){
+        console.log("sucsuss");
+        givePromotion()
+
+      }
+}
+
   };
   xhr.send();
 }
@@ -317,7 +358,7 @@ function displayForm() {
 
 function submitForm() {
   document.getElementById("popupForm").onsubmit = function (event) {
-    event.preventDefault(); // Prevent form from submitting normally
+    event.preventDefault(); 
 
     const product_id = document.getElementById("product_id").value;
     const discount = document.getElementById("discount").value;
@@ -337,9 +378,9 @@ function submitForm() {
         const messageElement = document.getElementById("message");
         messageElement.textContent = response.message;
 
-        // Display message in red for errors, green for success
         if (response.status === "success") {
           messageElement.style.color = "green";
+          givePromotion();
         } else {
           messageElement.style.color = "red";
         }

@@ -1,4 +1,8 @@
 <?php
+
+
+$erro ="none";
+
 if($_SERVER['REQUEST_METHOD']=== 'POST'){
     include'../connect.php';
 
@@ -8,17 +12,26 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
     $USERTYPE = 'NORMAL';
 
 
+    $hashedPassword = password_hash($PASSWORD, PASSWORD_DEFAULT);
     $sql = "select * from `users` where username='$USERNAME'";
     $result = mysqli_query($con, $sql);
 
     if(mysqli_num_rows($result)> 0){
-        echo"user already exit in the system";
+      $erro = "username";
     }else{
-        $sql = "insert into `users` (user_type,username,password,email) values ('$USERTYPE','$USERNAME','$PASSWORD','$EMAIL') ";
+        $sql = "select * from `users` where  email='$EMAIL'";
+        $result = mysqli_query($con, $sql);
+
+        if(mysqli_num_rows($result)> 0){
+            $erro = "email";
+        }
+        else{
+        $sql = "insert into `users` (user_type,username,password,email) values ('$USERTYPE','$USERNAME','$hashedPassword','$EMAIL') ";
         $result = mysqli_query($con, $sql);
         if($result){
             header('location:loging.php');
         }
+    }
 
     }
 }
@@ -129,7 +142,13 @@ if($_SERVER['REQUEST_METHOD']=== 'POST'){
         <h1>Sign Up</h1>
     <form action="signup.php" method="post">
         <input type="text" placeholder="Enter your Name" name="username" required>
+        <?php if($erro=="username"):?>
+            <span style="color: red; display: block; text-align: center;">This user name is already taken </span>
+        <?php endif; ?>
         <input type="text" placeholder="Enter Your Email" name="email" required>
+        <?php if($erro=="email"):?>
+            <span style="color: red; display: block; text-align: center;">This Email is registered</span>
+            <?php endif; ?>
         <input type="password" placeholder="Enter Your Password" name="password" required>
         <input type="submit" value="Sign Up">
     </form>

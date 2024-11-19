@@ -33,14 +33,9 @@ if ($_GET['product_id']) {
         $price = $product['price'];
         $brand = $product['brand'];
         $stock_quantity = $product['stock_quantity'];
-        $shipping_cost = $product['shipping_cost'];
-        $image_link = $product['image_link'];
         $color = $product['color'];
-        $size = $product['size'];
-        $weight = $product['weight'];
-        $is_free_shipping = $product['is_free_shiping'] ? 1 : 0;
-        $product_status = $product['product_status'] ? 1 : 0;
-        $category_id = $product['catogory_id'];
+        
+       
 
 
     } else {
@@ -168,38 +163,8 @@ if ($_GET['product_id']) {
             <input type="number" id="stock_quantity" name="stock_quantity" required
                 value="<?php echo htmlspecialchars($stock_quantity); ?>">
 
-            <label for="shipping_cost">Shipping Cost:</label>
-            <input type="number" id="shipping_cost" name="shipping_cost" step="0.01" required
-                value="<?php echo htmlspecialchars($shipping_cost); ?>">
-
-            <label for="image_link">Image Link:</label>
-            <input type="file" id="image_link" name="image_link" required>
-
             <label for="color">Color:</label>
             <input type="text" id="color" name="color" value="<?php echo htmlspecialchars($color); ?>">
-
-            <label for="size">Size:</label>
-            <input type="text" id="size" name="size" value="<?php echo htmlspecialchars($size); ?>">
-
-            <label for="weight">Weight:</label>
-            <input type="number" id="weight" name="weight" step="0.01" required
-                value="<?php echo htmlspecialchars($weight); ?>">
-
-            <label for="is_free_shipping">Is Free Shipping:</label>
-            <input type="checkbox" id="is_free_shipping" name="is_free_shipping" <?php if ($is_free_shipping)
-                echo 'checked'; ?>>
-
-            <label for="product_status">Product Status (Available):</label>
-            <input type="checkbox" id="product_status" name="product_status" <?php if ($product_status)
-                echo 'checked'; ?>>
-
-            <label for="category_id">Category:</label>
-            <select id="catogory_id" name="catogory_id" required>
-                <option value="">Select a catogory</option>
-                <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
-                    <option value="<?php echo $cat_row['product_cat_id']; ?>"><?php echo $cat_row['name']; ?></option>
-                <?php endwhile; ?>
-            </select>
 
             <input type="submit" value="Update Product">
         </form>

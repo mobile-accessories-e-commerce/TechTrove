@@ -163,7 +163,6 @@ while($row=mysqli_fetch_assoc($result)){
     let discount = <?php echo json_encode($product['discount']); ?>; 
     let priceValue;
 
-    // Use strict equality check for null
     if (discount === null) {
         priceValue = <?php echo json_encode($product['price']); ?>; // Use the original price
     } else {
@@ -171,7 +170,7 @@ while($row=mysqli_fetch_assoc($result)){
     }
 
     // Update the price display
-    price.innerHTML = (priceValue * quantityInput.value).toFixed(2);
+    price.innerHTML = `$${(priceValue * quantityInput.value).toFixed(2)}`;
     
     updateCartLink();
 }
@@ -192,7 +191,7 @@ while($row=mysqli_fetch_assoc($result)){
     }
 
     // Update the price display
-    price.innerHTML = (priceValue * quantityInput.value).toFixed(2);
+    price.innerHTML = `$${(priceValue * quantityInput.value).toFixed(2)}`;
     
     updateCartLink();
 }}
@@ -200,7 +199,7 @@ while($row=mysqli_fetch_assoc($result)){
         function updateCartLink() {
             const productId = "<?php echo $product['product_id']; ?>";
             const quantity = quantityInput.value;
-            addToCartLink.href = `../cart/add_to_cart.php?product_id=${productId}&quantity=${quantity}`;
+            addToCartLink.href = `../cart/add_to_cart.php?product_id=${productId}&quantity=${quantity}&back_link=<?php echo $back_link;?>`;
         }
     </script>
 

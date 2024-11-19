@@ -19,7 +19,7 @@ $response = [
 
 // Get total orders
 $total_orders_query = "
-    SELECT COUNT(DISTINCT oi.order_id) AS total_orders, 
+    SELECT COUNT(DISTINCT oi.item_id) AS total_orders, 
            SUM(p.price * oi.quantity) AS total_cost
      FROM order_items AS oi
     JOIN orders AS o ON oi.order_id = o.order_id
@@ -35,7 +35,7 @@ if ($row = mysqli_fetch_assoc($total_result)) {
 
 // Get completed orders count
 $completed_query = "
-    SELECT COUNT(DISTINCT oi.order_id) AS completed_orders
+    SELECT COUNT(DISTINCT oi.item_id) AS completed_orders
     FROM order_items AS oi
     JOIN orders AS o ON oi.order_id = o.order_id
     JOIN carts AS c ON o.cart_id = c.cart_id
@@ -48,11 +48,11 @@ if ($row = mysqli_fetch_assoc($completed_result)) {
 
 // Get pending orders count
 $pending_query = "
-    SELECT COUNT(DISTINCT oi.order_id) AS pending_orders
+    SELECT COUNT(DISTINCT oi.item_id) AS pending_orders
     FROM order_items AS oi
     JOIN orders AS o ON oi.order_id = o.order_id
     JOIN carts AS c ON o.cart_id = c.cart_id
-    WHERE c.user_id = '$user_id' AND (oi.order_status = 'pending' OR oi.order_status = 'shipped')
+    WHERE c.user_id = '$user_id' AND (oi.order_status = 'pending' OR oi.order_status = 'shiped')
 ";
 $pending_result = mysqli_query($con, $pending_query);
 if ($row = mysqli_fetch_assoc($pending_result)) {

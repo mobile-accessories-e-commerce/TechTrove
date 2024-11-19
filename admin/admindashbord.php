@@ -151,7 +151,7 @@ if (mysqli_num_rows($result) > 0) {
                                     class="<?php echo ($serviceProvider['aproved'] == 1 ? "block" : "approve") ?>">
                             </form>
                         </td>
-                        <td><a href=""><button>View Detail</button></a></td>
+                        <td><button onclick="viewServiceProviderDetail(<?php echo $serviceProvider['service_provider_id']; ?>)">View Detail</button></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
@@ -191,6 +191,39 @@ function viewSellerDetail(sellerId) {
                 if (!data.error) {
                     // Populate modal fields with the retrieved data
                     document.getElementById("modalStoreName").innerText = data.store_name;
+                    document.getElementById("modalEmail").innerText = data.email;
+                    document.getElementById("modalPhone").innerText = data.phone_number;
+                    document.getElementById("modalLocation").innerText = data.location;
+                } else {
+                    alert("Error: " + data.error);
+                }
+            } else {
+                alert("Error fetching data. Status: " + xhr.status);
+            }
+        }
+    };
+
+    // Send the request
+    xhr.send();
+}
+
+
+function viewServiceProviderDetail(serviceProviderId) {
+  
+    document.getElementById("sellerDetailModal").style.display = "block";
+
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `get_serviceprovider_detail.php?serviceprovider_id=${serviceProviderId}`, true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) { 
+            if (xhr.status === 200) { // Status OK
+                const data = JSON.parse(xhr.responseText);
+
+                if (!data.error) {
+                    // Populate modal fields with the retrieved data
+                    document.getElementById("modalStoreName").innerText = data.provider_name;
                     document.getElementById("modalEmail").innerText = data.email;
                     document.getElementById("modalPhone").innerText = data.phone_number;
                     document.getElementById("modalLocation").innerText = data.location;

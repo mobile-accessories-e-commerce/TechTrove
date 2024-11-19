@@ -48,6 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$cat_id = "none";
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+   
+    if (isset($_GET['cat_id'])) {
+        $cat_id = $_GET['cat_id'];
+       
+    }
+}
+
 
 
 
@@ -79,7 +88,7 @@ $product_list = getProducts($offset, $itemsPerPage);
         </div>
         <div class="category">
             <select name="category" id="category" onchange="categorySearch()">
-                <option value="none">All Categories</option>
+                <option  value="<?php echo $cat_id; ?>">All Categories</option>
                 <?php foreach ($product_category_list as $category): ?>
                     <option value="<?php echo $category['product_cat_id']; ?>"><?php echo $category['name']; ?></option>
                 <?php endforeach; ?>

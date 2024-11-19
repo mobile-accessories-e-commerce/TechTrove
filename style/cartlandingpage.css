@@ -92,6 +92,12 @@ video{
     margin-left: 500px;
     
 }
+
+@media screen and (max-width: 768px) {
+    video{
+        margin-left: 150px;
+    }
+}
 .container p{
     font-size: 15px;
     text-align: center;
@@ -112,6 +118,7 @@ video{
     width: 60px;
     text-align: center;
 }
+
 
 .total-container {
     display: flex;
@@ -164,4 +171,16 @@ video{
         width: 100%;
         /* Full width on mobile */
     }
+}
+
+@media screen and (max-width: 768px) {
+    .row{
+        align-items: center;
+
+    }
+    .card{
+        flex-direction: column;
+        gap: 10px;
+    }
+
 }

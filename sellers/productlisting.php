@@ -5,8 +5,6 @@ include '../connect.php';
 $user_id = $_SESSION['userid'];
 
 
-
-//Get seller id for user in session 
 $query = "SELECT seller_id FROM sellers WHERE user_id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -16,46 +14,54 @@ if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
     $seller_id = $row['seller_id'];
 } else {
-
     echo "Seller not found. Please contact support.";
     exit;
 }
 
-//Get catogaries
+
 $cat_query = "SELECT product_cat_id, name FROM product_catogory";
 $cat_result = $con->query($cat_query);
 
-
-//list product 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
     $product_name = trim($_POST['product_name']);
     $description = trim($_POST['description']);
     $price = floatval($_POST['price']);
     $brand = $_POST['brand'];
     $stock_quantity = intval($_POST['stock_quantity']);
-    $shipping_cost = floatval($_POST['shipping_cost']);
-    $image_link = trim($_POST['image_link']);
     $color = trim($_POST['color']);
-    $size = trim($_POST['size']);
-    $weight = floatval($_POST['weight']);
-    $is_free_shiping = isset($_POST['is_free_shiping']) ? 1 : 0;
     $product_status = isset($_POST['product_status']) ? 1 : 0;
     $catogory_id = intval($_POST['catogory_id']);
 
+ 
+    $image = $_FILES['image_link'];
+    $uploadDir = '../images/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true); 
+    }
 
-    if (empty($product_name) || empty($description) || $price <= 0 || $stock_quantity < 0) {
+    if ($image['error'] === UPLOAD_ERR_OK) {
+        $uniqueFileName = uniqid() . '-' . basename($image['name']);
+        $uploadPath = $uploadDir . $uniqueFileName;
+
+        if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
+            $image_link = $uniqueFileName; 
+        } else {
+            $error = "Failed to upload image.";
+        }
+    } else {
+        $error = "Error uploading image.";
+    }
+
+    if (empty($product_name) || empty($description) || $price <= 0 || $stock_quantity < 0 || empty($image_link)) {
         $error = "Please fill out all required fields correctly.";
     } else {
-
-        $insert_query = "INSERT INTO products (seller_id, catogory_id, product_name, description, price, brand, stock_quantity, shipping_cost, image_link, color, size, weight, is_free_shiping, product_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO products (seller_id, catogory_id, product_name, description, price, brand, stock_quantity,image_link, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($insert_query);
-        $stmt->bind_param("iissdssdsssidi", $seller_id, $catogory_id, $product_name, $description, $price, $brand, $stock_quantity, $shipping_cost, $image_link, $color, $size, $weight, $is_free_shiping, $product_status);
+        $stmt->bind_param("iissdssss", $seller_id, $catogory_id, $product_name, $description, $price, $brand, $stock_quantity, $image_link, $color);
 
         if ($stmt->execute()) {
             $success = "Product listed successfully!";
-            header("Location:sellerdashbord.php");
+            header("Location: sellerdashbord.php");
             exit;
         } else {
             $error = "Failed to list product. Please try again.";
@@ -71,7 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Listing</title>
-    <style>
+    
+<style>
         *{
             font-family: Arial, sans-serif;
         }
@@ -154,9 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <div class="container">
-    <button class="close-btn"><a href="../sellers/sellerdashbord.php">&times;</a></button>
+        <button class="close-btn"><a href="../sellers/sellerdashbord.php">&times;</a></button>
         <p>Product Listing</p>
-
 
         <?php if (!empty($error)): ?>
             <div class="error"><?php echo $error; ?></div>
@@ -164,8 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-
-        <form action="productlisting.php" method="POST">
+        <form action="productlisting.php" method="POST" enctype="multipart/form-data">
             <label for="product_name">Product Name:</label>
             <input type="text" id="product_name" name="product_name" required>
 
@@ -180,31 +185,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <label for="stock_quantity">Stock Quantity:</label>
             <input type="number" id="stock_quantity" name="stock_quantity" required>
-
-            <label for="shipping_cost">Shipping Cost:</label>
-            <input type="number" id="shipping_cost" name="shipping_cost" step="0.01" required>
-
-            <label for="image_link">Image Link:</label>
-            <input type="file" id="image_link" name="image_link" required>
+            <br>
+            <br>
+            <label for="image_link">Image:</label>
+            <input type="file" id="image_link" name="image_link" accept="image/*" required>
+            <br>
+            <br>
 
             <label for="color">Color:</label>
             <input type="text" id="color" name="color">
 
-            <label for="size">Size:</label>
-            <input type="text" id="size" name="size">
-
-            <label for="weight">Weight:</label>
-            <input type="number" id="weight" name="weight" step="0.01" required>
-
-            <label for="is_free_shiping">Is Free Shiping:</label>
-            <input type="checkbox" id="is_free_shiping" name="is_free_shiping">
-
-            <label for="product_status">Product Status (Available):</label>
-            <input type="checkbox" id="product_status" name="product_status">
-
-            <label for="catogory_id">Catogory:</label>
+            <label for="catogory_id">Category:</label>
             <select id="catogory_id" name="catogory_id" required>
-                <option value="">Select a catogory</option>
+                <option value="">Select a category</option>
                 <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
                     <option value="<?php echo $cat_row['product_cat_id']; ?>"><?php echo $cat_row['name']; ?></option>
                 <?php endwhile; ?>
@@ -216,3 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
+
+
+

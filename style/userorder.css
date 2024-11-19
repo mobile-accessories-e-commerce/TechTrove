@@ -8,8 +8,16 @@ body {
 .main-content {
     margin-top: 90px;
     display: flex;
+    margin-bottom: 0;
 }
-
+.hamburger{
+    display: none;
+    cursor: pointer;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 28px;
+}
 .side-bar {
     background-color: #ffffff;
     width: 200px;
@@ -20,6 +28,14 @@ body {
     display: flex;
     flex-direction: column;
 
+}
+@media screen and (max-width: 768px) {
+    .side-bar  {
+        display: none;
+}
+.hamburger{
+    display: block;
+}
 }
 
 .side-bar-icon {
@@ -47,7 +63,7 @@ body {
 /* Content area styles */
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 2px;
 }
 
 .content-header {
@@ -61,8 +77,8 @@ body {
 
 .orders-list {
     display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5px;
 }
 
 .order-card {
@@ -178,7 +194,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+   
 }
 
 .summary-item:hover {
@@ -197,3 +213,25 @@ body {
     margin: 0;
     font-weight: bold;
 }
+
+.pagination {
+    margin: 10px 0;
+    text-align: center;
+  }
+  .pagination button {
+    margin: 0 5px;
+    padding: 8px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  .pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  

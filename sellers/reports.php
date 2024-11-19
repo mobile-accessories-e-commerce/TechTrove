@@ -5,6 +5,8 @@ include('../connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $report_type = $_GET['report_type'];
+    $type = $_GET['type'];
+
 
 
     $seller_id = $_SESSION['seller_id'];
@@ -16,7 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     if ($report_type == 'sales_reports') {
-        $query = "SELECT 
+
+        if ($type == 'daily') {
+            $query = "SELECT 
                 SUM(oi.quantity) AS total_sales, 
                 SUM(oi.price * oi.quantity) AS total_revenue, 
                 COUNT(DISTINCT o.order_id) AS total_orders, 
@@ -24,7 +28,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
               FROM order_items oi
               JOIN orders o ON oi.order_id = o.order_id
               JOIN products p ON oi.product_id = p.product_id
-              WHERE p.seller_id = ?";
+              WHERE p.seller_id = ? and DATE(oi.ordered_data) = CURDATE()";
+        } elseif ($type == 'monthly') {
+            $query = "SELECT 
+            SUM(oi.quantity) AS total_sales, 
+            SUM(oi.price * oi.quantity) AS total_revenue, 
+            COUNT(DISTINCT o.order_id) AS total_orders, 
+            AVG(oi.price * oi.quantity) AS avg_order_value
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          WHERE p.seller_id = ? and MONTH(oi.ordered_data) = MONTH(CURDATE())";
+        } elseif ($type == 'yearly') {
+            $query = "SELECT 
+            SUM(oi.quantity) AS total_sales, 
+            SUM(oi.price * oi.quantity) AS total_revenue, 
+            COUNT(DISTINCT o.order_id) AS total_orders, 
+            AVG(oi.price * oi.quantity) AS avg_order_value
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          WHERE p.seller_id = ? and YEAR(oi.ordered_data) = YEAR(CURDATE())";
+        } else {
+            $query = "SELECT 
+            SUM(oi.quantity) AS total_sales, 
+            SUM(oi.price * oi.quantity) AS total_revenue, 
+            COUNT(DISTINCT o.order_id) AS total_orders, 
+            AVG(oi.price * oi.quantity) AS avg_order_value
+          FROM order_items oi
+          JOIN orders o ON oi.order_id = o.order_id
+          JOIN products p ON oi.product_id = p.product_id
+          WHERE p.seller_id = ?";
+        }
+
+
 
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $seller_id);
@@ -40,17 +77,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     if ($report_type == 'product_reports') {
-        $query = "SELECT p.product_name, 
+
+        if ($type == 'daily') {
+
+
+            $query = "SELECT p.product_name, 
        p.view_count, 
        p.stock_quantity, 
        SUM(oi.quantity) AS total_orders, 
        SUM(oi.price * oi.quantity) AS total_revenue
 FROM products p
 LEFT JOIN order_items oi ON p.product_id = oi.product_id
-WHERE p.seller_id = ?
+WHERE p.seller_id = ? and DATE(oi.ordered_data) = CURDATE()
 GROUP BY p.product_id
 ";
-
+        } elseif ($type == 'monthly') {
+            $query = "SELECT p.product_name, 
+    p.view_count, 
+    p.stock_quantity, 
+    SUM(oi.quantity) AS total_orders, 
+    SUM(oi.price * oi.quantity) AS total_revenue
+FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+WHERE p.seller_id = ? and MONTH(oi.ordered_data) = MONTH(CURDATE())
+GROUP BY p.product_id
+";
+        } elseif ($type == 'yearly') {
+            $query = "SELECT p.product_name, 
+    p.view_count, 
+    p.stock_quantity, 
+    SUM(oi.quantity) AS total_orders, 
+    SUM(oi.price * oi.quantity) AS total_revenue
+FROM products p
+LEFT JOIN order_items oi ON p.product_id = oi.product_id
+WHERE p.seller_id = ? and YEAR(oi.ordered_data) = YEAR(CURDATE())
+GROUP BY p.product_id
+";
+        } else {
+            $query = "SELECT p.product_name, 
+            p.view_count, 
+            p.stock_quantity, 
+            SUM(oi.quantity) AS total_orders, 
+            SUM(oi.price * oi.quantity) AS total_revenue
+        FROM products p
+        LEFT JOIN order_items oi ON p.product_id = oi.product_id
+        WHERE p.seller_id = ? 
+        GROUP BY p.product_id
+        ";
+        }
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $seller_id);
         $stmt->execute();
@@ -66,7 +140,9 @@ GROUP BY p.product_id
     }
 
     if ($report_type == 'customer_reports') {
-        $query = "SELECT 
+
+        if ($type == 'daily') {
+            $query = "SELECT 
                 COUNT(DISTINCT u.user_id) AS total_customers,
                 COUNT(o.order_id) AS total_orders,
                 SUM(oi.price * oi.quantity) AS total_revenue
@@ -75,8 +151,41 @@ GROUP BY p.product_id
               LEFT JOIN orders o ON c.cart_id = o.cart_id
               LEFT JOIN order_items oi ON o.order_id = oi.order_id
             LEFT JOIN products p ON oi.product_id = p.product_id
-              WHERE p.seller_id = ?";
-
+              WHERE p.seller_id = ? and DATE(oi.ordered_data) = CURDATE()";
+        } elseif ($type == 'monthly') {
+            $query = "SELECT 
+                COUNT(DISTINCT u.user_id) AS total_customers,
+                COUNT(o.order_id) AS total_orders,
+                SUM(oi.price * oi.quantity) AS total_revenue
+              FROM users u
+              LEFT JOIN carts c ON c.user_id = u.user_id
+              LEFT JOIN orders o ON c.cart_id = o.cart_id
+              LEFT JOIN order_items oi ON o.order_id = oi.order_id
+            LEFT JOIN products p ON oi.product_id = p.product_id
+              WHERE p.seller_id = ? and  MONTH(oi.ordered_data) = MONTH(CURDATE())";
+        } elseif ($type == 'yearly') {
+            $query = "SELECT 
+                COUNT(DISTINCT u.user_id) AS total_customers,
+                COUNT(o.order_id) AS total_orders,
+                SUM(oi.price * oi.quantity) AS total_revenue
+              FROM users u
+              LEFT JOIN carts c ON c.user_id = u.user_id
+              LEFT JOIN orders o ON c.cart_id = o.cart_id
+              LEFT JOIN order_items oi ON o.order_id = oi.order_id
+            LEFT JOIN products p ON oi.product_id = p.product_id
+              WHERE p.seller_id = ? and  YEAR(oi.ordered_data) = YEAR(CURDATE())";
+        } else {
+            $query = "SELECT 
+                COUNT(DISTINCT u.user_id) AS total_customers,
+                COUNT(o.order_id) AS total_orders,
+                SUM(oi.price * oi.quantity) AS total_revenue
+              FROM users u
+              LEFT JOIN carts c ON c.user_id = u.user_id
+              LEFT JOIN orders o ON c.cart_id = o.cart_id
+              LEFT JOIN order_items oi ON o.order_id = oi.order_id
+            LEFT JOIN products p ON oi.product_id = p.product_id
+              WHERE p.seller_id = ? ";
+        }
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $seller_id);
         $stmt->execute();
@@ -94,15 +203,48 @@ GROUP BY p.product_id
     }
 
     if ($report_type == 'top_selling_products') {
-        $query = "SELECT p.product_name, 
-                   SUM(oi.quantity) AS total_quantity_sold, 
-                   SUM(oi.price * oi.quantity) AS total_revenue
-              FROM order_items oi
-              JOIN products p ON oi.product_id = p.product_id
-              WHERE p.seller_id = ?
-              GROUP BY p.product_id
-              ORDER BY total_quantity_sold DESC
-              LIMIT 10";
+
+        if ($type == 'daily') {
+            $query = "SELECT p.product_name, 
+            SUM(oi.quantity) AS total_quantity_sold, 
+            SUM(oi.price * oi.quantity) AS total_revenue
+       FROM order_items oi
+       JOIN products p ON oi.product_id = p.product_id
+       WHERE p.seller_id = ? and DATE(oi.ordered_data) = CURDATE()
+       GROUP BY p.product_id
+       ORDER BY total_quantity_sold DESC
+       LIMIT 10";
+        } elseif ($type == 'monthly') {
+            $query = "SELECT p.product_name, 
+            SUM(oi.quantity) AS total_quantity_sold, 
+            SUM(oi.price * oi.quantity) AS total_revenue
+       FROM order_items oi
+       JOIN products p ON oi.product_id = p.product_id
+       WHERE p.seller_id = ? and MONTH(oi.ordered_data) = MONTH(CURDATE())
+       GROUP BY p.product_id
+       ORDER BY total_quantity_sold DESC
+       LIMIT 10";
+        } elseif ($type == 'yearly') {
+            $query = "SELECT p.product_name, 
+            SUM(oi.quantity) AS total_quantity_sold, 
+            SUM(oi.price * oi.quantity) AS total_revenue
+       FROM order_items oi
+       JOIN products p ON oi.product_id = p.product_id
+       WHERE p.seller_id = ? and YEAR(ordered_data) = YEAR(CURDATE())
+       GROUP BY p.product_id
+       ORDER BY total_quantity_sold DESC
+       LIMIT 10";
+        } else {
+            $query = "SELECT p.product_name, 
+        SUM(oi.quantity) AS total_quantity_sold, 
+        SUM(oi.price * oi.quantity) AS total_revenue
+   FROM order_items oi
+   JOIN products p ON oi.product_id = p.product_id
+   WHERE p.seller_id = ? 
+   GROUP BY p.product_id
+   ORDER BY total_quantity_sold DESC
+   LIMIT 10";
+        }
 
         $stmt = $con->prepare($query);
         $stmt->bind_param("i", $seller_id);
@@ -126,318 +268,252 @@ GROUP BY p.product_id
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Report</title>
+    <title>Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-    <?php if ($report_type == 'sales_reports' || 'customer_reports'): ?>
-        <style>
-            /* General reset for all elements */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Arial', sans-serif;
-            }
+        body {
+            background-color: #f4f4f9;
+            margin: 20px;
+            padding: 0;
+        }
 
-            body {
-                background-color: #f4f4f9;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
+        .report-table-container {
+            margin: 50px 40px;
+        }
 
-            /* Container for the report cards */
-            .container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-                padding: 20px;
-                max-width: 1000px;
-                width: 100%;
-            }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-            /* Individual report card styling */
-            .report-card {
-                background-color: #fff;
-                border-radius: 15px;
-                padding: 30px;
-                text-align: center;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
 
-            .report-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-            }
+        thead {
+            background-color: #0275d8;
+            color: #fff;
+        }
 
-            /* Title and value for each report item */
-            .report-card h2 {
-                font-size: 1.5rem;
-                color: #333;
-                margin-bottom: 20px;
-                font-weight: 600;
-            }
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-            .report-card p {
-                font-size: 2.5rem;
-                color: #27ae60;
-                font-weight: bold;
-                margin-bottom: 10px;
-            }
+        th {
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
 
-            /* Responsive behavior */
-            @media (max-width: 600px) {
-                .report-card {
-                    padding: 20px;
-                }
+        td:hover {
+            background-color: #f1f1f1;
+        }
 
-                .report-card h2 {
-                    font-size: 1.25rem;
-                }
+        td {
+            font-size: 0.95rem;
+            color: #555;
+        }
 
-                .report-card p {
-                    font-size: 2rem;
-                }
-            }
-        </style>
-    <?php endif; ?>
+        /* Responsive design */
+        @media (max-width: 768px) {
 
-    <?php if ($report_type == 'product_reports'): ?>
-        <style>
-            /* General reset for all elements */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Arial', sans-serif;
-            }
-
-            body {
-                background-color: #f4f4f9;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                flex-direction: column;
-                padding: 20px;
-            }
-
-            /* Container for the product reports */
-            .products-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
-                padding: 20px;
-                max-width: 1200px;
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            /* Individual report card styling */
-            .report-card {
-                background-color: #ffffff;
-                border-radius: 15px;
+            th,
+            td {
                 padding: 10px;
-                text-align: center;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
-
-            .report-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-            }
-
-            /* Title and value for each report item */
-            .report-card h2 {
-                font-size: 1rem;
-                color: #333;
-                margin-bottom: 10px;
-                font-weight: 600;
-            }
-
-            .report-card p {
-                font-size: 1rem;
-                color: #27ae60;
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
-
-            /* Responsive behavior */
-            @media (max-width: 600px) {
-                .report-card {
-                    padding: 15px;
-                }
-
-                .report-card h2 {
-                    font-size: 1rem;
-                }
-
-                .report-card p {
-                    font-size: 1.2rem;
-                }
-            }
-        </style>
-    <?php endif; ?>
-
-    <?php if ($report_type == 'top_selling_products'): ?>
-        <style>
-            /* General reset for all elements */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Arial', sans-serif;
-            }
-
-            body {
-                background-color: #f4f4f9;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                flex-direction: column;
-                padding: 20px;
-            }
-
-            /* Container for the product reports */
-            .container {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-                padding: 20px;
-                max-width: 1200px;
-                width: 100%;
-            }
-
-            /* Individual report card styling */
-            .report-card {
-                background-color: #ffffff;
-                border-radius: 15px;
-                padding: 20px;
-                text-align: center;
-                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .report-card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-            }
-
-            /* Title and value for each report item */
-            .report-card h2 {
-                font-size: 1.5rem;
-                color: #333;
-                margin-bottom: 15px;
-                font-weight: 600;
-            }
-
-            .report-card p {
-                font-size: 1.2rem;
-                color: #27ae60;
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
-
-            /* Responsive behavior */
-            @media (max-width: 600px) {
-                .report-card {
-                    padding: 15px;
-                }
-
-                .report-card h2 {
-                    font-size: 1.25rem;
-                }
-
-                .report-card p {
-                    font-size: 1rem;
-                }
-            }
-        </style>
-    <?php endif; ?>
+        }
+        .print-btn{
+            position: absolute;
+            right: 20px;
+            margin-top: 40px;
+            padding: 15px;
+            font-size: 16px;
+            background-color:white;
+            transition: 0.3s ease;
+            cursor: pointer;
+            border-style: none;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 500;
+        }
+        .print-btn:hover{
+            background-color: #0275d8 ;
+        }
+    </style>
 </head>
 
 <body>
-    <?php if ($report_type == 'sales_reports'): ?>
+    <h1>
+        <?php echo ucfirst(str_replace('_', ' ', $report_type)); ?> Report
+    </h1>
 
+    <?php if ($report_type == 'sales_reports' && isset($report)): ?>
         <div class="container">
-            <div class="report-card">
-                <h2>Total Sales</h2>
-                <p><?php echo $report['total_sales']; ?></p>
-            </div>
-            <div class="report-card">
-                <h2>Total Revenue</h2>
-                <p>$<?php echo $report['total_revenue']; ?></p>
-            </div>
-            <div class="report-card">
-                <h2>Total Orders</h2>
-                <p><?php echo $report['total_orders']; ?></p>
-            </div>
-            <div class="report-card">
-                <h2>Average Order Value</h2>
-                <p>$<?php echo $report['avg_order_value']; ?></p>
-            </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Total Sales</th>
+                    <th>Total Revenue</th>
+                    <th>Total Orders</th>
+                    <th>Average Order Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $report['total_sales']; ?></td>
+                    <td><?php echo number_format($report['total_revenue'], 2); ?></td>
+                    <td><?php echo $report['total_orders']; ?></td>
+                    <td><?php echo number_format($report['avg_order_value'], 2); ?></td>
+                </tr>
+            </tbody>
+        </table>
         </div>
-    <?php endif; ?>
+        <button class="print-btn"  onclick="downloadAsPDF('sales report')">Print Reports</button>
 
-    <?php if ($report_type == 'product_reports'): ?>
-        <div class="products-container">
-            <?php foreach ($product_report as $report): ?>
-                <div class="report-card">
-                    <h2>Product Name</h2>
-                    <p><?php echo $report['product_name']; ?></p>
-                </div>
-                <div class="report-card">
-                    <h2>View Count</h2>
-                    <p><?php echo $report['view_count']; ?></p>
-                </div>
-                <div class="report-card">
-                    <h2>Stock Quantity</h2>
-                    <p><?php echo $report['stock_quantity']; ?></p>
-                </div>
-                <div class="report-card">
-                    <h2>Total orders</h2>
-                    <p><?php echo $report['total_orders'] ?></p>
-                </div>
-                <div class="report-card">
-                    <h2>Total Revenue</h2>
-                    <p>$<?php echo $report['total_revenue']; ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
-
-    <?php if ($report_type == 'customer_reports'): ?>
+    <?php elseif ($report_type == 'product_reports' && !empty($product_report)): ?>
         <div class="container">
-            <div class="report-card">
-                <h2>Total Customers</h2>
-                <p><?php echo isset($customer_report['total_customers']) ? $customer_report['total_customers'] : 0; ?></p>
-            </div>
-            <div class="report-card">
-                <h2>Total Orders</h2>
-                <p><?php echo isset($customer_report['total_orders']) ? $customer_report['total_orders'] : 0; ?></p>
-            </div>
-            <div class="report-card">
-                <h2>Total Revenue</h2>
-                <p>$<?php echo isset($customer_report['total_revenue']) ? $customer_report['total_revenue'] : 0; ?></p>
-            </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Views</th>
+                    <th>Stock</th>
+                    <th>Total Orders</th>
+                    <th>Total Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($product_report as $row): ?>
+                    <tr>
+                        <td><?php echo $row['product_name']; ?></td>
+                        <td><?php echo $row['view_count']; ?></td>
+                        <td><?php echo $row['stock_quantity']; ?></td>
+                        <td><?php echo $row['total_orders']; ?></td>
+                        <td><?php echo number_format($row['total_revenue'], 2); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
         </div>
-    <?php endif; ?>
+        <button class="print-btn"  onclick="downloadAsPDF('product_report')">Print Reports</button>
 
-    <?php if ($report_type == 'top_selling_products'): ?>
-
+    <?php elseif ($report_type == 'customer_reports' && isset($customer_report)): ?>
         <div class="container">
-
-            <?php foreach ($top_selling_products as $product): ?>
-                <div class="report-card">
-                    <h2><?php echo $product['product_name']; ?></h2>
-                    <p>Quantity Sold: <?php echo $product['total_quantity_sold']; ?></p>
-                    <p>Total Revenue: $<?php echo $product['total_revenue']; ?></p>
-                </div>
-            <?php endforeach; ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Total Customers</th>
+                    <th>Total Orders</th>
+                    <th>Total Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $customer_report['total_customers']; ?></td>
+                    <td><?php echo $customer_report['total_orders']; ?></td>
+                    <td><?php echo number_format($customer_report['total_revenue'], 2); ?></td>
+                </tr>
+            </tbody>
+        </table>
+        
         </div>
+        <button class="print-btn" onclick="downloadAsPDF('customer_report')">Print Reports</button>
+    <?php elseif ($report_type == 'top_selling_products' && !empty($top_selling_products)): ?>
+        <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity Sold</th>
+                    <th>Total Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($top_selling_products as $row): ?>
+                    <tr>
+                        <td><?php echo $row['product_name']; ?></td>
+                        <td><?php echo $row['total_quantity_sold']; ?></td>
+                        <td><?php echo number_format($row['total_revenue'], 2); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        </div>
+        <button class="print-btn"  onclick="downloadAsPDF('top_selling_product report')">Print Reports</button>
+
+    <?php else: ?>
+        <p>No data available for this report.</p>
     <?php endif; ?>
+
+
+
+ 
+    <script>
+    function downloadAsPDF(topic) {
+        // Create a new window
+        const printWindow = window.open('', '_blank');
+
+        printWindow.document.title = 'elife.com';
+        
+        // Ensure the window has fully loaded before writing content
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Seller Report</title>
+                    <style>
+                        /* Custom print styles */
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 20px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        table th, table td {
+                            border: 1px solid #000;
+                            padding: 8px;
+                            text-align: left;
+                        }
+                        table th {
+                            background-color: #f2f2f2;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${topic}</h1>
+                    ${document.querySelector('.container').outerHTML}
+                </body>
+            </html>
+        `);
+
+       
+        printWindow.document.close();
+
+     
+        printWindow.onload = function () {
+            printWindow.print();
+        };
+    }
+</script>
+
+
 </body>
 
 </html>

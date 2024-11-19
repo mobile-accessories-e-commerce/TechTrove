@@ -360,6 +360,14 @@ nav {
     width: 70%;
 
 }
+@media screen and (max-width: 768px) {
+    .collection-item-wrapper{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px; 
+        width: 100%;
+    }
+}
 
 .collection-item {
     display: flex;
@@ -482,10 +490,14 @@ nav {
     display: flex;
     justify-content: space-around;
     margin-top: 40px;
-    
-    display: flex;
     transition: transform 0.5s ease;
     width: 100%;
+}
+@media screen and (max-width: 768px) {
+    .product-item {
+        min-width: 90%; 
+        margin: 0 auto;
+    }
 }
 
 .product-item {
@@ -604,6 +616,11 @@ nav {
     border-radius: 10px;
     overflow: hidden;
     background-color: #f0f0f0; /* Optional: adds a background color */
+}
+@media screen and (max-width: 768px) {
+    .promo-box{
+        width: 90%;
+    }
 }
 
 .promo-image {

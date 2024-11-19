@@ -2,7 +2,7 @@
 include "../connect.php";
 session_start();
 
-$sql = "SELECT * FROM invalid_search_quary WHERE type='product'";
+$sql = "SELECT * FROM invalid_search_quary WHERE type='product' ORDER BY date DESC LIMIT 15 ";
 $result = mysqli_query($con,$sql);
 $product_keyword_list = array();
 while($row = mysqli_fetch_assoc($result)){
@@ -10,7 +10,7 @@ while($row = mysqli_fetch_assoc($result)){
 }
 
 
-$sql = "SELECT * FROM invalid_search_quary WHERE type='service'";
+$sql = "SELECT * FROM invalid_search_quary WHERE type='service'  ORDER BY date DESC LIMIT 15 ";
 $result = mysqli_query($con,$sql);
 $service_keyword_list = array();
 while($row = mysqli_fetch_assoc($result)){

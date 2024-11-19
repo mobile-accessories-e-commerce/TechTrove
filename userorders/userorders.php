@@ -34,10 +34,13 @@ if(!isset($_SESSION['userid'])){
         <h2>Order Details</h2> -->
     <!-- Order data will be displayed here -->
     <!-- </div> -->
-
+   
 <div class="main-content">
+<div class="hamburger" id="hamburger">
+        ☰
+    </div>
 
-    <div class="side-bar">
+    <div class="side-bar" id="sidebar">
         <div class="side-bar-icon">
             <a href="#" id="dashbord-btn"><i class="fas fa-home"></i> Dashboard</a>
         </div>
@@ -62,6 +65,17 @@ if(!isset($_SESSION['userid'])){
     </div>
     </div>
         <script src="../script/userorder.js"></script>
+        <script>
+            document.getElementById('hamburger').addEventListener('click', function () {
+    const sidebar = document.getElementById('sidebar');
+   if(sidebar.style.display === 'block'){
+        sidebar.style.display = 'none';
+   }else{
+    sidebar.style.display = 'block';
+   }
+});
+        </script>
 </body>
+
 
 </html>

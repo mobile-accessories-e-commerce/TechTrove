@@ -12,7 +12,7 @@ function searchProducts() {
             let updateContent = `<div>Search Result for "${searchTerm}"</div><ul class="product-section-item-wrapper">`;
             if (products == "false") {
                 const xhr2 = new XMLHttpRequest();
-                xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}?type`, true);
+                xhr2.open('GET', `storeSearchQuary.php?query=${searchTerm}&type=product`, true);
                 xhr2.send();
                 updateContent += `<h1>No product found try different keyword</h1>`;
             } else {
@@ -129,8 +129,14 @@ function categorySearch() {
 
 
 window.onload = function () {
+    
     const searchTerm = document.getElementById('search').value;
     if (searchTerm) {
         searchProducts();  // Automatically call searchProducts to display results
     }
+    const cat_id = document.getElementById('category').value;
+    if(cat_id){
+        categorySearch();
+    }
+    console.log(cat_id);
 };
