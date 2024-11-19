@@ -1,6 +1,10 @@
 <?php
 include "../connect.php";
+session_start();
 
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../authentication/adminloging.php");
+}
 $quary = "SELECT * FROM sellers ";
 $result = mysqli_query($con, $quary);
 $sellerList = array();
@@ -95,7 +99,8 @@ if (mysqli_num_rows($result) > 0) {
         <a onclick="getSearchKeyword()">Search keyword</a>
         <a onclick="getFeatureProduct()">Approve Feature Product</a>
         <a onclick="givePromotion()">Promotion</a>
-        <a href="#">Logout</a>
+        <a href="reports.php">reports</a>
+        <a href="logout.php">Logout</a>
     </div>
 
     <!-- Dashboard content -->
