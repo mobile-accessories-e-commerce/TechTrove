@@ -27,9 +27,7 @@ if ($_GET['service_id']) {
         $service_name = $service['service_name'];
         $description = $service['description'];
         $price = $service['price'];
-        $image_link = $service['image_link'];
         $service_status = $service['service_status'];
-        $category_id = $service['catogory_id'];
         $location = $service['location'];
         $contact_detail = $service['contact_detail'];
         $duration = $service['duration'];
@@ -148,22 +146,12 @@ if ($_GET['service_id']) {
             <input type="text" id="contact_detail" name="contact_detail" required
                 value="<?php echo $contact_detail; ?>">
 
-            <label for="image_link">Image Link:</label>
-            <input type="file" id="image_link" name="image_link" required>
 
             <label for="duration">Duration:</label>
             <input type="text" id="duration" name="duration" required value="<?php echo $duration; ?>">
 
             <label for="service_status">Service Status (Available):</label>
             <input type="checkbox" id="service_status" name="service_status" value="<?php echo $is_free_shiping; ?>">
-
-            <label for="category_id">Category:</label>
-            <select id="category_id" name="category_id" required>
-                <option value="">Select a category</option>
-                <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
-                    <option value="<?php echo $cat_row['service_cat_id']; ?>"><?php echo $cat_row['name']; ?></option>
-                <?php endwhile; ?>
-            </select>
 
             <input type="submit" value="List Service">
         </form>

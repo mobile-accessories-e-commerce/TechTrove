@@ -332,12 +332,12 @@
             <p>CEO & Founder</p>
         </div>
         <div class="team-member fade-in-up delay-2">
-            <img src="../images/budhika.jpg" alt="Team Member 2">
+            <img src="../images/budhika2.jpg" alt="Team Member 2">
             <h4>Budhika Madumali</h4>
             <p>CTO</p>
         </div>
         <div class="team-member fade-in-up delay-3">
-            <img src="../images/praveen.jpg" alt="Team Member 3">
+            <img src="../images/praveen2.jpg" alt="Team Member 3">
             <h4>Praveen Dadigama</h4>
             <p>Lead Developer</p>
         </div>
@@ -359,10 +359,12 @@
 <section id="contact" class="fade-in-up">
     <h2>Contact Us</h2>
     <div class="contact-form">
+       
         <input type="text" placeholder="Your Name" required>
         <input type="email" placeholder="Your Email" required>
         <textarea placeholder="Your Message" required></textarea>
         <button type="submit">Submit</button>
+        
     </div>
 </section>
 

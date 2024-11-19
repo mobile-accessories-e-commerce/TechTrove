@@ -124,7 +124,7 @@ if ($_GET['product_id']) {
         input[type=submit] {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;

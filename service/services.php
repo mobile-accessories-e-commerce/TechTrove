@@ -85,7 +85,7 @@ $service_list = getServices($offset, $itemsPerPage);
         </div>
         <div class="category">
             <select name="category" id="category" onchange="categorySearch()">
-                <option value="<?php echo $cart_id; ?>">All Categories</option>
+                <option value="<?php echo $cat_id; ?>">All Categories</option>
                 <?php foreach ($service_category_list as $category): ?>
                     <option value="<?php echo $category['service_cat_id']; ?>"><?php echo $category['name']; ?></option>
                 <?php endforeach; ?>

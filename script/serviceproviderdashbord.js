@@ -15,7 +15,6 @@ function loadContent(section) {
                                 <img src="../images/${service.image_link}" alt="${service.service_name}">                              
                                 <div class="product-name">${service.service_name}</div>
                                 <div class="product-price">$${service.price}</div>
-                                <div class="product-stock">Stock: ${service.service_status}</div>
                                 <a href="editservice.php?service_id=${service.service_id}">Edit</a>
                             </div>
                         `;

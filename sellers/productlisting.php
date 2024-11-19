@@ -70,145 +70,201 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Listing</title>
-    
-<style>
-        *{
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
         }
-        body{
-            background-color:  #d9e5f4;
-        }
-        .container {
-            width: 60%;
-            margin: auto;
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
             padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            position: relative;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.1);
         }
-        .close-btn {
-            
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            background: none;
-            border: none;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px 30px;
+        }
+
+        .container h1 {
             font-size: 24px;
-            color: #333;
-            cursor: pointer;
-            outline: none;
-        }
-        .close-btn a{
-            text-decoration: none;
-            color: gray;
-        }
-        .close-btn a:hover {
-        color: #f00; 
-        }
-        .container p{
-            font-size: 22px;
-            color: black;
-        }
-        label,option{
-            font-size: 13px;
-            color: #333;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        input[type=text],
-        input[type=number],
-        input[type=float],
+        .form-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-section .form-left,
+        .form-section .form-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
         textarea,
-        select {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-            box-sizing: border-box;
-        }
-
-        input[type=submit] {
+        select,
+        input[type="file"] {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
         }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 80px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
         input[type="submit"]:hover {
-            background-color: #218838; 
+            background: #0056b3;
+        }
+
+        .close-btn {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 20px;
+            color: #999;
+            float: right;
+            margin-top: -10px;
+        }
+
+        .close-btn:hover {
+            color: #f00;
+        }
+
+        .error, .success {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .error {
-            color: red;
+            background: #ffe5e5;
+            color: #d9534f;
+            border: 1px solid #d9534f;
         }
 
         .success {
-            color: green;
+            background: #e5ffee;
+            color: #5cb85c;
+            border: 1px solid #5cb85c;
+        }
+
+        @media (max-width: 768px) {
+            .form-section {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <button class="close-btn"><a href="../sellers/sellerdashbord.php">&times;</a></button>
-        <p>Product Listing</p>
+        <a href="../sellers/sellerdashbord.php" class="close-btn">&times;</a>
+        <h1>Product Listing</h1>
 
-        <?php if (!empty($error)): ?>
-            <div class="error"><?php echo $error; ?></div>
-        <?php elseif (!empty($success)): ?>
-            <div class="success"><?php echo $success; ?></div>
-        <?php endif; ?>
+        <!-- Feedback Messages -->
+        <div class="error" style="display: none;">Error message goes here.</div>
+        <div class="success" style="display: none;">Success message goes here.</div>
 
+        <!-- Form Start -->
         <form action="productlisting.php" method="POST" enctype="multipart/form-data">
-            <label for="product_name">Product Name:</label>
-            <input type="text" id="product_name" name="product_name" required>
+            <div class="form-section">
+                <!-- Left Section -->
+                <div class="form-left">
+                    <label for="product_name">Product Name:</label>
+                    <input type="text" id="product_name" name="product_name" required>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea>
 
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" step="0.01" required>
+                    <label for="price">Price:</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
 
-            <label for="brand">Brand:</label>
-            <input type="text" id="brand" name="brand" required>
+                    <label for="brand">Brand:</label>
+                    <input type="text" id="brand" name="brand" required>
+                </div>
 
-            <label for="stock_quantity">Stock Quantity:</label>
-            <input type="number" id="stock_quantity" name="stock_quantity" required>
-            <br>
-            <br>
-            <label for="image_link">Image:</label>
-            <input type="file" id="image_link" name="image_link" accept="image/*" required>
-            <br>
-            <br>
+                <!-- Right Section -->
+                <div class="form-right">
+                    <label for="stock_quantity">Stock Quantity:</label>
+                    <input type="number" id="stock_quantity" name="stock_quantity" required>
 
-            <label for="color">Color:</label>
-            <input type="text" id="color" name="color">
+                    <label for="image_link">Image:</label>
+                    <input type="file" id="image_link" name="image_link" accept="image/*" required>
 
-            <label for="catogory_id">Category:</label>
-            <select id="catogory_id" name="catogory_id" required>
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color">
+
+                    <label for="catogory_id">Category:</label>
+                    <select id="catogory_id" name="catogory_id" required>
                 <option value="">Select a category</option>
                 <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
                     <option value="<?php echo $cat_row['product_cat_id']; ?>"><?php echo $cat_row['name']; ?></option>
                 <?php endwhile; ?>
             </select>
+                </div>
+            </div>
 
+            <!-- Submit Button -->
             <input type="submit" value="List Product">
         </form>
     </div>
 </body>
-
 </html>
+
 
 
 
