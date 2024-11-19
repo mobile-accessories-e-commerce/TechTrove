@@ -27,6 +27,50 @@ function loadContent(section) {
             "<h1>No services Found</h1><p>You haven't listed any service yet.</p>";
         }
       }
+      if (section === "reports") {
+        content.innerHTML = `<div class="reports-menu">
+                                    <h2>Today Reports</h2>
+                                    <ul>
+                                        <li><a href='reports.php?report_type=sales_reports&type=daily'>Sales Summary Report</a></li>
+                                        <li><a href='reports.php?report_type=product_reports&type=daily'>Product Performance Report</a></li>
+                                        <li><a href='reports.php?report_type=top_selling_products&type=daily'>Top Selling Products</a></li>
+                                        <li><a href='reports.php?report_type=customer_reports&type=daily'>Customer Report</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="reports-menu">
+                                    <h2>This Month Reports</h2>
+                                    <ul>
+                                        <li><a href='reports.php?report_type=sales_reports&type=monthly'>Sales Summary Report</a></li>
+                                        <li><a href='reports.php?report_type=product_reports&type=monthly'>Product Performance Report</a></li>
+                                        <li><a href='reports.php?report_type=top_selling_products&type=monthly'>Top Selling Products</a></li>
+                                        <li><a href='reports.php?report_type=customer_reports&type=monthly'>Customer Report</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="reports-menu">
+                                    <h2>This Year Reports</h2>
+                                    <ul>
+                                        <li><a href='reports.php?report_type=sales_reports&type=yearly'>Sales Summary Report</a></li>
+                                        <li><a href='reports.php?report_type=product_reports&type=yearly'>Product Performance Report</a></li>
+                                        <li><a href='reports.php?report_type=top_selling_products&type=yearly'>Top Selling Products</a></li>
+                                        <li><a href='reports.php?report_type=customer_reports&type=yearly'>Customer Report</a></li>
+                                    </ul>
+                                </div>
+                                <div class="reports-menu">
+                                    <h2>Overall Reports</h2>
+                                    <ul>
+                                        <li><a href='reports.php?report_type=sales_reports&type=all'>Sales Summary Report</a></li>
+                                        <li><a href='reports.php?report_type=product_reports&type=all'>Product Performance Report</a></li>
+                                        <li><a href='reports.php?report_type=top_selling_products&type=all'>Top Selling Products</a></li>
+                                        <li><a href='reports.php?report_type=customer_reports&type=all'>Customer Report</a></li>
+                                    </ul>
+                                </div>
+                                    `;
+      }
+      
+      
+      
       if (section === "service_request") {
         let services = JSON.parse(xhr.responseText);
         content.innerHTML = "<h1>All services</h1>";
