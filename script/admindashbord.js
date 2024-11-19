@@ -99,6 +99,7 @@ function getAllProduct() {
       const product_list = JSON.parse(xhr.responseText);
 
       product_list.forEach(function (product) {
+        rating = product.rating == null ? 0 : product.rating;
         productsHTML += `
                         <tr>
                         <td><img src="../images/${product.image_link}" width="100" height="100"></td>
@@ -109,7 +110,7 @@ function getAllProduct() {
                         <td>${product.catogory_id}</td>
                         <td>${product.product_id}</td>
                         <td>${product.view_count}</td>
-                        <td>${product.rating}</td>
+                        <td>${rating}</td>
                         
                         </tr>    
                 `;

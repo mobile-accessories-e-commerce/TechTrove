@@ -60,7 +60,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         if ($result->num_rows > 0) {
 
-            echo "This item already in your cart";
+            echo "<div style='
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: rgba(0, 0, 0, 0.8);
+                    color: white;
+                    padding: 20px 40px;
+                    border-radius: 8px;
+                    font-size: 18px;
+                    font-family: Arial, sans-serif;
+                    text-align: center;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                '>
+                    This item is already in your cart
+                </div>";
 
         } else {
 
@@ -74,3 +89,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alrady in cart</title>
+</head>
+<body>
+    <script>
+       
+    setTimeout(function() {
+        window.location.href = "../product/products.php"; 
+    }, 1000);
+
+
+
+    </script>
+</body>
+</html>
