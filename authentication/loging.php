@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="text"> Start Your Journey Here</p>
 
         <form action="loging.php" method="post">
-            <input type="text" placeholder="Enter your Name" name="email" required>
+            <input type="text" placeholder="Enter your User name or Email" name="email" required>
             <input type="password" placeholder="Enter Your Password" name="password" required>
             <input type="submit" value="Log In">
         </form>
