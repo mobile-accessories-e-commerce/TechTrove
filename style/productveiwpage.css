@@ -95,8 +95,8 @@ color: white;
 
 
 .product-price {
-    font-size: 50px;
-    color: #1557e7;
+    font-size: 40px;
+    color: rgb(219, 55, 5);
     
 
 }
@@ -123,9 +123,11 @@ color: white;
     margin-bottom: 20px;
 }
 
+
 .quantity button {
-    background-color: #076bd4;
-    color: white;
+    background-color: lightgray;
+    
+    color: #333;
     border: none;
     padding: 10px 15px;
     font-size: 18px;
@@ -148,17 +150,18 @@ color: white;
 }
 
 button.add-to-cart {
-    background-color: #28a745;
+    background-color: #0a5c80;
     color: white;
     border: none;
     padding: 12px 20px;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
+    width: 100%;
 }
 
 button.add-to-cart:hover {
-    background-color: #218838;
+    background-color: #023e61;
 }
 
 
