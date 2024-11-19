@@ -68,7 +68,6 @@ $providerName = mysqli_fetch_assoc($resultProvider)['provider_name'] ?? "Service
                     <li><a href="servicedashbord.php">Home</a></li>
                     <li><a href="servicelisting.php">Add service</a></li>
                     <li><a href="#" onclick="loadContent('all_service')">All service</a></li>
-                    <li><a href="#" onclick="loadContent('product_status')">Product Status</a></li>
                     <li><a href="#" onclick="loadContent('service_request')">Ordered Products</a></li>
                     <li><a href="../Home/dashbord.php">Back to Home</a></li>
                 </ul>
