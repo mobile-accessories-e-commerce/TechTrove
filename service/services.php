@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 $totalProducts = getTotalService(); 
-$itemsPerPage = 1; 
+$itemsPerPage = 12; 
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($currentPage - 1) * $itemsPerPage;
 $service_list = getServices($offset, $itemsPerPage);
