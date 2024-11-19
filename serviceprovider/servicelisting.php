@@ -32,16 +32,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = floatval($_POST['price']);
     $location = trim($_POST['location']);
     $contact_detail = trim($_POST['contact_detail']);
-    $image_link = trim($_POST['image_link']);
     $duration = trim($_POST['duration']);
     $service_status = isset($_POST['service_status']) ? 1 : 0;
     $category_id = intval($_POST['category_id']);
 
 
+
+    $image = $_FILES['image_link'];
+    $uploadDir = '../images/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true); 
+    }
+
+    if ($image['error'] === UPLOAD_ERR_OK) {
+        $uniqueFileName = uniqid() . '-' . basename($image['name']);
+        $uploadPath = $uploadDir . $uniqueFileName;
+
+        if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
+            $image_link = $uniqueFileName; 
+        } else {
+            $error = "Failed to upload image.";
+        }
+    } else {
+        $error = "Error uploading image.";
+    }
+
     if (empty($service_name) || empty($description) || $price <= 0 || empty($location) || empty($contact_detail)) {
         $error = "Please fill out all required fields correctly.";
     } else {
-        // Insert into service listings table
+        
         $insert_query = "INSERT INTO services (service_provider_id, catogory_id, service_name, description, price, location, contact_detail, image_link, duration, service_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($insert_query);
         $stmt->bind_param("iissdssssi", $service_provider_id, $category_id, $service_name, $description, $price, $location, $contact_detail, $image_link, $duration, $service_status);
@@ -161,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
 
 
-        <form action="servicelisting.php" method="POST">
+        <form action="servicelisting.php" method="POST" enctype="multipart/form-data">
             <label for="service_name">Service Name:</label>
             <input type="text" id="service_name" name="service_name" required>
 
@@ -178,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="contact_detail" name="contact_detail" required>
 
             <label for="image_link">Image Link:</label>
-            <input type="file" id="image_link" name="image_link" required>
+            <input type="file" id="image_link" name="image_link" accept="image/*" required>
 
             <label for="duration">Duration:</label>
             <input type="text" id="duration" name="duration" required>
