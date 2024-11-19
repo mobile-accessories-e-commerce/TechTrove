@@ -83,7 +83,7 @@ function getAllProduct() {
                             <th>Seller_id</th>
                             <th>quantity</th>
                              <th>category_id</th>
-                              <th>Product status</th>
+                              <th>Product id</th>
                                <th>View Count</th>
                             <th>rating</th>
                             
@@ -107,7 +107,7 @@ function getAllProduct() {
                         <td>${product.seller_id}</td>
                         <td>${product.stock_quantity}</td>
                         <td>${product.catogory_id}</td>
-                        <td>${product.product_status}</td>
+                        <td>${product.product_id}</td>
                         <td>${product.view_count}</td>
                         <td>${product.rating}</td>
                         
