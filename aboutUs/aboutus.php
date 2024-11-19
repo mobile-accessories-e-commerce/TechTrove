@@ -342,7 +342,7 @@
             <p>Lead Developer</p>
         </div>
         <div class="team-member fade-in-up delay-3">
-            <img src="../images/jojeeven.jpg" alt="Team Member 3">
+            <img src="../images/jojeeven2.jpg" alt="Team Member 3">
             <h4>Jo Jeeven</h4>
             <p>Lead Developer</p>
         </div>
