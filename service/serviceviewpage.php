@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     <title>Product Detail</title>
     <link rel="stylesheet" href="../style/productveiwpage.css">
     <style>
+        .price{
+            color: rgb(219, 55, 5);
+            font-size: 40px;
+            
+        }
         /* Popup form styling */
         .form-container {
             display: none;
