@@ -30,7 +30,7 @@
                                 <span class="product-price">$${service['price']}</span>
                             
                                 <a href="serviceviewpage.php?service_id=${service['service_id']}">
-                                    <button class="blue-btn add-to-cart">View service</button>
+                <a class="service-link" href="serviceviewpage.php?service_id='${service.service_id}'"><button class="blue-btn add-to-cart">view service</button></a>
                                     
                                 </a>
                             </div>
@@ -75,7 +75,9 @@
                                 <span class="product-price">$${service['price']}</span>
                                 
                                 <a href="servuceveiwpage.php?product_id=${service['service_id']}">
-                                    <button class="blue-btn add-to-cart">View service</button>
+                                                <a class="service-link" href="serviceviewpage.php?service_id='${service.service_id}'"><button class="blue-btn add-to-cart">view service</button></a>
+
+                                   
                                     
                                 </a>
                             </div>

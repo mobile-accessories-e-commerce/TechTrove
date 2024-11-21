@@ -1,10 +1,17 @@
 <?php
 session_start();
-include '../connect.php';
+ob_start(); // Start output buffering
+include_once '../connect.php'; // Use include_once to prevent multiple inclusions
+
+// Validate user session
+if (!isset($_SESSION['userid'])) {
+    echo "User not logged in. Please log in.";
+    exit;
+}
 
 $user_id = $_SESSION['userid'];
 
-
+// Fetch seller ID
 $query = "SELECT seller_id FROM sellers WHERE user_id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -18,21 +25,22 @@ if ($result->num_rows == 1) {
     exit;
 }
 
-
-$cat_query = "SELECT product_cat_id, name FROM product_catogory";
+// Fetch unique product categories
+$cat_query = "SELECT DISTINCT product_cat_id, name FROM product_catogory";
 $cat_result = $con->query($cat_query);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_name = trim($_POST['product_name']);
     $description = trim($_POST['description']);
     $price = floatval($_POST['price']);
-    $brand = $_POST['brand'];
+    $brand = trim($_POST['brand']);
     $stock_quantity = intval($_POST['stock_quantity']);
     $color = trim($_POST['color']);
     $product_status = isset($_POST['product_status']) ? 1 : 0;
     $catogory_id = intval($_POST['catogory_id']);
+    $image_link = '';
 
- 
+    // Handle image upload
     $image = $_FILES['image_link'];
     $uploadDir = '../images/';
     if (!is_dir($uploadDir)) {
@@ -52,10 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Error uploading image.";
     }
 
+    // Validate input
     if (empty($product_name) || empty($description) || $price <= 0 || $stock_quantity < 0 || empty($image_link)) {
         $error = "Please fill out all required fields correctly.";
     } else {
-        $insert_query = "INSERT INTO products (seller_id, catogory_id, product_name, description, price, brand, stock_quantity,image_link, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Insert product into database
+        $insert_query = "INSERT INTO products (seller_id, catogory_id, product_name, description, price, brand, stock_quantity, image_link, color) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $con->prepare($insert_query);
         $stmt->bind_param("iissdssss", $seller_id, $catogory_id, $product_name, $description, $price, $brand, $stock_quantity, $image_link, $color);
 
@@ -69,8 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -216,8 +224,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Product Listing</h1>
 
         <!-- Feedback Messages -->
-        <div class="error" style="display: none;">Error message goes here.</div>
-        <div class="success" style="display: none;">Success message goes here.</div>
+        <?php if (!empty($error)): ?>
+            <div class="error"><?php echo htmlspecialchars($error); ?></div>
+        <?php elseif (!empty($success)): ?>
+            <div class="success"><?php echo htmlspecialchars($success); ?></div>
+        <?php endif; ?>
 
         <!-- Form Start -->
         <form action="productlisting.php" method="POST" enctype="multipart/form-data">
@@ -250,11 +261,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <label for="catogory_id">Category:</label>
                     <select id="catogory_id" name="catogory_id" required>
-                <option value="">Select a category</option>
-                <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
-                    <option value="<?php echo $cat_row['product_cat_id']; ?>"><?php echo $cat_row['name']; ?></option>
-                <?php endwhile; ?>
-            </select>
+                        <option value="">Select a category</option>
+                        <?php while ($cat_row = $cat_result->fetch_assoc()): ?>
+                            <option value="<?php echo htmlspecialchars($cat_row['product_cat_id']); ?>">
+                                <?php echo htmlspecialchars($cat_row['name']); ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
             </div>
 
@@ -264,6 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+
 
 
 
